@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BTS PI · Révision Anglais E2/E3 · Session 2026</title>
+<style>
+:root{--font-serif:Georgia,'Times New Roman',serif;--font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;--bg:#f4f1ec;--surface:#ffffff;--surface2:#ede9e1;--border:#dcd7ce;--text:#1a1815;--tl:#6a6158;--accent:#0d5c3a;--al:#e6f4ed;--green:#1a6b3c;--gl:#e6f4ed;--red:#b3281e;--rl:#fcecea;--orange:#c45c0a;--ol:#fef2e6;--yellow:#f5c842;--purple:#6b21a8;--pl:#f3e8ff;--blue:#1a5276;--bl:#e8f2fb;--r:10px;--sh:0 2px 16px rgba(0,0,0,.07)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.65;padding-bottom:80px;-webkit-user-select:none;user-select:none}
+#kb-lock{display:none;position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#0a2e1a 0%,#0d5c3a 50%,#0a1f3d 100%);color:#fff;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px}
+#kb-lock.visible{display:flex}
+.kl-logo{font-family:var(--font-serif);font-size:2.8rem;color:#f5c842;letter-spacing:.06em;margin-bottom:6px;font-weight:bold}
+.kl-sub{font-size:.72rem;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase;margin-bottom:28px}
+.kl-title{font-family:var(--font-serif);font-size:1.25rem;margin-bottom:8px;color:#e6f4ed;font-weight:bold}
+.kl-desc{font-size:.84rem;color:rgba(255,255,255,.6);max-width:420px;line-height:1.7;margin-bottom:28px}
+.kl-divider{width:60px;height:2px;background:linear-gradient(90deg,#f5c842,#e8a020);border-radius:2px;margin:0 auto 28px}
+.kl-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.kl-input{padding:10px 18px;border-radius:8px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:.95rem;width:220px;outline:none;letter-spacing:.1em;text-align:center;font-family:var(--font-sans)}
+.kl-input::placeholder{color:rgba(255,255,255,.3)}
+.kl-input:focus{border-color:#f5c842;background:rgba(255,255,255,.12)}
+.kl-btn{padding:10px 24px;border-radius:8px;border:none;background:linear-gradient(90deg,#f5c842,#e8a020);color:#0a2e1a;font-weight:700;font-size:.9rem;cursor:pointer;font-family:var(--font-sans)}
+.kl-err{font-size:.78rem;color:#ff8a8a;min-height:20px;margin-bottom:6px;font-family:var(--font-sans)}
+.kl-footer{font-size:.6rem;color:rgba(255,255,255,.22);letter-spacing:.08em;margin-top:32px;text-transform:uppercase}
+#kb-expired{display:none;position:fixed;inset:0;z-index:99998;background:linear-gradient(135deg,#1a0505 0%,#3d0f0f 60%,#0a2e1a 100%);color:#fff;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px}
+#kb-expired.visible{display:flex}
+.ke-logo{font-family:var(--font-serif);font-size:2.8rem;color:#ff6b6b;letter-spacing:.06em;margin-bottom:6px;font-weight:bold}
+.ke-title{font-family:var(--font-serif);font-size:1.25rem;margin-bottom:10px;color:#ffe0e0;font-weight:bold}
+.ke-msg{font-size:.84rem;color:rgba(255,255,255,.6);max-width:440px;line-height:1.75;margin-bottom:28px}
+.ke-divider{width:60px;height:2px;background:linear-gradient(90deg,#ff6b6b,#e03030);border-radius:2px;margin:0 auto 28px}
+.ke-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.ke-input{padding:10px 18px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff;font-size:.9rem;width:220px;outline:none;letter-spacing:.1em;text-align:center;font-family:var(--font-sans)}
+.ke-input:focus{border-color:#f5c842}
+.ke-btn{padding:10px 24px;border-radius:8px;border:none;background:linear-gradient(90deg,#f5c842,#e8a020);color:#0a2e1a;font-weight:700;font-size:.9rem;cursor:pointer;font-family:var(--font-sans)}
+.ke-err{font-size:.78rem;color:#ff8a8a;min-height:20px;margin-bottom:6px}
+.ke-footer{font-size:.6rem;color:rgba(255,255,255,.2);letter-spacing:.08em;margin-top:32px;text-transform:uppercase}
+.sticky-head{position:sticky;top:0;z-index:100;box-shadow:0 3px 16px rgba(13,92,58,.25)}
+.welcome-banner{background:linear-gradient(120deg,#0a2e1a 0%,#0d5c3a 50%,#1a5276 100%);color:#fff;text-align:center;padding:14px 24px 12px;position:relative;overflow:hidden}
+.welcome-banner::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 18px,rgba(255,255,255,.025) 18px,rgba(255,255,255,.025) 36px);pointer-events:none}
+.welcome-banner::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f5c842,#e8a020,#f5c842)}
+.welcome-name{font-family:var(--font-serif);font-size:1.2rem;line-height:1.25;position:relative;font-weight:bold}
+.welcome-name em{font-style:italic;color:#f5c842}
+.welcome-tagline{font-size:.7rem;opacity:.72;letter-spacing:.1em;text-transform:uppercase;margin-top:4px;position:relative}
+.kb-copyright{background:#0a2e1a;color:rgba(255,255,255,.55);text-align:center;font-size:.65rem;letter-spacing:.08em;padding:4px 16px;border-bottom:1px solid rgba(245,200,66,.3)}
+.top-bar{background:rgba(0,0,0,.18);color:#fff;padding:7px 16px;display:flex;align-items:center;justify-content:space-between}
+.top-bar-sub{font-size:.65rem;opacity:.55;text-transform:uppercase;letter-spacing:.06em;margin-top:1px}
+.tab-nav{background:var(--surface);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{flex:none;padding:10px 14px;font-family:var(--font-sans);font-size:.78rem;font-weight:500;color:var(--tl);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s}
+.tab-btn:hover{color:var(--accent)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-btn.qcm-btn{color:var(--purple)}
+.tab-btn.qcm-btn.active{color:var(--purple);border-bottom-color:var(--purple)}
+.tab-btn.cas-btn{color:var(--blue)}
+.tab-btn.cas-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.container{max-width:900px;margin:0 auto;padding:28px 16px}
+.section-header{margin-bottom:20px}
+.section-header h2{font-family:var(--font-serif);font-size:1.45rem;color:var(--accent);margin-bottom:4px;font-weight:bold}
+.section-header p{font-size:.82rem;color:var(--tl);line-height:1.5}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin-bottom:18px;box-shadow:var(--sh)}
+.card-title{font-family:var(--font-serif);font-size:1.05rem;color:var(--accent);margin-bottom:14px;font-weight:bold}
+.alert-box{border-radius:var(--r);padding:13px 16px;margin-bottom:18px;display:flex;gap:12px;align-items:flex-start;font-size:.84rem}
+.alert-box.green{background:var(--gl);border-left:4px solid var(--green)}
+.alert-box.orange{background:var(--ol);border-left:4px solid var(--orange)}
+.alert-box.red{background:var(--rl);border-left:4px solid var(--red)}
+.alert-box.blue{background:var(--bl);border-left:4px solid var(--blue)}
+.alert-box.accent{background:var(--al);border-left:4px solid var(--accent)}
+.ai{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+.at{line-height:1.55}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.84rem}
+th{background:var(--al);color:var(--accent);font-weight:600;text-align:left;padding:8px 10px;border-bottom:2px solid var(--accent)}
+td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--surface2)}
+.fiche-section{margin-bottom:28px}
+.fiche-section-title{font-family:var(--font-serif);font-size:1.1rem;color:var(--accent);margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--al);font-weight:bold}
+.fiche-encadre{background:linear-gradient(135deg,#e6f4ed,#f4f1ec);border:2px solid var(--accent);border-radius:var(--r);padding:16px 18px;margin-bottom:16px;font-size:.85rem}
+.fiche-encadre-title{font-weight:700;color:var(--accent);margin-bottom:8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.05em}
+.fiche-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:18px}
+.fiche-tile{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 15px;font-size:.83rem;line-height:1.55}
+.fiche-tile strong{display:block;color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px}
+.fiche-tile em{color:var(--tl);font-style:normal;font-size:.78rem}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:.72rem;font-weight:600;margin-right:4px;margin-bottom:2px}
+.tag-en{background:var(--al);color:var(--accent)}
+.tag-ok{background:var(--gl);color:var(--green)}
+.tag-err{background:var(--rl);color:var(--red)}
+.tag-theme{background:var(--ol);color:var(--orange)}
+.tag-blue{background:var(--bl);color:var(--blue)}
+.exemple-redige{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-top:10px}
+.er-title{font-size:.78rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.er-step{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;background:rgba(255,255,255,.7);border-radius:7px;padding:10px 12px}
+.er-num{width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;flex-shrink:0}
+.er-text{font-size:.83rem;line-height:1.6;flex:1}
+.er-en{font-style:italic;color:var(--blue);font-family:var(--font-serif)}
+.cas-toggle{background:var(--accent);color:#fff;border:none;border-radius:7px;padding:8px 16px;font-size:.82rem;cursor:pointer;margin-top:10px;transition:background .15s;font-family:var(--font-sans)}
+.cas-toggle:hover{background:#0a2e1a}
+.welcome-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:20px}
+.welcome-tile{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 14px;cursor:pointer;transition:box-shadow .15s,transform .15s,border-color .15s}
+.welcome-tile:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(13,92,58,.12);transform:translateY(-2px)}
+.welcome-tile.cas-tile{border-color:rgba(26,82,118,.3)}
+.welcome-tile.cas-tile:hover{border-color:var(--blue)}
+.welcome-tile.qcm-tile{border-color:rgba(107,33,168,.3)}
+.welcome-tile.qcm-tile:hover{border-color:var(--purple)}
+.wt-icon{font-size:1.6rem;margin-bottom:6px}
+.wt-title{font-family:var(--font-serif);font-size:.92rem;color:var(--text);margin-bottom:3px;font-weight:bold}
+.wt-desc{font-size:.73rem;color:var(--tl)}
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border-radius:8px;padding:11px 14px}
+.step-num{font-family:var(--font-serif);font-size:1.3rem;color:var(--accent);flex-shrink:0;line-height:1;margin-top:2px;font-weight:bold}
+.step-body{font-size:.84rem;line-height:1.6}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+.chain-item{background:var(--accent);color:#fff;padding:5px 12px;border-radius:99px;font-size:.78rem;font-weight:600}
+.chain-arrow{color:var(--tl);font-size:.9rem}
+.memo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:20px}
+.memo-tile{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 15px;font-size:.82rem;line-height:1.55}
+.memo-tile strong{display:block;color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px}
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-bottom:16px}
+.vocab-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:3px}
+.vocab-en{font-weight:600;color:var(--accent);font-size:.88rem}
+.vocab-fr{font-size:.78rem;color:var(--tl)}
+.global-score-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;margin-bottom:24px;display:flex;flex-wrap:wrap;gap:20px;align-items:center}
+.score-big{font-family:var(--font-serif);font-size:2rem;color:var(--accent);line-height:1;font-weight:bold}
+.score-sub{font-size:.75rem;color:var(--tl)}
+.score-prog-wrap{flex:1;min-width:150px}
+.score-prog-bg{background:var(--surface2);border-radius:99px;height:10px;overflow:hidden}
+.score-prog-fill{height:100%;background:linear-gradient(90deg,var(--purple),#8b5cf6);border-radius:99px;transition:width .5s ease}
+.score-prog-label{font-size:.72rem;color:var(--tl);margin-top:4px}
+.btn-reset-all{background:none;border:1px solid var(--border);border-radius:7px;padding:7px 14px;font-size:.78rem;cursor:pointer;color:var(--tl);transition:border-color .15s,color .15s;font-family:var(--font-sans)}
+.btn-reset-all:hover{border-color:var(--red);color:var(--red)}
+.cas-dossier{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--sh);margin-bottom:32px;overflow:hidden}
+.cas-header{background:linear-gradient(90deg,#0a2e1a,#1a5276);color:#fff;padding:18px 22px}
+.cas-header h3{font-family:var(--font-serif);font-size:1.15rem;margin-bottom:4px;font-weight:bold}
+.cas-header p{font-size:.78rem;opacity:.75}
+.cas-body{padding:20px 22px}
+.cas-doc{background:var(--surface2);border-radius:8px;padding:14px 16px;margin-bottom:12px;font-size:.84rem;border:1px solid var(--border);font-family:var(--font-serif);line-height:1.75}
+.cas-doc-title{font-family:var(--font-sans);font-weight:600;color:var(--blue);margin-bottom:6px;font-size:.82rem}
+.cas-doc-meta{font-family:var(--font-sans);font-size:.72rem;color:var(--tl);margin-bottom:8px}
+.cas-question{margin-bottom:24px;padding:18px 20px;background:var(--bg);border:1px solid var(--border);border-radius:10px}
+.cas-q-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.cas-q-num{background:var(--blue);color:#fff;font-weight:700;padding:3px 10px;border-radius:6px;font-size:.82rem;flex-shrink:0}
+.cas-q-text{font-size:.9rem;font-weight:500;flex:1;line-height:1.5}
+.cas-q-pts{font-size:.72rem;color:var(--tl);margin-top:4px}
+.answer-zone{margin-top:12px}
+.answer-zone label{font-size:.75rem;font-weight:600;color:var(--tl);letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:6px}
+.answer-textarea{width:100%;min-height:100px;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-sans);font-size:.88rem;line-height:1.6;background:#fff;color:var(--text);resize:vertical;transition:border-color .15s;-webkit-user-select:text;user-select:text}
+.answer-textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(13,92,58,.1)}
+.answer-actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.btn-evaluate{background:linear-gradient(90deg,#0a2e1a,#0d5c3a);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-family:var(--font-sans);font-size:.84rem;font-weight:600;cursor:pointer;transition:opacity .15s;display:flex;align-items:center;gap:7px}
+.btn-evaluate:hover:not(:disabled){opacity:.88}
+.btn-evaluate:disabled{opacity:.55;cursor:not-allowed}
+.btn-show-corrige{background:none;border:1.5px solid var(--border);border-radius:8px;padding:8px 16px;font-family:var(--font-sans);font-size:.82rem;cursor:pointer;color:var(--tl);transition:border-color .15s,color .15s,background .15s}
+.btn-show-corrige:hover:not(:disabled){border-color:var(--blue);color:var(--blue)}
+.btn-show-corrige.step2{border-color:var(--blue);color:var(--blue);background:var(--bl)}
+.btn-show-corrige:disabled{opacity:.35;cursor:not-allowed}
+.char-count{font-size:.72rem;color:var(--tl);margin-left:auto}
+.eval-result{margin-top:14px;border-radius:10px;overflow:hidden;border:1px solid var(--border);animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.eval-header{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.eval-header.excellent{background:linear-gradient(90deg,#1a6b3c,#2d9e58);color:#fff}
+.eval-header.bien{background:linear-gradient(90deg,#0d5c3a,#1a8a5c);color:#fff}
+.eval-header.passable{background:linear-gradient(90deg,#c45c0a,#e08030);color:#fff}
+.eval-header.insuffisant{background:linear-gradient(90deg,#b3281e,#d44030);color:#fff}
+.eval-note-big{font-family:var(--font-serif);font-size:2.2rem;line-height:1;font-weight:bold}
+.eval-label{font-size:.78rem;opacity:.85;margin-top:2px}
+.eval-mention{font-size:.9rem;font-weight:600}
+.eval-body{background:var(--surface);padding:16px 18px}
+.eval-section{margin-bottom:14px}
+.eval-section-title{font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:6px}
+.kw-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.kw-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:.74rem;font-weight:600}
+.kw-found{background:var(--gl);color:var(--green)}
+.kw-missing{background:var(--rl);color:var(--red)}
+.eval-feedback{font-size:.84rem;line-height:1.65;color:var(--text)}
+.eval-note-big{font-family:var(--font-serif);font-size:2.2rem;line-height:1;font-weight:bold}
+.progress-note{position:relative;background:var(--surface2);border-radius:99px;height:10px;overflow:hidden;margin:8px 0 4px}
+.progress-note-fill{height:100%;border-radius:99px;transition:width .5s ease}
+.progress-note-fill.excellent{background:linear-gradient(90deg,#1a6b3c,#2d9e58)}
+.progress-note-fill.bien{background:linear-gradient(90deg,#0d5c3a,#1a8a5c)}
+.progress-note-fill.passable{background:linear-gradient(90deg,#c45c0a,#e08030)}
+.progress-note-fill.insuffisant{background:linear-gradient(90deg,#b3281e,#d44030)}
+.annotated-response{background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;margin-top:8px;font-size:.88rem;line-height:1.8;-webkit-user-select:text;user-select:text}
+.annot-err{background:#fce8e8;border-bottom:2px solid var(--red);color:var(--red);font-weight:600;cursor:help}
+.annot-warn{background:#fef2e6;border-bottom:2px solid var(--orange);color:var(--orange);font-weight:500;cursor:help}
+.corrige-step2{margin-top:4px;padding:14px 16px;background:var(--bl);border:1.5px solid var(--blue);border-radius:10px;font-size:.84rem;line-height:1.7;white-space:pre-line;-webkit-user-select:text;user-select:text;font-family:var(--font-serif);font-style:italic}
+.corrige-step2-title{font-family:var(--font-sans);font-style:normal;font-weight:700;color:var(--blue);font-size:.85rem;margin-bottom:8px}
+.tips-box{background:linear-gradient(135deg,#f3e8ff,#e6f4ed);border:1px solid #9fd4b8;border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:.82rem;line-height:1.6}
+.tips-box strong{color:var(--accent)}
+.doc-oral{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:12px;font-size:.84rem}
+.doc-oral-phase{font-size:.72rem;font-weight:700;color:var(--tl);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+.doc-oral-txt{font-family:var(--font-serif);font-style:italic;line-height:1.7;color:var(--text)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.fiche-grid,.vocab-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- LOCK -->
+<div id="kb-lock">
+  <div style="font-size:2.5rem;margin-bottom:16px;opacity:.8">🔒</div>
+  <div class="kl-logo">BTS PI</div>
+  <div class="kl-sub">Usage pédagogique interne · Anglais E2/E3 · Session 2026</div>
+  <div class="kl-divider"></div>
+  <div class="kl-title">Outil de révision — Anglais</div>
+  <div class="kl-desc">E2 · E3 · Épreuve de contrôle · Coefficient 2 + 2<br>Saisissez le code d'accès fourni par votre enseignant.</div>
+  <div class="kl-form">
+    <input class="kl-input" type="password" id="kl-pwd" placeholder="Code d'accès" maxlength="32" autocomplete="off"/>
+    <button class="kl-btn" onclick="kbUnlock()">Accéder</button>
+  </div>
+  <div class="kl-err" id="kl-err"></div>
+  <div class="kl-footer">© Usage pédagogique interne · BTS PI · Anglais · Session 2026</div>
+</div>
+
+<!-- EXPIRED -->
+<div id="kb-expired">
+  <div class="ke-logo">⏰ Accès expiré</div>
+  <div class="ke-divider"></div>
+  <div class="ke-title">Période d'accès terminée</div>
+  <div class="ke-msg">La période d'accès à cet outil est arrivée à échéance.<br>Si vous disposez d'un code de prolongation, saisissez-le ci-dessous.</div>
+  <div class="ke-form">
+    <input class="ke-input" type="password" id="ke-pwd" placeholder="Code de prolongation" maxlength="32" autocomplete="off"/>
+    <button class="ke-btn" onclick="kbUnlockExpired()">Réactiver</button>
+  </div>
+  <div class="ke-err" id="ke-err"></div>
+  <div class="ke-footer">© Usage pédagogique interne · BTS PI · Anglais · Session 2026</div>
+</div>
+
+<!-- APP -->
+<div id="kb-app" style="display:none">
+
+<div class="sticky-head">
+  <div class="welcome-banner">
+    <div class="welcome-name">BTS Professions Immobilières · <em>Anglais — Épreuve de contrôle E2 / E3</em></div>
+    <div class="welcome-tagline">Méthodes · Vocabulaire · 3 dossiers interactifs · QCM 30 questions · Session 2026</div>
+  </div>
+  <div class="kb-copyright">© Usage pédagogique interne · BTS PI · Anglais E2/E3 · Session 2026</div>
+  <div class="top-bar">
+    <div>
+      <div style="font-size:.85rem;font-weight:600">Révision Anglais — Épreuve de contrôle</div>
+      <div class="top-bar-sub">Compréhension · Expression · Vocabulaire · QCM · Hors ligne</div>
+    </div>
+    <div id="top-score" style="font-size:.72rem;color:rgba(255,255,255,.7)">QCM : 0 / 30</div>
+  </div>
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('accueil')">🏠 Home</button>
+    <button class="tab-btn" onclick="showTab('cadre')">📋 Cadre</button>
+    <button class="tab-btn" onclick="showTab('methodes')">🔧 Methods</button>
+    <button class="tab-btn" onclick="showTab('vocab')">📖 Vocabulary</button>
+    <button class="tab-btn" onclick="showTab('exemples')">🗣 Examples</button>
+    <button class="tab-btn cas-btn" onclick="showTab('cas')">📂 Practice</button>
+    <button class="tab-btn qcm-btn" onclick="showTab('qcm')">🧩 QCM (32)</button>
+    <button class="tab-btn" onclick="showTab('memo')">🧠 Memo</button>
+  </nav>
+</div>
+
+<!-- ACCUEIL -->
+<div id="sec-accueil" class="tab-content active">
+  <div class="container">
+    <div class="section-header"><h2>Welcome to the English revision tool</h2><p>E2 / E3 · Épreuve de contrôle · BTS Professions Immobilières · Session 2026</p></div>
+    <div class="alert-box accent"><span class="ai">✅</span><div class="at"><strong>Ce que l'examinateur évalue :</strong> comprendre l'essentiel d'un document · s'exprimer simplement en anglais · donner un avis argumenté · communiquer dans des situations professionnelles immobilières. <strong>Un anglais simple et structuré vaut mieux qu'un silence parfait.</strong></div></div>
+    <div class="alert-box orange"><span class="ai">⭐</span><div class="at"><strong>Règle d'or :</strong> ne jamais rester silencieux. Si on ne connaît pas un mot, on décrit, on tourne autour, on utilise des mots simples. L'examinateur évalue la communication, pas la perfection grammaticale.</div></div>
+    <div class="card"><div class="card-title">🎯 Critères d'évaluation</div><div class="tbl-wrap"><table><tr><th>Critère</th><th>Ce qui est évalué</th></tr><tr><td><strong>Compréhension</strong></td><td>Understanding the main idea, key details, document type</td></tr><tr><td><strong>Expression</strong></td><td>Clarity, structure, ability to explain and reformulate</td></tr><tr><td><strong>Vocabulary</strong></td><td>General + professional real estate vocabulary</td></tr><tr><td><strong>Communication</strong></td><td>Ability to interact, answer questions, give an opinion</td></tr><tr><td><strong>Pronunciation</strong></td><td>Intelligible — perfection not required</td></tr></table></div></div>
+    <div class="welcome-grid">
+      <div class="welcome-tile" onclick="showTab('cadre')"><div class="wt-icon">📋</div><div class="wt-title">Cadre de l'épreuve</div><div class="wt-desc">Format, documents, thématiques fréquentes</div></div>
+      <div class="welcome-tile" onclick="showTab('methodes')"><div class="wt-icon">🔧</div><div class="wt-title">Methods</div><div class="wt-desc">QQWWH · CCCS · DIC · PEE · Plan universel</div></div>
+      <div class="welcome-tile" onclick="showTab('vocab')"><div class="wt-icon">📖</div><div class="wt-title">Vocabulary</div><div class="wt-desc">Immobilier + général · phrases utiles</div></div>
+      <div class="welcome-tile" onclick="showTab('exemples')"><div class="wt-icon">🗣</div><div class="wt-title">Examples</div><div class="wt-desc">3 documents fictifs avec présentation modèle</div></div>
+      <div class="welcome-tile cas-tile" onclick="showTab('cas')"><div class="wt-icon">📂</div><div class="wt-title">Practice dossiers</div><div class="wt-desc">3 dossiers interactifs · annotation · corrigé</div></div>
+      <div class="welcome-tile qcm-tile" onclick="showTab('qcm')"><div class="wt-icon">🧩</div><div class="wt-title">QCM — 32 questions</div><div class="wt-desc">Méthodes · vocab · erreurs · correction immédiate</div></div>
+      <div class="welcome-tile" onclick="showTab('memo')"><div class="wt-icon">🧠</div><div class="wt-title">Memo final</div><div class="wt-desc">Phrases-clés · réflexes · à relire la veille</div></div>
+    </div>
+    <div class="card"><div class="card-title">⛓ La chaîne de présentation orale</div><div class="chain"><div class="chain-item">1. Present</div><div class="chain-arrow">→</div><div class="chain-item">2. Describe</div><div class="chain-arrow">→</div><div class="chain-item">3. Explain</div><div class="chain-arrow">→</div><div class="chain-item">4. Give your opinion</div><div class="chain-arrow">→</div><div class="chain-item">5. Conclude</div></div></div>
+  </div>
+</div>
+
+<!-- CADRE -->
+<div id="sec-cadre" class="tab-content">
+  <div class="container">
+    <div class="section-header"><h2>📋 Cadre de l'épreuve de contrôle</h2><p>Anglais · E2 et E3 · BTS Professions Immobilières · Arrêté du 22 novembre 2023 mod. 24 juin 2025</p></div>
+    <div class="fiche-encadre"><div class="fiche-encadre-title">📌 Ce que l'examinateur attend</div>Comprendre l'essentiel d'un document (écrit ou image). S'exprimer clairement en anglais. Donner un avis structuré. Utiliser du vocabulaire immobilier de base. <strong>L'examinateur n'attend pas un anglais parfait — il évalue la communication.</strong></div>
+    <div class="fiche-section"><div class="fiche-section-title">1. Format de l'épreuve</div><div class="fiche-grid"><div class="fiche-tile"><strong>Durée</strong>Préparation : <strong>20 minutes</strong><br>Présentation orale : <strong>20 minutes</strong><br>Coeff. E2 : 2 · Coeff. E3 : 2</div><div class="fiche-tile"><strong>Support remis</strong>1 à 2 documents sur un thème lié à l'immobilier ou à la société. Texte, image, ou document mixte. Parfois une annonce immobilière ou un e-mail professionnel.</div><div class="fiche-tile"><strong>Déroulement</strong>Présentation libre du document (10 min environ). Questions de l'examinateur en anglais (10 min). Possibilité de jeu de rôle ou situation professionnelle simulée.</div><div class="fiche-tile"><strong>Niveau visé</strong>B1–B2 du CECRL. En pratique : communiquer efficacement prime sur la grammaire. Un candidat qui parle simplement mais clairement valide.</div></div></div>
+    <div class="fiche-section"><div class="fiche-section-title">2. Types de documents</div><div class="fiche-grid"><div class="fiche-tile"><strong>Written documents</strong><span class="tag tag-blue">News article</span> <span class="tag tag-blue">Email</span> <span class="tag tag-blue">Property listing</span> <span class="tag tag-blue">Report extract</span> <span class="tag tag-blue">Website page</span> <span class="tag tag-blue">Testimonial</span></div><div class="fiche-tile"><strong>Visual documents</strong><span class="tag tag-ok">Photograph</span> <span class="tag tag-ok">Advertisement</span> <span class="tag tag-ok">Infographic</span> <span class="tag tag-ok">Graph / chart</span> <span class="tag tag-ok">Property photo</span></div><div class="fiche-tile"><strong>Professional documents</strong><span class="tag tag-theme">Client email</span> <span class="tag tag-theme">Rental listing</span> <span class="tag tag-theme">Property description</span> <span class="tag tag-theme">Market report</span></div></div></div>
+    <div class="fiche-section"><div class="fiche-section-title">3. Thématiques fréquentes</div><div class="fiche-grid"><div class="fiche-tile"><strong>Real Estate (priorité)</strong><span class="tag tag-en">Housing crisis</span> <span class="tag tag-en">Renting vs buying</span> <span class="tag tag-en">Sustainable housing</span> <span class="tag tag-en">Energy renovation</span> <span class="tag tag-en">House prices</span></div><div class="fiche-tile"><strong>Work & Economy</strong><span class="tag tag-theme">Remote working</span> <span class="tag tag-theme">Inflation</span> <span class="tag tag-theme">Cost of living</span> <span class="tag tag-theme">AI in the workplace</span></div><div class="fiche-tile"><strong>Environment</strong><span class="tag tag-theme">Climate change</span> <span class="tag tag-theme">Energy efficiency</span> <span class="tag tag-theme">Green buildings</span></div><div class="fiche-tile"><strong>Society</strong><span class="tag tag-theme">Young people</span> <span class="tag tag-theme">Social networks</span> <span class="tag tag-theme">Cities & transport</span> <span class="tag tag-theme">Tourism</span></div></div></div>
+    <div class="alert-box red"><span class="ai">✗</span><div class="at"><strong>Erreurs à éviter absolument :</strong> traduire mot à mot · rester silencieux · répondre uniquement « yes » ou « no » · chercher la perfection grammaticale · avoir peur des fautes · parler en français.</div></div>
+  </div>
+</div>
+
+<!-- METHODS -->
+<div id="sec-methodes" class="tab-content">
+  <div class="container">
+    <div class="section-header"><h2>🔧 Les 4 méthodes essentielles</h2><p>Outils à appliquer pendant les 20 minutes de préparation et pendant l'oral.</p></div>
+    <div class="card"><div class="card-title">🕐 Gérer les 20 minutes de préparation</div><div class="steps"><div class="step"><div class="step-num">5'</div><div class="step-body"><strong>Read / Observe :</strong> lire ou observer le document. Souligner les mots-clés. Identifier le type de document.</div></div><div class="step"><div class="step-num">10'</div><div class="step-body"><strong>Prepare :</strong> appliquer QQWWH. Identifier 3 idées principales. Chercher 2 exemples. Préparer son opinion avec PEE.</div></div><div class="step"><div class="step-num">5'</div><div class="step-body"><strong>Structure :</strong> rédiger sa phrase d'introduction. Préparer la conclusion. Anticiper les questions de l'examinateur.</div></div></div></div>
+    <div class="fiche-section"><div class="fiche-section-title">Method 1 — Understand : QQWWH</div><div class="fiche-grid"><div class="fiche-tile"><strong>Who?</strong>Who is speaking? Who is the audience? <em>Qui parle ? À qui ?</em></div><div class="fiche-tile"><strong>What?</strong>What is the topic? What is the main message? <em>Quel est le sujet ?</em></div><div class="fiche-tile"><strong>Where? When?</strong>What is the context? When was it published? <em>Contexte géographique et temporel.</em></div><div class="fiche-tile"><strong>Why? How?</strong>Why was it written? What angle? <em>Intention de l'auteur.</em></div></div><div class="alert-box accent"><span class="ai">💡</span><div class="at">Answer these 6 questions mentally in 2 minutes. They structure your introduction.</div></div></div>
+    <div class="fiche-section"><div class="fiche-section-title">Method 2 — Analyse : CCCS</div><div class="fiche-grid"><div class="fiche-tile"><strong>Causes</strong>Why does this situation exist? <em>Pourquoi cette situation existe-t-elle ?</em></div><div class="fiche-tile"><strong>Consequences</strong>What are the effects? <em>Quels sont les effets ?</em></div><div class="fiche-tile"><strong>Comparisons</strong>How does it compare? Better or worse than before? <em>Comparaisons utiles.</em></div><div class="fiche-tile"><strong>Solutions</strong>What solutions are proposed? <em>Quelles réponses possibles ?</em></div></div><div class="alert-box accent"><span class="ai">💡</span><div class="at">CCCS works for almost every topic. It structures the development of your presentation.</div></div></div>
+    <div class="fiche-section"><div class="fiche-section-title">Method 3 — Analyse an image : DIC</div><div class="fiche-grid"><div class="fiche-tile"><strong>Describe</strong>What can you see? Describe the people, objects, colours, composition. <em>Décrire les éléments visibles.</em></div><div class="fiche-tile"><strong>Interpret</strong>What does the image mean? What message does the author want to convey? <em>Interpréter le message.</em></div><div class="fiche-tile"><strong>Comment</strong>What do you think about it? Link to current events, your own knowledge. <em>Donner un avis élargi.</em></div></div><div class="alert-box red"><span class="ai">✗</span><div class="at"><strong>Common mistake :</strong> only describing the image without interpreting it. The examiner expects a message to be identified, not just "I can see a man and a building."</div></div></div>
+    <div class="fiche-section"><div class="fiche-section-title">Method 4 — Give your opinion : PEE</div><div class="fiche-grid"><div class="fiche-tile"><strong>Point</strong>State your opinion clearly. <em>« I think… / In my opinion… / I believe… »</em></div><div class="fiche-tile"><strong>Explain</strong>Give a reason. <em>« Because… / This is because… / The reason is… »</em></div><div class="fiche-tile"><strong>Example</strong>Support with a concrete example. <em>« For example… / For instance… »</em></div></div><div class="exemple-redige"><div class="er-title">PEE — exemple appliqué · Housing crisis</div><div class="er-step"><div class="er-num">P</div><div class="er-text"><span class="er-en">I think the housing crisis is one of the biggest challenges for young people today.</span></div></div><div class="er-step"><div class="er-num">E</div><div class="er-text"><span class="er-en">Because rents have increased much faster than salaries, making it very difficult to find an affordable flat in big cities.</span></div></div><div class="er-step"><div class="er-num">E</div><div class="er-text"><span class="er-en">For example, in Paris or Lyon, young workers often spend more than 40% of their income on rent, which leaves very little for other expenses.</span></div></div></div></div>
+    <div class="card"><div class="card-title">📐 Plan oral universel</div><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-body"><strong>Introduction :</strong> present the document (type, source, topic). State the main idea in one sentence. Announce your plan briefly.</div></div><div class="step"><div class="step-num">2</div><div class="step-body"><strong>Development :</strong> causes / consequences / solutions (CCCS). Use linking words. Add a personal example or opinion.</div></div><div class="step"><div class="step-num">3</div><div class="step-body"><strong>Conclusion :</strong> summarise in one sentence. Open with a broader question or personal view. Do not introduce new ideas.</div></div></div></div>
+  </div>
+</div>
+
+<!-- VOCABULARY -->
+<div id="sec-vocab" class="tab-content">
+  <div class="container">
+    <div class="section-header"><h2>📖 Vocabulary</h2><p>Vocabulaire immobilier professionnel + vocabulaire général indispensable</p></div>
+    <div class="fiche-section"><div class="fiche-section-title">Real estate vocabulary — à connaître absolument</div><div class="vocab-grid">
+      <div class="vocab-card"><div class="vocab-en">Property / a property</div><div class="vocab-fr">Bien immobilier</div></div>
+      <div class="vocab-card"><div class="vocab-en">Estate agency</div><div class="vocab-fr">Agence immobilière</div></div>
+      <div class="vocab-card"><div class="vocab-en">Real estate agent</div><div class="vocab-fr">Agent immobilier</div></div>
+      <div class="vocab-card"><div class="vocab-en">Landlord</div><div class="vocab-fr">Propriétaire bailleur</div></div>
+      <div class="vocab-card"><div class="vocab-en">Tenant</div><div class="vocab-fr">Locataire</div></div>
+      <div class="vocab-card"><div class="vocab-en">Rent / to rent</div><div class="vocab-fr">Loyer / louer</div></div>
+      <div class="vocab-card"><div class="vocab-en">Lease agreement</div><div class="vocab-fr">Contrat de location</div></div>
+      <div class="vocab-card"><div class="vocab-en">Mortgage</div><div class="vocab-fr">Prêt immobilier</div></div>
+      <div class="vocab-card"><div class="vocab-en">Property management</div><div class="vocab-fr">Gestion immobilière</div></div>
+      <div class="vocab-card"><div class="vocab-en">Housing crisis</div><div class="vocab-fr">Crise du logement</div></div>
+      <div class="vocab-card"><div class="vocab-en">Affordable housing</div><div class="vocab-fr">Logement abordable</div></div>
+      <div class="vocab-card"><div class="vocab-en">Sustainable housing</div><div class="vocab-fr">Habitat durable</div></div>
+      <div class="vocab-card"><div class="vocab-en">Energy renovation</div><div class="vocab-fr">Rénovation énergétique</div></div>
+      <div class="vocab-card"><div class="vocab-en">Energy efficiency</div><div class="vocab-fr">Performance énergétique</div></div>
+      <div class="vocab-card"><div class="vocab-en">House prices</div><div class="vocab-fr">Prix de l'immobilier</div></div>
+      <div class="vocab-card"><div class="vocab-en">Studio flat / apartment</div><div class="vocab-fr">Studio</div></div>
+      <div class="vocab-card"><div class="vocab-en">Shared flat</div><div class="vocab-fr">Colocation</div></div>
+      <div class="vocab-card"><div class="vocab-en">To move in / move out</div><div class="vocab-fr">Emménager / déménager</div></div>
+    </div></div>
+    <div class="fiche-section"><div class="fiche-section-title">General vocabulary — indispensable</div><div class="vocab-grid">
+      <div class="vocab-card"><div class="vocab-en">Advantage / disadvantage</div><div class="vocab-fr">Avantage / inconvénient</div></div>
+      <div class="vocab-card"><div class="vocab-en">To increase / to decrease</div><div class="vocab-fr">Augmenter / diminuer</div></div>
+      <div class="vocab-card"><div class="vocab-en">Challenge</div><div class="vocab-fr">Défi, enjeu</div></div>
+      <div class="vocab-card"><div class="vocab-en">Opportunity</div><div class="vocab-fr">Opportunité</div></div>
+      <div class="vocab-card"><div class="vocab-en">Solution</div><div class="vocab-fr">Solution</div></div>
+      <div class="vocab-card"><div class="vocab-en">Issue / problem</div><div class="vocab-fr">Problème</div></div>
+      <div class="vocab-card"><div class="vocab-en">Climate change</div><div class="vocab-fr">Changement climatique</div></div>
+      <div class="vocab-card"><div class="vocab-en">Remote working</div><div class="vocab-fr">Télétravail</div></div>
+      <div class="vocab-card"><div class="vocab-en">Cost of living</div><div class="vocab-fr">Coût de la vie</div></div>
+      <div class="vocab-card"><div class="vocab-en">Young people</div><div class="vocab-fr">Les jeunes</div></div>
+      <div class="vocab-card"><div class="vocab-en">Society</div><div class="vocab-fr">Société</div></div>
+      <div class="vocab-card"><div class="vocab-en">Technology</div><div class="vocab-fr">Technologie</div></div>
+    </div></div>
+    <div class="fiche-section"><div class="fiche-section-title">Phrases utiles à mémoriser</div><div class="fiche-grid">
+      <div class="fiche-tile"><strong>Présenter le document</strong><span class="er-en">This document is a… / The article deals with… / The picture shows… / The main topic is…</span></div>
+      <div class="fiche-tile"><strong>Donner son avis</strong><span class="er-en">I think that… / In my opinion… / I believe that… / Personally, I…</span></div>
+      <div class="fiche-tile"><strong>Relier les idées</strong><span class="er-en">First… / Then… / Moreover… / However… / Finally… / On the other hand…</span></div>
+      <div class="fiche-tile"><strong>Donner un exemple</strong><span class="er-en">For example… / For instance… / Such as… / Like…</span></div>
+      <div class="fiche-tile"><strong>Conclure</strong><span class="er-en">To conclude… / In conclusion… / To sum up… / Finally, we can say that…</span></div>
+      <div class="fiche-tile"><strong>Si on ne sait pas un mot</strong><span class="er-en">It is a kind of… / It means… / The opposite of… / Something like… / I cannot remember the exact word, but…</span></div>
+    </div></div>
+    <div class="card"><div class="card-title">Questions fréquentes de l'examinateur — et comment y répondre</div><div class="fiche-grid">
+      <div class="fiche-tile"><strong>What is the document about?</strong><span class="er-en">This document is about [topic]. The main idea is that [main message].</span></div>
+      <div class="fiche-tile"><strong>Do you agree?</strong><span class="er-en">I agree / I do not fully agree because [reason]. For example, [example].</span></div>
+      <div class="fiche-tile"><strong>What are the advantages?</strong><span class="er-en">I think the main advantages are [1] and [2]. For example, [example].</span></div>
+      <div class="fiche-tile"><strong>Would you like to work in real estate?</strong><span class="er-en">Yes / No. I think it is [interesting / challenging] because [reason]. I would like to [specialism].</span></div>
+      <div class="fiche-tile"><strong>What do you think about…?</strong><span class="er-en">In my opinion, [point]. Because [explain]. For example, [example].</span></div>
+      <div class="fiche-tile"><strong>What are the challenges?</strong><span class="er-en">I think the biggest challenge is [topic]. It is difficult because [reason].</span></div>
+    </div></div>
+  </div>
+</div>
+
+<!-- EXEMPLES ORAUX -->
+<div id="sec-exemples" class="tab-content">
+  <div class="container">
+    <div class="section-header"><h2>🗣 Examples — présentations orales modèles</h2><p>3 documents fictifs traités avec une présentation orale en anglais. À lire à voix haute.</p></div>
+    <div class="tips-box"><strong>How to use these examples :</strong> read the document, prepare your own presentation (20 min), then reveal the model. Compare your approach with the suggested answer.</div>
+    <div class="cas-dossier"><div class="cas-header"><h3>📰 Example 1 — Article · Housing crisis & young people</h3><p>Fictitious document · Written text · Real estate theme</p></div><div class="cas-body"><div class="cas-doc"><div class="cas-doc-title">Document : "Young people priced out of the housing market"</div><div class="cas-doc-meta">Fictitious article · Real Estate Weekly · March 2024</div><em>According to a recent survey, more than 60% of people under 30 in major European cities spend over 40% of their income on rent. Rising house prices and stagnant wages mean that buying a property has become almost impossible for young adults without family support. Experts warn that this trend could have serious long-term consequences on social mobility and inequality. Some governments are considering new policies such as rent controls and affordable housing programmes to address the issue.</em></div>
+    <button class="cas-toggle" onclick="toggleEx('oral1')">▼ Voir la présentation orale modèle</button>
+    <div class="exemple-redige" id="oral1" style="display:none"><div class="er-title">Oral presentation model — 4 to 5 minutes</div>
+    <div class="doc-oral"><div class="doc-oral-phase">Introduction</div><div class="doc-oral-txt">"This document is a news article from Real Estate Weekly, published in March 2024. It deals with the housing crisis and its impact on young people in European cities. The main idea is that rising rents and house prices are making it extremely difficult for young adults to find affordable housing. I will first present the main problem, then explain its causes and consequences, and finally give my opinion."</div></div>
+    <div class="doc-oral"><div class="doc-oral-phase">Development — Causes &amp; Consequences</div><div class="doc-oral-txt">"The article shows that more than 60% of young people spend over 40% of their income on rent. This is because house prices have increased much faster than salaries. As a result, buying a flat is almost impossible without financial help from family. This could increase social inequality in the long term, because young people from less wealthy families are the most affected."</div></div>
+    <div class="doc-oral"><div class="doc-oral-phase">Opinion + Example</div><div class="doc-oral-txt">"In my opinion, this is one of the most important challenges for society today. Governments must act — for example, by building more social housing or introducing rent controls, as some cities like Berlin or Barcelona have tried. Without action, the gap between rich and poor will continue to grow."</div></div>
+    <div class="doc-oral"><div class="doc-oral-phase">Conclusion</div><div class="doc-oral-txt">"To conclude, this article shows that the housing crisis is not just an economic problem — it is also a social one. It raises the question: what kind of society do we want, where access to housing depends on your family's wealth?"</div></div></div></div></div>
+
+    <div class="cas-dossier"><div class="cas-header"><h3>🖼 Example 2 — Image · Remote working</h3><p>Fictitious document · Visual · Society theme</p></div><div class="cas-body"><div class="cas-doc"><div class="cas-doc-title">Document : Photograph — a person working from home</div><div class="cas-doc-meta">Fictitious photo · Context: remote working debate · 2024</div><em>A person is sitting at a desk at home, laptop open, surrounded by plants and natural light. The background shows a cosy living room. The person looks relaxed and focused. A caption reads: "Work from home — the new normal?"</em></div>
+    <button class="cas-toggle" onclick="toggleEx('oral2')">▼ Voir la présentation orale modèle (DIC)</button>
+    <div class="exemple-redige" id="oral2" style="display:none"><div class="er-title">Oral presentation model — DIC method</div>
+    <div class="doc-oral"><div class="doc-oral-phase">Describe</div><div class="doc-oral-txt">"In this photograph, I can see a person working from home. They are sitting at a desk with a laptop, surrounded by plants and natural light. The atmosphere looks calm and comfortable. There is a caption that says 'Work from home — the new normal?'"</div></div>
+    <div class="doc-oral"><div class="doc-oral-phase">Interpret</div><div class="doc-oral-txt">"The picture represents the rise of remote working, which has become very common since the pandemic in 2020. The caption asks whether this is now the 'new normal', suggesting that working from home is no longer exceptional but part of everyday life. The image seems to present remote working in a positive way — the person looks happy and productive."</div></div>
+    <div class="doc-oral"><div class="doc-oral-phase">Comment</div><div class="doc-oral-txt">"In my opinion, remote working has both advantages and disadvantages. The main advantage is flexibility — people save time on commuting and can have a better work-life balance. However, it can also be isolating, and not everyone has a comfortable space to work at home. For a real estate agent, for example, some tasks can be done remotely, but meeting clients requires physical presence. I think a mix of office and home working is probably the best solution."</div></div></div></div></div>
+
+    <div class="cas-dossier"><div class="cas-header"><h3>📊 Example 3 — Graph · Energy renovation</h3><p>Fictitious document · Chart · Real estate / environment theme</p></div><div class="cas-body"><div class="cas-doc"><div class="cas-doc-title">Document : Bar chart — "Energy performance of housing in France (2024)"</div><div class="cas-doc-meta">Fictitious source · Ministry of Housing · 2024</div><em>The bar chart shows the percentage of homes in each energy category (A to G). Category A: 3%. B: 8%. C: 15%. D: 22%. E: 20%. F: 17%. G: 15%. Title: "Over 30% of French homes are energy-inefficient (F or G)."</em></div>
+    <button class="cas-toggle" onclick="toggleEx('oral3')">▼ Voir la présentation orale modèle</button>
+    <div class="exemple-redige" id="oral3" style="display:none"><div class="er-title">Oral presentation model — chart analysis</div>
+    <div class="doc-oral"><div class="doc-oral-phase">Present the document</div><div class="doc-oral-txt">"This document is a bar chart from the French Ministry of Housing, published in 2024. It shows the energy performance of homes in France. The main message is that more than 30% of French homes are in the worst energy categories — F or G — meaning they are very inefficient and expensive to heat."</div></div>
+    <div class="doc-oral"><div class="doc-oral-phase">Interpret — do not just read the numbers</div><div class="doc-oral-txt">"I will not just read the figures — what this chart tells us is that France faces a major challenge: a large proportion of its housing stock wastes energy. This is important because in 2023, French law started banning the rental of G-rated properties, and F-rated properties will follow. This means many landlords must renovate or sell their properties."</div></div>
+    <div class="doc-oral"><div class="doc-oral-phase">Opinion + Conclusion</div><div class="doc-oral-txt">"In my opinion, energy renovation is essential for both the environment and for tenants who pay high energy bills. However, it is expensive, and many owners cannot afford it. The question is: who will pay for the renovation — the landlord, the tenant, or the government? This is one of the key debates in the French housing market today."</div></div></div></div></div>
+  </div>
+</div>
+
+<!-- PRACTICE DOSSIERS -->
+<div id="sec-cas" class="tab-content">
+  <div class="container">
+    <div class="section-header"><h2>📂 Practice dossiers — entraînement interactif</h2><p>3 dossiers · Rédigez en anglais · Évaluez · Annotez · Comparez avec le corrigé</p></div>
+    <div class="tips-box"><strong>Mode d'emploi :</strong> lisez le document. Répondez en anglais. Cliquez sur « Evaluate » pour un retour. Clic 1 sur « Corrigé » → annotation de votre réponse. Clic 2 → corrigé complet.</div>
+    <div id="cas-container"></div>
+  </div>
+</div>
+
+<!-- QCM -->
+<div id="sec-qcm" class="tab-content">
+  <div class="container">
+    <div class="section-header"><h2>🧩 QCM — 32 questions</h2><p>Méthodes · Vocabulaire · Structures · Erreurs · Correction immédiate</p></div>
+    <div class="global-score-bar"><div><div class="score-big" id="qcm-score-num">0 / 0</div><div class="score-sub">correct answers</div></div><div class="score-prog-wrap"><div class="score-prog-bg"><div class="score-prog-fill" id="qcm-prog" style="width:0%"></div></div><div class="score-prog-label" id="qcm-prog-label">No answers yet</div></div><button class="btn-reset-all" onclick="qcmReset()">↺ Reset</button></div>
+    <div id="qcm-container"></div>
+  </div>
+</div>
+
+<!-- MEMO -->
+<div id="sec-memo" class="tab-content">
+  <div class="container">
+    <div class="section-header"><h2>🧠 Memo final — à relire la veille et le matin</h2><p>12 réflexes · Phrases-clés · Erreurs interdites</p></div>
+    <div class="alert-box accent"><span class="ai">✅</span><div class="at"><strong>Si vous ne retenez que trois choses :</strong> 1) ne jamais rester silencieux. 2) structurer avec QQWWH + PEE. 3) utiliser les linking words (first, then, however, finally).</div></div>
+    <div class="fiche-section"><div class="fiche-section-title">12 réflexes essentiels</div><div class="memo-grid">
+      <div class="memo-tile"><strong>1 — QQWWH first</strong>Identify Who, What, Where, When, Why, How before speaking. It structures your introduction.</div>
+      <div class="memo-tile"><strong>2 — One sentence = one idea</strong>Keep sentences short and clear. Better simple and correct than long and confused.</div>
+      <div class="memo-tile"><strong>3 — CCCS for development</strong>Causes → Consequences → Comparisons → Solutions. Works for any topic.</div>
+      <div class="memo-tile"><strong>4 — DIC for images</strong>Describe → Interpret → Comment. Never just describe. The examiner wants the message.</div>
+      <div class="memo-tile"><strong>5 — PEE for opinions</strong>Point → Explain → Example. Never say "I think" without explaining why and giving an example.</div>
+      <div class="memo-tile"><strong>6 — Linking words</strong>First / Then / Moreover / However / Finally / As a result / On the other hand.</div>
+      <div class="memo-tile"><strong>7 — Real estate vocabulary</strong>Property, landlord, tenant, rent, lease, mortgage, housing crisis, energy renovation.</div>
+      <div class="memo-tile"><strong>8 — If you don't know a word</strong>"It is a kind of…" / "The opposite of…" / "Something like…" / "I cannot remember the word, but it means…"</div>
+      <div class="memo-tile"><strong>9 — Never say only "yes" or "no"</strong>Always add a reason: "Yes, I agree because…" / "No, I don't think so because…"</div>
+      <div class="memo-tile"><strong>10 — Don't translate word for word</strong>Think in English, not in French. Use simple words you know.</div>
+      <div class="memo-tile"><strong>11 — Read numbers aloud</strong>40% → "forty per cent" / 2024 → "twenty twenty-four" / 3 million → "three million".</div>
+      <div class="memo-tile"><strong>12 — Conclude properly</strong>"To conclude…" / "In conclusion…" / "To sum up…" + one opening question.</div>
+    </div></div>
+    <div class="card"><div class="card-title">💬 Phrases-clés à mémoriser — en anglais</div><div class="fiche-grid">
+      <div class="fiche-tile"><strong>Introduction</strong><span class="er-en">This document is… / This article deals with… / The main topic is… / The picture shows…</span></div>
+      <div class="fiche-tile"><strong>Develop</strong><span class="er-en">First… / Then… / Moreover… / As a result… / This means that…</span></div>
+      <div class="fiche-tile"><strong>Opinion</strong><span class="er-en">I think… / In my opinion… / I believe… / Personally, I… / I agree / I disagree because…</span></div>
+      <div class="fiche-tile"><strong>Example</strong><span class="er-en">For example… / For instance… / Such as… / A good example is…</span></div>
+      <div class="fiche-tile"><strong>Conclude</strong><span class="er-en">To conclude… / In conclusion… / To sum up… / This raises the question of…</span></div>
+      <div class="fiche-tile"><strong>Reformulate</strong><span class="er-en">In other words… / What I mean is… / To put it simply… / That is to say…</span></div>
+    </div></div>
+    <div class="alert-box red"><span class="ai">✗</span><div class="at"><strong>Erreurs interdites :</strong> rester silencieux · répondre « yes » ou « no » seulement · parler en français · traduire mot à mot · décrire une image sans l'interpréter · chercher la grammaire parfaite plutôt que de communiquer.</div></div>
+  </div>
+</div>
+
+</div><!-- end #kb-app -->
+
+<script>
+function showTab(id){
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active')});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+  var sec=document.getElementById('sec-'+id);if(sec)sec.classList.add('active');
+  var map=['accueil','cadre','methodes','vocab','exemples','cas','qcm','memo'];
+  var btns=document.querySelectorAll('.tab-btn');
+  var idx=map.indexOf(id);if(idx>=0&&btns[idx])btns[idx].classList.add('active');
+}
+function toggleEx(id){var el=document.getElementById(id);if(!el)return;el.style.display=el.style.display==='none'?'block':'none';}
+
+/* ====== DOSSIERS ====== */
+var casDossiers=[
+  {id:'d1',title:'📰 Dossier 1 — Article · Housing crisis',subtitle:'Written document · Methods: QQWWH + CCCS + PEE',
+   doc:{titre:'Young people and the housing crisis',meta:'Fictitious article · UK Property News · 2024',
+        texte:'Rising house prices and soaring rents are pushing young people out of major cities. A recent study shows that the average rent in London increased by 15% in 2023, while average wages only grew by 4%. As a result, many young professionals are forced to live far from their workplace or share accommodation with several flatmates. Some are delaying major life decisions such as starting a family or changing jobs. Experts call for urgent government action, including the construction of more affordable housing and stronger protections for tenants.'},
+   questions:[
+    {id:'d1q1',num:'Q1',pts:'3 pts',
+     question:"What is this document about? Identify the main idea and the author's intention.",
+     minwords:20,
+     annotations:[
+       {pattern:'housing|rent|young|crisis|afford',type:'ok',note:'Key topic identified ✓'},
+       {pattern:'main idea|main topic|article (is|deals|explains|shows)',type:'ok',note:'Good introduction structure ✓'},
+       {pattern:'because|as a result|therefore|so',type:'ok',note:'Cause/effect linking present ✓'},
+       {pattern:'c\'est|le|la |les |un |une |des |je pense que',type:'err',note:'Error: answer must be in English, not French'},
+       {pattern:'very very|really really',type:'warn',note:'Tip: avoid repetitive emphasis — use "extremely" or "significantly" instead'},
+     ],
+     criteres:['Main topic stated (housing crisis / young people)','Author\'s intention identified','Answer in English','At least 2 sentences'],
+     corrige:'This document is a news article that deals with the housing crisis and its impact on young people in big cities. The main idea is that rents are rising much faster than wages, making it increasingly difficult for young adults to find affordable housing. The author\'s intention is to highlight the severity of this social problem and to call for government action, including the construction of more affordable homes and better tenant protections.'},
+    {id:'d1q2',num:'Q2',pts:'4 pts',
+     question:"Apply the CCCS method: identify the Causes, Consequences, Comparisons and Solutions mentioned in the document.",
+     minwords:40,
+     annotations:[
+       {pattern:'cause|because|due to|result of',type:'ok',note:'Cause identified ✓'},
+       {pattern:'consequence|result|as a result|therefore|so|forced|delay',type:'ok',note:'Consequence identified ✓'},
+       {pattern:'solution|government|affordable|action|protect',type:'ok',note:'Solution identified ✓'},
+       {pattern:'15%|4%|london|wages|salary|salaries',type:'ok',note:'Good use of figures from the document ✓'},
+       {pattern:'c\'est|le |la |les ',type:'err',note:'Error: answer must be in English'},
+       {pattern:'i think|in my opinion|i believe',type:'warn',note:'Tip: CCCS is objective — save your opinion for PEE. Avoid "I think" here.'},
+     ],
+     criteres:['Causes clearly identified (rising prices, stagnant wages)','Consequences identified (forced to move, delayed decisions)','Solutions mentioned (affordable housing, tenant protections)','Answer structured and in English'],
+     corrige:'CAUSES: House prices and rents are rising very fast (15% in London in 2023), while wages are growing much more slowly (only 4%). This makes housing unaffordable for many young people.\nCONSEQUENCES: Many young professionals are forced to live far from work or share flats. They also delay important life decisions such as starting a family or changing jobs.\nCOMPARISONS: The gap between rent increases (15%) and wage growth (4%) is significant — rents grew nearly four times faster.\nSOLUTIONS: Experts recommend government action: building more affordable housing and introducing stronger protections for tenants.'},
+    {id:'d1q3',num:'Q3',pts:'3 pts',
+     question:"Give your opinion on the housing crisis using the PEE method (Point – Explain – Example). Your example must come from your own knowledge, not the document.",
+     minwords:40,
+     annotations:[
+       {pattern:'i think|in my opinion|i believe|personally',type:'ok',note:'Point stated ✓'},
+       {pattern:'because|since|as|the reason|this is why',type:'ok',note:'Explanation given ✓'},
+       {pattern:'for example|for instance|such as|like|a good example',type:'ok',note:'Example introduced ✓'},
+       {pattern:'paris|france|berlin|barcelona|social housing|rent control|maprimerenov|government',type:'ok',note:'Good personal example from outside the document ✓'},
+       {pattern:'the document says|according to the text|as the article',type:'err',note:'Error: your example must come from YOUR OWN knowledge, not from the document'},
+       {pattern:'very good|very bad|very nice',type:'warn',note:'Tip: avoid "very + basic adjective". Use: "serious", "significant", "crucial", "alarming" instead.'},
+     ],
+     criteres:['Clear point stated (I think…)','Explanation developed (Because…)','Personal example from outside the document','Answer in English'],
+     corrige:'I think the housing crisis is one of the most serious social problems in Europe today. Because rents are increasing much faster than salaries, young people with average incomes simply cannot afford to live in big cities. This creates a society where access to housing depends on your family\'s wealth, not your work. For example, in France, the government introduced MaPrimeRénov\' to help property owners renovate their homes, which can improve the housing stock — but it does not directly solve the problem of high rents for young tenants. I believe that building more social housing and controlling rent increases are the most urgent solutions.'}
+   ]},
+
+  {id:'d2',title:'🖼 Dossier 2 — Image · Sustainable housing',subtitle:'Visual document · Method: DIC',
+   doc:{titre:'Advertisement image — "The house of the future"',meta:'Fictitious advertisement · Green Living Magazine · 2024',
+        texte:'The image shows a modern house with solar panels on the roof, large windows, and a green garden full of plants and trees. The walls are covered with climbing plants. There is a small electric car charging in the garage. The sky is blue and clear. A slogan reads: "The house of the future — sustainable, smart, and affordable."'},
+   questions:[
+    {id:'d2q1',num:'Q1',pts:'4 pts',
+     question:"Analyse this image using the DIC method (Describe – Interpret – Comment). Write at least 3 paragraphs.",
+     minwords:60,
+     annotations:[
+       {pattern:'i can see|the image shows|in the picture|there is|there are',type:'ok',note:'Describe step present ✓'},
+       {pattern:'represent|mean|message|author|convey|suggest|symbol',type:'ok',note:'Interpret step present ✓'},
+       {pattern:'i think|in my opinion|i believe|comment|however|advantage|disadvantage',type:'ok',note:'Comment step present ✓'},
+       {pattern:'solar panel|electric car|sustainable|green|environment|energy|eco',type:'ok',note:'Good thematic vocabulary ✓'},
+       {pattern:'c\'est|le |la |les |très ',type:'err',note:'Error: answer must be in English'},
+       {pattern:'nice|pretty|beautiful',type:'warn',note:'Tip: avoid purely aesthetic comments — focus on the message. "It looks attractive" → "It conveys a positive image of sustainable living."'},
+     ],
+     criteres:['Describe: key visual elements mentioned','Interpret: message/intention identified','Comment: personal view + link to context','Answer in English with at least 3 paragraphs'],
+     corrige:'DESCRIBE: In this image, I can see a modern house with solar panels on the roof and large windows. The garden is full of trees and plants, and climbing plants cover the walls. There is an electric car charging in the garage. The sky is bright and clear. A slogan reads: "The house of the future — sustainable, smart, and affordable."\n\nINTERPRET: This image is an advertisement for sustainable housing. The author wants to present an attractive vision of the future — a home that is good for the environment, technologically advanced, and still affordable. The choice of green colours, natural light, and clean energy (solar panels, electric car) sends a positive message about the possibility of living in an eco-friendly way without sacrificing comfort.\n\nCOMMENT: In my opinion, this image reflects a real trend in the housing market. Energy renovation and sustainable housing are becoming more and more important, especially since governments in Europe are introducing stricter energy efficiency regulations. However, I think the slogan "affordable" is questionable — sustainable homes often cost more to build, and not everyone can afford solar panels or an electric car. This raises the question: is sustainable housing really accessible to everyone, or only to wealthy homeowners?'},
+    {id:'d2q2',num:'Q2',pts:'3 pts',
+     question:"An examiner asks: 'Do you think sustainable housing is the future?' Answer using PEE. Give concrete examples.",
+     minwords:35,
+     annotations:[
+       {pattern:'i think|yes|no|i agree|i believe|in my opinion',type:'ok',note:'Point stated ✓'},
+       {pattern:'because|since|as |the reason|this is why',type:'ok',note:'Explanation given ✓'},
+       {pattern:'for example|for instance|such as|like',type:'ok',note:'Example introduced ✓'},
+       {pattern:'however|but|although|on the other hand|nevertheless',type:'ok',note:'Good nuance present ✓'},
+       {pattern:'c\'est|le |la |oui|non|parce que',type:'err',note:'Error: answer must be entirely in English'},
+     ],
+     criteres:['Clear point (yes/no + reason)','Explanation developed','Personal example','Nuance or counterargument present'],
+     corrige:'Yes, I think sustainable housing is the future — and also a necessity. Because climate change is accelerating, and buildings are responsible for a significant part of CO2 emissions, we have no choice but to make our homes more energy-efficient. For example, France has already banned the rental of G-rated properties — the least efficient ones — which means landlords must renovate or sell. However, I also think that the cost of renovation is a real barrier for many people. Not everyone can afford solar panels or insulation. So while sustainable housing is the right direction, governments must provide financial support to make it accessible to all, not just the wealthy.'}
+   ]},
+
+  {id:'d3',title:'📧 Dossier 3 — Professional email · Client enquiry',subtitle:'Professional document · Comprehension + written response',
+   doc:{titre:'Email from a potential client',meta:'Fictitious professional email · Real estate context · 2024',
+        texte:'Subject: Enquiry about renting a flat in Lyon\n\nDear Sir / Madam,\n\nI am writing to enquire about the availability of flats for rent in the Lyon city centre area. I am looking for a two-bedroom flat, ideally close to public transport, with a budget of around €1,200 per month. I would also like to know whether the properties are furnished or unfurnished, and whether pets are allowed.\n\nI am planning to move in at the beginning of September. Could you please let me know what is available and arrange a visit?\n\nKind regards,\nMr James Hartley'},
+   questions:[
+    {id:'d3q1',num:'Q1',pts:'2 pts',
+     question:"What does Mr Hartley want? Summarise his request in 3 to 4 sentences.",
+     minwords:25,
+     annotations:[
+       {pattern:'flat|apartment|rent|two.bedroom|lyon|1200|budget',type:'ok',note:'Key details of the request identified ✓'},
+       {pattern:'he want|he is looking|he need|he ask|he would like',type:'ok',note:'Good use of reported speech ✓'},
+       {pattern:'september|september|visit|viewing',type:'ok',note:'Timeline mentioned ✓'},
+       {pattern:'c\'est|il veut|monsieur|il cherche',type:'err',note:'Error: answer must be in English'},
+       {pattern:'he want to',type:'warn',note:'Grammar tip: "he wants to" (not "he want to") — third person singular always takes -s'},
+     ],
+     criteres:['Type of property identified (2-bedroom flat)','Location mentioned (Lyon centre)','Budget stated (€1,200/month)','Move-in date and visit request mentioned'],
+     corrige:"Mr Hartley is looking for a two-bedroom flat to rent in the centre of Lyon. His budget is approximately €1,200 per month. He wants to know whether the available properties are furnished or unfurnished, and whether pets are allowed. He is planning to move in at the beginning of September and would like to arrange a viewing as soon as possible."},
+    {id:'d3q2',num:'Q2',pts:'5 pts',
+     question:"Write a short professional reply to Mr Hartley's email in English (8 to 12 sentences). Introduce yourself, confirm you have received his request, describe one available property, and suggest a viewing.",
+     minwords:70,
+     annotations:[
+       {pattern:'dear mr hartley|dear mr\.|dear james',type:'ok',note:'Professional greeting ✓'},
+       {pattern:'thank you|thank you for|we have received|i am writing',type:'ok',note:'Professional opening ✓'},
+       {pattern:'two.bedroom|2 bedroom|furnished|unfurnished|pet|transport|september',type:'ok',note:'Client requirements addressed ✓'},
+       {pattern:'viewing|visit|appointment|available on',type:'ok',note:'Viewing proposed ✓'},
+       {pattern:'kind regards|yours sincerely|best regards',type:'ok',note:'Professional closing ✓'},
+       {pattern:'c\'est|bonjour|cordialement|monsieur|madame',type:'err',note:'Error: the entire email must be written in English'},
+       {pattern:'!!!|please please|urgent urgent',type:'warn',note:'Tip: professional emails use formal, calm language — avoid multiple exclamation marks or repetition'},
+     ],
+     criteres:['Professional greeting and closing','Opening acknowledges the enquiry','At least one property briefly described','Viewing offered with date/time','Formal and clear English throughout'],
+     corrige:"Dear Mr Hartley,\n\nThank you for your enquiry. My name is [Name] and I am a real estate agent at [Agency Name] in Lyon. I am pleased to inform you that we currently have several two-bedroom flats available in the city centre area that may suit your requirements.\n\nOne property I would particularly recommend is a bright, unfurnished two-bedroom flat located close to the Part-Dieu metro station, available from the 1st of September. The monthly rent is €1,150, which is within your budget. Pets are allowed with the landlord's agreement, and the flat is close to bus and tram lines.\n\nI would be happy to arrange a viewing at your convenience. Would you be available for a visit on Thursday 15th August at 10:00 a.m., or would you prefer another time?\n\nPlease do not hesitate to contact me if you have any further questions.\n\nKind regards,\n[Your name]\n[Agency name] — Lyon"}
+   ]}
+];
+
+var answerState={};
+
+function buildCas(){
+  var container=document.getElementById('cas-container');if(!container)return;container.innerHTML='';
+  casDossiers.forEach(function(dossier){
+    var div=document.createElement('div');div.className='cas-dossier';
+    var qHtml=dossier.questions.map(function(q){
+      return '<div class="cas-question" id="cq-'+q.id+'">'+
+        '<div class="cas-q-header"><span class="cas-q-num">'+q.num+'</span>'+
+        '<div><div class="cas-q-text">'+q.question+'</div>'+
+        '<div class="cas-q-pts">'+q.pts+' · Criteria: '+q.criteres.join(' · ')+'</div></div></div>'+
+        '<div class="answer-zone"><label>Your answer (in English)</label>'+
+        '<textarea class="answer-textarea" id="ta-'+q.id+'" placeholder="Write your answer in English here…" oninput="updateCharCount(\''+q.id+'\')"></textarea>'+
+        '<div class="answer-actions">'+
+        '<button class="btn-evaluate" onclick="evaluateAnswer(\''+q.id+'\')">✓ Evaluate</button>'+
+        '<button class="btn-show-corrige" id="btn-corr-'+q.id+'" onclick="requestCorrige(\''+q.id+'\')" disabled>📋 Corrigé</button>'+
+        '<span class="char-count" id="cc-'+q.id+'">0 words</span>'+
+        '</div>'+
+        '<div id="eval-'+q.id+'"></div>'+
+        '<div id="annot-'+q.id+'" style="display:none;margin-top:12px">'+
+        '<div style="font-size:.75rem;font-weight:600;color:var(--red);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px">📝 Your annotated answer — review before seeing the model</div>'+
+        '<div class="annotated-response" id="annot-txt-'+q.id+'"></div>'+
+        '<div id="annot-legend-'+q.id+'" style="margin-top:8px;font-size:.72rem;color:var(--tl)"></div>'+
+        '</div>'+
+        '<div id="corr-'+q.id+'" style="display:none;margin-top:12px">'+
+        '<div class="corrige-step2-title">✅ Model answer</div>'+
+        '<div class="corrige-step2" id="corr-txt-'+q.id+'"></div>'+
+        '</div>'+
+        '</div></div>';
+    }).join('');
+    div.innerHTML='<div class="cas-header"><h3>'+dossier.title+'</h3><p>'+dossier.subtitle+'</p></div>'+
+      '<div class="cas-body"><div class="cas-doc"><div class="cas-doc-title">'+dossier.doc.titre+'</div>'+
+      '<div class="cas-doc-meta">'+dossier.doc.meta+'</div>'+dossier.doc.texte+'</div>'+qHtml+'</div>';
+    container.appendChild(div);
+  });
+}
+
+function updateCharCount(id){
+  var ta=document.getElementById('ta-'+id);var cc=document.getElementById('cc-'+id);if(!ta||!cc)return;
+  var words=ta.value.trim().split(/\s+/).filter(function(w){return w.length>0;});
+  cc.textContent=words.length+' word'+(words.length>1?'s':'');
+}
+
+function evaluateAnswer(id){
+  var q=null;
+  casDossiers.forEach(function(d){d.questions.forEach(function(qq){if(qq.id===id)q=qq;});});
+  if(!q)return;
+  var annotations=q.annotations;var minwords=q.minwords;
+  var ta=document.getElementById('ta-'+id);var container=document.getElementById('eval-'+id);
+  var btnCorr=document.getElementById('btn-corr-'+id);
+  if(!ta||!container)return;
+  var text=ta.value.trim();var textL=text.toLowerCase();
+  var words=textL.split(/\s+/).filter(function(w){return w.length>0;});
+  var wordCount=words.length;
+  if(wordCount<5){container.innerHTML='<div class="alert-box red" style="margin-top:10px"><span class="ai">✗</span><div class="at">Write your answer in English before evaluating.</div></div>';return;}
+  var okFound=annotations.filter(function(a){return a.type==='ok'&&textL.match(new RegExp(a.pattern,'i'));});
+  var errFound=annotations.filter(function(a){return a.type==='err'&&textL.match(new RegExp(a.pattern,'i'));});
+  var warnFound=annotations.filter(function(a){return a.type==='warn'&&textL.match(new RegExp(a.pattern,'i'));});
+  var totalOk=annotations.filter(function(a){return a.type==='ok';}).length;
+  var kwScore=totalOk>0?Math.round((okFound.length/totalOk)*100):50;
+  var lengthOk=wordCount>=minwords;
+  var penalty=errFound.length*18+warnFound.length*5;
+  var combined=Math.max(0,(kwScore*0.6)+(lengthOk?40:(wordCount/minwords)*40)-penalty);
+  var score,mention,cls,stars;
+  if(combined>=78){score='Excellent';mention='Complete and well-structured answer';cls='excellent';stars='★★★★★';}
+  else if(combined>=55){score='Good';mention='Good answer — a few elements to add';cls='bien';stars='★★★★☆';}
+  else if(combined>=35){score='Pass';mention='Incomplete — review the annotations';cls='passable';stars='★★★☆☆';}
+  else{score='Insufficient';mention='Answer to revise — consult the model';cls='insuffisant';stars='★★☆☆☆';}
+  var pct=Math.min(100,Math.round(combined));
+  var errHtml=errFound.map(function(a){return'<span class="kw-tag kw-missing">⚠ '+a.note+'</span>';}).join('');
+  var warnHtml=warnFound.map(function(a){return'<span class="kw-tag" style="background:var(--ol);color:var(--orange)">~ '+a.note+'</span>';}).join('');
+  var okHtml=okFound.map(function(a){return'<span class="kw-tag kw-found">✓ '+a.pattern+'</span>';}).join('');
+  container.innerHTML=
+    '<div class="eval-result"><div class="eval-header '+cls+'">'+
+    '<div><div class="eval-note-big">'+score+'</div><div class="eval-label">'+wordCount+' words · minimum: '+minwords+'</div></div>'+
+    '<div style="text-align:right"><div class="eval-mention">'+mention+'</div><div style="font-size:.82rem;opacity:.8;margin-top:4px">'+stars+'</div></div></div>'+
+    '<div class="eval-body">'+
+    '<div class="progress-note"><div class="progress-note-fill '+cls+'" style="width:'+pct+'%"></div></div>'+
+    '<div style="font-size:.72rem;color:var(--tl);margin-bottom:12px">'+pct+'% of criteria detected</div>'+
+    (okHtml?'<div class="eval-section"><div class="eval-section-title">Detected criteria</div><div class="kw-list">'+okHtml+'</div></div>':'')+
+    (errHtml?'<div class="eval-section"><div class="eval-section-title">Errors detected</div><div class="kw-list">'+errHtml+'</div></div>':'')+
+    (warnHtml?'<div class="eval-section"><div class="eval-section-title">Points to improve</div><div class="kw-list">'+warnHtml+'</div></div>':'')+
+    '<div class="eval-section"><div class="eval-section-title">Advice</div><div class="eval-feedback">'+getAdvice(cls,lengthOk,errFound.length)+'</div></div>'+
+    '</div></div>';
+  answerState[id]={text:text,step:0};
+  buildAnnotation(id,text,annotations);
+  if(btnCorr){btnCorr.disabled=false;btnCorr.textContent='📝 Annotate my answer';}
+  if(ta)ta.readOnly=true;
+}
+
+function getAdvice(cls,lengthOk,errCount){
+  if(errCount>0)return'Method errors detected. Correct them before viewing the model answer.';
+  if(cls==='excellent')return'Excellent. Click "Annotate" to check finer points, then compare with the model.';
+  if(cls==='bien')return'Good base. Click "Annotate" to identify what can be improved before seeing the model.';
+  if(cls==='passable'){if(!lengthOk)return'Answer too short. Develop further — the examiner expects structured development.';return'Several criteria are missing. Annotate your answer to identify the gaps.';}
+  return'Answer insufficient. Annotate, revise, then consult the model answer.';
+}
+
+function buildAnnotation(id,text,annotations){
+  var annotDiv=document.getElementById('annot-txt-'+id);var legendDiv=document.getElementById('annot-legend-'+id);if(!annotDiv)return;
+  var html=escapeHtml(text);var legend=[];
+  annotations.forEach(function(a){
+    var re=new RegExp('('+a.pattern+')','gi');
+    if(re.test(html)){
+      if(a.type==='err'){
+        html=html.replace(new RegExp('('+a.pattern+')','gi'),'<span class="annot-err" title="'+escapeAttr(a.note)+'">$1</span>');
+        legend.push('<span style="color:var(--red)">■</span> Error: '+a.note);
+      } else if(a.type==='warn'){
+        html=html.replace(new RegExp('('+a.pattern+')','gi'),'<span class="annot-warn" title="'+escapeAttr(a.note)+'">$1</span>');
+        legend.push('<span style="color:var(--orange)">■</span> Tip: '+a.note);
+      } else {
+        html=html.replace(new RegExp('('+a.pattern+')','gi'),'<span style="background:#e6f4ed;border-bottom:2px solid var(--green)" title="'+escapeAttr(a.note)+'">$1</span>');
+      }
+    }
+  });
+  annotDiv.innerHTML=html;
+  legendDiv.innerHTML=legend.length>0?'<strong>Legend:</strong> '+legend.join(' · '):'<span style="color:var(--green)">✓ No errors or major issues detected in your formulation.</span>';
+}
+
+function escapeHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
+function escapeAttr(t){return t.replace(/"/g,'&quot;');}
+
+function requestCorrige(id){
+  var q=null;
+  casDossiers.forEach(function(d){d.questions.forEach(function(qq){if(qq.id===id)q=qq;});});
+  if(!q)return;
+  var state=answerState[id];if(!state)return;
+  var annotDiv=document.getElementById('annot-'+id);var corrDiv=document.getElementById('corr-'+id);
+  var corrTxt=document.getElementById('corr-txt-'+id);var btn=document.getElementById('btn-corr-'+id);
+  if(state.step===0){
+    if(annotDiv)annotDiv.style.display='block';state.step=1;
+    if(btn){btn.textContent='✅ Show model answer';btn.classList.add('step2');}
+  } else {
+    if(corrTxt)corrTxt.textContent=q.corrige;if(corrDiv)corrDiv.style.display='block';
+    if(btn){btn.textContent='✅ Model answer shown';btn.disabled=true;}
+  }
+}
+
+/* ====== QCM ====== */
+var qcmModules=[
+  {id:'qm1',title:'Module 1 — Methods (QQWWH, CCCS, DIC, PEE)',color:'#0d5c3a',bg:'#e6f4ed',questions:[
+    {q:"QQWWH stands for:",opts:["Question, Quality, Work, Wish, Hypothesis","Who, What, Where, When, Why, How","Question, Quoi, Where, When, Help","Who, What, Work, When, How"],ans:1,expl:"QQWWH = Who / What / Where / When / Why / How. These 6 questions help you understand any document quickly and structure your introduction."},
+    {q:"The DIC method is used for:",opts:["Written articles","Professional emails","Images and visual documents","Statistical data"],ans:2,expl:"DIC (Describe – Interpret – Comment) is specifically for visual documents: photos, cartoons, advertisements, infographics."},
+    {q:"In the DIC method, what does 'I' (Interpret) mean?",opts:["Write down the numbers in the image","Describe what you can see in more detail","Explain the message or intention of the author","Give your personal opinion"],ans:2,expl:"Interpret = identify the message or intention of the author. What does the image mean? What does it represent? Not just what is visible."},
+    {q:"The PEE method stands for:",opts:["Prepare, Explain, Expand","Point, Evidence, Evaluate","Point, Explain, Example","Paraphrase, Expand, End"],ans:2,expl:"PEE = Point (state your opinion) + Explain (give a reason: because…) + Example (for example…). Always use this structure when giving your opinion."},
+    {q:"In the CCCS method, what does the second 'C' stand for?",opts:["Conclusions","Causes","Comparisons","Comments"],ans:2,expl:"CCCS = Causes / Consequences / Comparisons / Solutions. The second C = Comparisons — comparing the situation to the past, to other countries, to the norm."},
+    {q:"Which method structures your introduction to a document?",opts:["PEE","DIC","QQWWH","CCCS"],ans:2,expl:"QQWWH structures the comprehension and introduction: answer Who, What, Where, When, Why, How to understand the document before speaking."}
+  ]},
+  {id:'qm2',title:'Module 2 — Real estate vocabulary',color:'#1a5276',bg:'#e8f2fb',questions:[
+    {q:"What does 'landlord' mean?",opts:["Locataire","Propriétaire bailleur","Agent immobilier","Syndic"],ans:1,expl:"Landlord = propriétaire bailleur — the person who owns a property and rents it out to a tenant."},
+    {q:"What does 'tenant' mean?",opts:["Locataire","Propriétaire","Acheteur","Notaire"],ans:0,expl:"Tenant = locataire — the person who pays rent to live in a property they do not own."},
+    {q:"What is a 'lease agreement'?",opts:["Un contrat de vente","Un bail / contrat de location","Un acte notarié","Un état des lieux"],ans:1,expl:"Lease agreement = bail / contrat de location — the contract between a landlord and a tenant."},
+    {q:"What does 'mortgage' mean?",opts:["Hypothèque","Prêt immobilier","Assurance habitation","Caution"],ans:1,expl:"Mortgage = prêt immobilier — a loan from a bank to buy a property, paid back over time with interest."},
+    {q:"How do you say 'crise du logement' in English?",opts:["Housing problem","Real estate crisis","Housing crisis","Flat shortage"],ans:2,expl:"Housing crisis = crise du logement. This is a very frequent topic in BTS PI English exams."},
+    {q:"What does 'energy renovation' mean?",opts:["Construction neuve","Rénovation énergétique","Réfection des parties communes","Entretien courant"],ans:1,expl:"Energy renovation = rénovation énergétique — work done to improve the energy performance of a building (insulation, heating system, etc.)."},
+    {q:"How do you say 'agence immobilière' in English?",opts:["Real estate company","Property firm","Estate agency","Housing office"],ans:2,expl:"Estate agency = agence immobilière. 'Real estate agent' = agent immobilier."},
+    {q:"What does 'affordable housing' mean?",opts:["Logement de luxe","Logement social","Logement abordable / accessible financièrement","Résidence principale"],ans:2,expl:"Affordable housing = logement abordable — housing that people on average or low incomes can afford to rent or buy."}
+  ]},
+  {id:'qm3',title:'Module 3 — Useful phrases & structures',color:'#6b21a8',bg:'#f3e8ff',questions:[
+    {q:"How do you introduce a document in English?",opts:["I think this document is about…","This document is a… It deals with…","The document contains information about…","We can read that…"],ans:1,expl:"'This document is a [type]. It deals with [topic].' is the standard, professional way to introduce a document at BTS level."},
+    {q:"Which phrase correctly gives an opinion using PEE?",opts:["Yes the housing crisis is bad.","I think the housing crisis is serious because rents are rising. For example, in Paris, young people spend 40% of their income on rent.","The document says the housing crisis is serious.","Housing crisis is a problem."],ans:1,expl:"Point (I think…) + Explain (because…) + Example (for example…). Always use this structure for opinions."},
+    {q:"Which linking word introduces a consequence?",opts:["However","Moreover","As a result","For example"],ans:2,expl:"'As a result' introduces a consequence. 'However' = contrast. 'Moreover' = addition. 'For example' = illustration."},
+    {q:"Which phrase introduces a contrast?",opts:["Therefore","As a result","In addition","However / On the other hand"],ans:3,expl:"'However' and 'On the other hand' introduce a contrast or opposing idea. Essential for nuanced answers."},
+    {q:"If you don't know a word, what should you do?",opts:["Stay silent","Say 'je ne sais pas'","Explain it with simpler words: 'It is a kind of…'","Stop speaking"],ans:2,expl:"Always keep talking. Use 'It is a kind of…', 'The opposite of…', 'Something like…', or 'I cannot remember the word, but it means…'"},
+    {q:"How do you conclude a presentation?",opts:["That's it.","In conclusion, [summary]. This raises the question of [opening].","I finish now.","To end, I want to say that…"],ans:1,expl:"'In conclusion, [summary]. This raises the question of [opening].' is the standard structure. Always close with a broader question or perspective."}
+  ]},
+  {id:'qm4',title:'Module 4 — Topics & content knowledge',color:'#c45c0a',bg:'#fef2e6',questions:[
+    {q:"What is the main cause of the housing crisis for young people?",opts:["Too many new buildings","Rents and house prices rising faster than wages","Too many tenants in cities","Lack of estate agencies"],ans:1,expl:"The housing crisis is mainly caused by rents and property prices rising much faster than salaries, making housing unaffordable for many young people."},
+    {q:"What is 'remote working'?",opts:["Travail à distance / télétravail","Travail le week-end","Travail en équipe","Travail à temps partiel"],ans:0,expl:"Remote working = télétravail — working from home or away from the office, using technology. A major topic since 2020."},
+    {q:"What does 'energy efficient' mean?",opts:["Très consommateur d'énergie","Qui utilise peu d'énergie / performant énergétiquement","Alimenté à l'énergie solaire uniquement","Construit avec des matériaux naturels"],ans:1,expl:"Energy efficient = performant énergétiquement — using energy wisely and not wasting it. The opposite is 'energy inefficient' (passoire thermique)."},
+    {q:"What is 'climate change'?",opts:["Les saisons","Le réchauffement climatique / changement climatique","La pollution de l'air uniquement","Les catastrophes naturelles"],ans:1,expl:"Climate change = changement climatique — the long-term shift in global temperatures and weather patterns, mainly caused by human activities."},
+    {q:"How do you say 'coût de la vie' in English?",opts:["Life expenses","Cost of living","Daily costs","Living expenses"],ans:1,expl:"Cost of living = coût de la vie. A key phrase for economic topics — 'the cost of living is increasing' = 'le coût de la vie augmente'."},
+    {q:"What is 'social housing'?",opts:["Logement de luxe","Copropriété","Logement social (HLM)","Résidence secondaire"],ans:2,expl:"Social housing = logement social (HLM) — housing provided by the government or local authorities for people on low incomes."}
+  ]},
+  {id:'qm5',title:"Module 5 — Errors to avoid",color:'#b3281e',bg:'#fcecea',questions:[
+    {q:"What is the most penalised behaviour in an English oral exam?",opts:["Making grammar mistakes","Staying silent and not speaking","Using simple vocabulary","Speaking slowly"],ans:1,expl:"Staying silent is the worst behaviour. The examiner evaluates communication. Simple, clear speech scores far better than silence."},
+    {q:"An examiner asks 'Do you agree?' — what is the correct answer?",opts:["Yes.","No.","I agree because [reason]. For example, [example].","I don't know."],ans:2,expl:"Never answer only 'yes' or 'no'. Always add a reason (because…) and an example (for example…)."},
+    {q:"Which sentence is a translation mistake (mot à mot)?",opts:["I think the housing crisis is a serious problem.","It is difficult for young people to find an affordable flat.","The crisis of the lodging is very important for the young.","Rents are increasing faster than wages."],ans:2,expl:"'The crisis of the lodging is very important for the young' is a word-for-word translation of French. Always think in English: 'The housing crisis is very serious for young people.'"},
+    {q:"When describing an image, what is the most common mistake?",opts:["Using too many adjectives","Only describing what you can see without interpreting the message","Speaking too slowly","Starting with your opinion"],ans:1,expl:"The most common mistake: only saying 'I can see a man and a building' without interpreting the message. Always move from Describe → Interpret → Comment."},
+    {q:"What does the examiner primarily evaluate?",opts:["Perfect grammar","Pronunciation with no accent","The ability to communicate and be understood","The number of words spoken"],ans:2,expl:"The examiner primarily evaluates communication — the ability to make yourself understood, to structure ideas, and to interact. Grammar perfection is not the priority."},
+    {q:"Which phrase should you use if you cannot remember a word?",opts:["Je ne sais pas.","I don't know this word, sorry.","It is a kind of… / Something like… / The opposite of…","I cannot speak."],ans:2,expl:"Use reformulation strategies: 'It is a kind of…', 'Something like…', 'The opposite of…', 'I cannot remember the exact word but it means…'. Never stop speaking."}
+  ]}
+];
+
+var qcmState={};var qcmCorrect=0;var qcmAnswered=0;
+var qcmTotal=qcmModules.reduce(function(s,m){return s+m.questions.length;},0);
+
+function buildQcm(){
+  var container=document.getElementById('qcm-container');if(!container)return;container.innerHTML='';
+  var globalIdx=0;
+  qcmModules.forEach(function(mod){
+    var section=document.createElement('div');section.style.cssText='margin-bottom:28px';
+    var am=mod.questions.filter(function(_,i){return qcmState[mod.id+'_'+i]!==undefined;}).length;
+    var cm=mod.questions.filter(function(_,i){return qcmState[mod.id+'_'+i]===mod.questions[i].ans;}).length;
+    var header=document.createElement('div');
+    header.style.cssText='background:'+mod.bg+';border-left:4px solid '+mod.color+';border-radius:var(--r);padding:12px 16px;margin-bottom:14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between';
+    header.innerHTML='<span style="font-family:var(--font-serif);font-size:1rem;font-weight:bold;color:'+mod.color+'">'+mod.title+'</span><span style="font-size:.78rem;color:'+mod.color+';opacity:.8">'+am+'/'+mod.questions.length+' answered'+(am>0?' · '+cm+' correct':'')+'</span>';
+    var body=document.createElement('div');body.id='qmod-'+mod.id;
+    mod.questions.forEach(function(q,qi){
+      globalIdx++;var key=mod.id+'_'+qi;
+      var card=document.createElement('div');card.id='qcard-'+key;
+      card.style.cssText='background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:12px';
+      var optsHtml=q.opts.map(function(o,j){
+        var sv=qcmState[key];var cls='background:var(--surface2);border:1px solid var(--border);';
+        if(sv!==undefined){
+          if(j===q.ans)cls='background:var(--gl);border:1px solid var(--green);color:var(--green);';
+          else if(j===sv&&j!==q.ans)cls='background:var(--rl);border:1px solid var(--red);color:var(--red);';
+          else cls='background:var(--surface2);border:1px solid var(--border);opacity:.5';
+        }
+        var dis=sv!==undefined?'pointer-events:none;':'cursor:pointer;';
+        return '<div onclick="qcmAnswer(\''+key+'\','+j+','+q.ans+')" style="'+cls+dis+'border-radius:8px;padding:9px 12px;margin-bottom:6px;display:flex;align-items:flex-start;gap:10px;font-size:.85rem"><span style="font-weight:600;min-width:18px">'+['A','B','C','D'][j]+'</span><span>'+o+'</span></div>';
+      }).join('');
+      var explShow=qcmState[key]!==undefined?'display:block':'display:none';
+      card.innerHTML='<div style="font-size:.72rem;font-weight:600;color:var(--tl);letter-spacing:.04em;margin-bottom:6px">Q'+globalIdx+' / '+qcmTotal+'</div><div style="font-size:.9rem;font-weight:500;margin-bottom:12px;line-height:1.5">'+q.q+'</div><div>'+optsHtml+'</div><div id="expl-'+key+'" style="'+explShow+';margin-top:10px;padding:10px 12px;background:var(--al);border-radius:8px;font-size:.82rem;color:var(--accent);line-height:1.6"><strong>📖 Explanation:</strong> '+q.expl+'</div>';
+      body.appendChild(card);
+    });
+    header.onclick=function(){body.style.display=body.style.display==='none'?'block':'none';};
+    section.appendChild(header);section.appendChild(body);container.appendChild(section);
+  });
+  updateQcmScore();
+}
+
+function qcmAnswer(key,chosen,correctAns){
+  if(qcmState[key]!==undefined)return;qcmState[key]=chosen;
+  if(chosen===correctAns)qcmCorrect++;qcmAnswered++;
+  var card=document.getElementById('qcard-'+key);
+  if(card){
+    card.querySelectorAll('[onclick]').forEach(function(o,j){
+      o.style.pointerEvents='none';o.style.cursor='default';
+      if(j===correctAns){o.style.background='var(--gl)';o.style.border='1px solid var(--green)';o.style.color='var(--green)';}
+      else if(j===chosen&&j!==correctAns){o.style.background='var(--rl)';o.style.border='1px solid var(--red)';o.style.color='var(--red)';}
+      else{o.style.opacity='.5';}
+    });
+    var expl=document.getElementById('expl-'+key);if(expl)expl.style.display='block';
+  }
+  updateQcmScore();
+}
+
+function updateQcmScore(){
+  var s=document.getElementById('qcm-score-num');var p=document.getElementById('qcm-prog');
+  var l=document.getElementById('qcm-prog-label');var t=document.getElementById('top-score');
+  if(!s)return;
+  s.textContent=qcmCorrect+' / '+qcmAnswered+' (out of '+qcmTotal+')';
+  var pct=qcmTotal>0?Math.round((qcmCorrect/qcmTotal)*100):0;
+  if(p)p.style.width=pct+'%';
+  if(l)l.textContent=qcmAnswered===0?'No answers yet':qcmAnswered+' answered · '+pct+'% correct';
+  if(t)t.textContent='QCM : '+qcmCorrect+' / '+qcmTotal;
+}
+function qcmReset(){if(!confirm('Reset all QCM answers?'))return;qcmState={};qcmCorrect=0;qcmAnswered=0;buildQcm();}
+
+/* ====== PROTECTION ====== */
+(function(){
+  var _a=['D','R','A','K','E'];var _PWD=_a.join('');
+  var _b=['E','X','T','2','0','2','6'];var _EXT=_b.join('');
+  var _EXP=new Date(2026,6,15,0,0,0).getTime();
+  var _SK='_kb_en_s26';var _MAX=5;var _tries=0;
+  function _h(s){var h=0,i,c;for(i=0;i<s.length;i++){c=s.charCodeAt(i);h=((h<<5)-h)+c;h|=0;}return h;}
+  var _HP=_h(_PWD);var _HE=_h(_EXT);
+  function _show(){
+    var l=document.getElementById('kb-lock');var e=document.getElementById('kb-expired');var a=document.getElementById('kb-app');
+    if(l)l.style.display='none';if(e)e.classList.remove('visible');if(a)a.style.display='block';
+    buildCas();buildQcm();
+    document.addEventListener('contextmenu',function(e){e.preventDefault();});
+    document.addEventListener('keydown',function(e){
+      if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&'IJC'.includes(e.key))||(e.ctrlKey&&'uUsSpPaA'.includes(e.key))){e.preventDefault();}
+    });
+  }
+  window.kbUnlock=function(){
+    var v=document.getElementById('kl-pwd').value.trim().toUpperCase();var err=document.getElementById('kl-err');
+    if(_tries>=_MAX){err.textContent='Too many attempts. Reload the page.';return;}
+    if(_h(v)===_HP){try{sessionStorage.setItem(_SK,'1');}catch(x){}err.textContent='';_show();}
+    else{_tries++;var left=_MAX-_tries;err.textContent='Incorrect code.'+(left>0?' '+left+' attempt(s) remaining.':' Access blocked.');document.getElementById('kl-pwd').value='';}
+  };
+  window.kbUnlockExpired=function(){
+    var v=document.getElementById('ke-pwd').value.trim().toUpperCase();var err=document.getElementById('ke-err');
+    if(_h(v)===_HE||_h(v)===_HP){try{sessionStorage.setItem(_SK,'1');}catch(x){}err.textContent='';_show();}
+    else{err.textContent='Incorrect extension code.';document.getElementById('ke-pwd').value='';}
+  };
+  var now=Date.now();var stored=null;try{stored=sessionStorage.getItem(_SK);}catch(x){}
+  if(now<_EXP){_show();}
+  else if(stored==='1'){_show();}
+  else{
+    // À partir du 15 juillet sans session valide : afficher l'écran d'expiration
+    var ek=document.getElementById('kb-expired');if(ek)ek.classList.add('visible');
+    var p2=document.getElementById('ke-pwd');
+    if(p2)p2.addEventListener('keydown',function(e){if(e.key==='Enter')kbUnlockExpired();});
+  }
+})();
+</script>
+</body>
+</html>
