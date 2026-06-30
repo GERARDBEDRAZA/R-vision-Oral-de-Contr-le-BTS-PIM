@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BTS PI · Révision E1 · Culture générale · Session 2026</title>
+<style>
+:root{--font-serif:Georgia,'Times New Roman',serif;--font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;--bg:#f4f1ec;--surface:#ffffff;--surface2:#ede9e1;--border:#dcd7ce;--text:#1a1815;--tl:#6a6158;--accent:#1a5276;--al:#e8f2fb;--green:#1a6b3c;--gl:#e6f4ed;--red:#b3281e;--rl:#fcecea;--orange:#c45c0a;--ol:#fef2e6;--yellow:#f5c842;--purple:#6b21a8;--pl:#f3e8ff;--r:10px;--sh:0 2px 16px rgba(0,0,0,.07)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.65;padding-bottom:80px;-webkit-user-select:none;user-select:none}
+/* LOCK SCREEN */
+#kb-lock{display:none;position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#1a0d4a 0%,#2d1b69 50%,#0d2d4a 100%);color:#fff;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px}
+#kb-lock.visible{display:flex}
+#kb-lock.hidden{display:none}
+.kl-logo{font-family:var(--font-serif);font-size:2.8rem;color:#f5c842;letter-spacing:.06em;margin-bottom:6px;font-weight:bold}
+.kl-sub{font-size:.72rem;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase;margin-bottom:28px}
+.kl-title{font-family:var(--font-serif);font-size:1.25rem;margin-bottom:8px;color:#e8f2fb;font-weight:bold}
+.kl-desc{font-size:.84rem;color:rgba(255,255,255,.6);max-width:420px;line-height:1.7;margin-bottom:28px}
+.kl-divider{width:60px;height:2px;background:linear-gradient(90deg,#f5c842,#e8a020);border-radius:2px;margin:0 auto 28px}
+.kl-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.kl-input{padding:10px 18px;border-radius:8px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:.95rem;width:220px;outline:none;letter-spacing:.1em;text-align:center;font-family:var(--font-sans)}
+.kl-input::placeholder{color:rgba(255,255,255,.3);letter-spacing:.05em}
+.kl-input:focus{border-color:#f5c842;background:rgba(255,255,255,.12)}
+.kl-btn{padding:10px 24px;border-radius:8px;border:none;background:linear-gradient(90deg,#f5c842,#e8a020);color:#1a0d4a;font-weight:700;font-size:.9rem;cursor:pointer;transition:opacity .15s;font-family:var(--font-sans)}
+.kl-btn:hover{opacity:.88}
+.kl-err{font-size:.78rem;color:#ff8a8a;min-height:20px;margin-bottom:6px;font-family:var(--font-sans)}
+.kl-footer{font-size:.6rem;color:rgba(255,255,255,.22);letter-spacing:.08em;margin-top:32px;text-transform:uppercase}
+.kl-lock-icon{font-size:2.5rem;margin-bottom:16px;opacity:.8}
+/* EXPIRED SCREEN */
+#kb-expired{display:none;position:fixed;inset:0;z-index:99998;background:linear-gradient(135deg,#1a0505 0%,#3d0f0f 60%,#1a0d4a 100%);color:#fff;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px}
+#kb-expired.visible{display:flex}
+.ke-logo{font-family:var(--font-serif);font-size:2.8rem;color:#ff6b6b;letter-spacing:.06em;margin-bottom:6px;font-weight:bold}
+.ke-title{font-family:var(--font-serif);font-size:1.25rem;margin-bottom:10px;color:#ffe0e0;font-weight:bold}
+.ke-msg{font-size:.84rem;color:rgba(255,255,255,.6);max-width:440px;line-height:1.75;margin-bottom:28px}
+.ke-divider{width:60px;height:2px;background:linear-gradient(90deg,#ff6b6b,#e03030);border-radius:2px;margin:0 auto 28px}
+.ke-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.ke-input{padding:10px 18px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff;font-size:.9rem;width:220px;outline:none;letter-spacing:.1em;text-align:center;font-family:var(--font-sans)}
+.ke-input:focus{border-color:#f5c842}
+.ke-btn{padding:10px 24px;border-radius:8px;border:none;background:linear-gradient(90deg,#f5c842,#e8a020);color:#1a0d4a;font-weight:700;font-size:.9rem;cursor:pointer;font-family:var(--font-sans)}
+.ke-err{font-size:.78rem;color:#ff8a8a;min-height:20px;margin-bottom:6px}
+.ke-footer{font-size:.6rem;color:rgba(255,255,255,.2);letter-spacing:.08em;margin-top:32px;text-transform:uppercase}
+/* APP */
+.sticky-head{position:sticky;top:0;z-index:100;box-shadow:0 3px 16px rgba(13,45,74,.22)}
+.welcome-banner{background:linear-gradient(120deg,#2d1b69 0%,#1a5276 50%,#0d6b5e 100%);color:#fff;text-align:center;padding:14px 24px 12px;position:relative;overflow:hidden}
+.welcome-banner::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 18px,rgba(255,255,255,.025) 18px,rgba(255,255,255,.025) 36px);pointer-events:none}
+.welcome-banner::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#f5c842,#e8a020,#f5c842)}
+.welcome-name{font-family:var(--font-serif);font-size:1.2rem;line-height:1.25;position:relative;font-weight:bold}
+.welcome-name em{font-style:italic;color:#f5c842}
+.welcome-tagline{font-size:.7rem;opacity:.72;letter-spacing:.1em;text-transform:uppercase;margin-top:4px;position:relative}
+.kb-copyright{background:#1a0d4a;color:rgba(255,255,255,.55);text-align:center;font-size:.65rem;letter-spacing:.08em;padding:4px 16px;border-bottom:1px solid rgba(245,200,66,.3)}
+.top-bar{background:rgba(0,0,0,.18);color:#fff;padding:7px 16px;display:flex;align-items:center;justify-content:space-between}
+.top-bar-sub{font-size:.65rem;opacity:.55;text-transform:uppercase;letter-spacing:.06em;margin-top:1px}
+.tab-nav{background:var(--surface);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{flex:none;padding:10px 14px;font-family:var(--font-sans);font-size:.78rem;font-weight:500;color:var(--tl);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s}
+.tab-btn:hover{color:var(--accent)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-btn.qcm-btn{color:var(--purple)}
+.tab-btn.qcm-btn.active{color:var(--purple);border-bottom-color:var(--purple)}
+.tab-btn.cas-btn{color:var(--green)}
+.tab-btn.cas-btn.active{color:var(--green);border-bottom-color:var(--green)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.container{max-width:900px;margin:0 auto;padding:28px 16px}
+.section-header{margin-bottom:20px}
+.section-header h2{font-family:var(--font-serif);font-size:1.45rem;color:var(--accent);margin-bottom:4px;font-weight:bold}
+.section-header p{font-size:.82rem;color:var(--tl);line-height:1.5}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;margin-bottom:18px;box-shadow:var(--sh)}
+.card-title{font-family:var(--font-serif);font-size:1.05rem;color:var(--accent);margin-bottom:14px;font-weight:bold}
+.alert-box{border-radius:var(--r);padding:13px 16px;margin-bottom:18px;display:flex;gap:12px;align-items:flex-start;font-size:.84rem}
+.alert-box.green{background:var(--gl);border-left:4px solid var(--green)}
+.alert-box.orange{background:var(--ol);border-left:4px solid var(--orange)}
+.alert-box.red{background:var(--rl);border-left:4px solid var(--red)}
+.alert-box.blue{background:var(--al);border-left:4px solid var(--accent)}
+.alert-box.purple{background:var(--pl);border-left:4px solid var(--purple)}
+.ai{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+.at{line-height:1.55}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.84rem}
+th{background:var(--al);color:var(--accent);font-weight:600;text-align:left;padding:8px 10px;border-bottom:2px solid var(--accent)}
+td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--surface2)}
+.fiche-section{margin-bottom:28px}
+.fiche-section-title{font-family:var(--font-serif);font-size:1.1rem;color:var(--accent);margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--al);font-weight:bold}
+.fiche-encadre{background:linear-gradient(135deg,#e8f2fb,#f4f1ec);border:2px solid var(--accent);border-radius:var(--r);padding:16px 18px;margin-bottom:16px;font-size:.85rem}
+.fiche-encadre-title{font-weight:700;color:var(--accent);margin-bottom:8px;font-size:.82rem;text-transform:uppercase;letter-spacing:.05em}
+.fiche-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:18px}
+.fiche-tile{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 15px;font-size:.83rem;line-height:1.55}
+.fiche-tile strong{display:block;color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:.72rem;font-weight:600;margin-right:4px;margin-bottom:2px}
+.tag-methode{background:var(--al);color:var(--accent)}
+.tag-err{background:var(--rl);color:var(--red)}
+.tag-ok{background:var(--gl);color:var(--green)}
+.tag-cle{background:var(--pl);color:var(--purple)}
+.tag-theme{background:var(--ol);color:var(--orange)}
+.exemple-redige{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-top:10px}
+.er-title{font-size:.78rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.er-step{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;background:rgba(255,255,255,.7);border-radius:7px;padding:10px 12px}
+.er-num{width:26px;height:26px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;flex-shrink:0}
+.er-text{font-size:.83rem;line-height:1.6;flex:1}
+.cas-toggle{background:var(--accent);color:#fff;border:none;border-radius:7px;padding:8px 16px;font-size:.82rem;cursor:pointer;margin-top:10px;transition:background .15s;font-family:var(--font-sans)}
+.cas-toggle:hover{background:#0d2d4a}
+.welcome-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:20px}
+.welcome-tile{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 14px;cursor:pointer;transition:box-shadow .15s,transform .15s,border-color .15s}
+.welcome-tile:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(26,82,118,.12);transform:translateY(-2px)}
+.welcome-tile.cas-tile{border-color:rgba(26,107,60,.3)}
+.welcome-tile.cas-tile:hover{border-color:var(--green)}
+.welcome-tile.qcm-tile{border-color:rgba(107,33,168,.3)}
+.welcome-tile.qcm-tile:hover{border-color:var(--purple)}
+.wt-icon{font-size:1.6rem;margin-bottom:6px}
+.wt-title{font-family:var(--font-serif);font-size:.92rem;color:var(--text);margin-bottom:3px;font-weight:bold}
+.wt-desc{font-size:.73rem;color:var(--tl)}
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border-radius:8px;padding:11px 14px}
+.step-num{font-family:var(--font-serif);font-size:1.3rem;color:var(--accent);flex-shrink:0;line-height:1;margin-top:2px;font-weight:bold}
+.step-body{font-size:.84rem;line-height:1.6}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+.chain-item{background:var(--accent);color:#fff;padding:5px 12px;border-radius:99px;font-size:.78rem;font-weight:600}
+.chain-arrow{color:var(--tl);font-size:.9rem}
+.memo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:20px}
+.memo-tile{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 15px;font-size:.82rem;line-height:1.55}
+.memo-tile strong{display:block;color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px}
+.global-score-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;margin-bottom:24px;display:flex;flex-wrap:wrap;gap:20px;align-items:center}
+.score-big{font-family:var(--font-serif);font-size:2rem;color:var(--accent);line-height:1;font-weight:bold}
+.score-sub{font-size:.75rem;color:var(--tl)}
+.score-prog-wrap{flex:1;min-width:150px}
+.score-prog-bg{background:var(--surface2);border-radius:99px;height:10px;overflow:hidden}
+.score-prog-fill{height:100%;background:linear-gradient(90deg,var(--purple),#8b5cf6);border-radius:99px;transition:width .5s ease}
+.score-prog-label{font-size:.72rem;color:var(--tl);margin-top:4px}
+.btn-reset-all{background:none;border:1px solid var(--border);border-radius:7px;padding:7px 14px;font-size:.78rem;cursor:pointer;color:var(--tl);transition:border-color .15s,color .15s;font-family:var(--font-sans)}
+.btn-reset-all:hover{border-color:var(--red);color:var(--red)}
+.cas-dossier{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--sh);margin-bottom:32px;overflow:hidden}
+.cas-header{background:linear-gradient(90deg,#1a3a2a,#1a6b3c);color:#fff;padding:18px 22px}
+.cas-header h3{font-family:var(--font-serif);font-size:1.15rem;margin-bottom:4px;font-weight:bold}
+.cas-header p{font-size:.78rem;opacity:.75}
+.cas-body{padding:20px 22px}
+.cas-doc{background:var(--surface2);border-radius:8px;padding:14px 16px;margin-bottom:12px;font-size:.84rem;border:1px solid var(--border);font-family:var(--font-serif);font-style:italic;line-height:1.7}
+.cas-doc-title{font-family:var(--font-sans);font-style:normal;font-weight:600;color:var(--green);margin-bottom:8px;font-size:.82rem}
+.cas-doc-meta{font-family:var(--font-sans);font-style:normal;font-size:.72rem;color:var(--tl);margin-bottom:8px}
+.cas-question{margin-bottom:24px;padding:18px 20px;background:var(--bg);border:1px solid var(--border);border-radius:10px}
+.cas-q-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.cas-q-num{background:var(--green);color:#fff;font-weight:700;padding:3px 10px;border-radius:6px;font-size:.82rem;flex-shrink:0}
+.cas-q-text{font-size:.9rem;font-weight:500;flex:1;line-height:1.5}
+.cas-q-pts{font-size:.72rem;color:var(--tl);margin-top:4px}
+.answer-zone{margin-top:12px}
+.answer-zone label{font-size:.75rem;font-weight:600;color:var(--tl);letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:6px}
+.answer-textarea{width:100%;min-height:120px;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-sans);font-size:.88rem;line-height:1.6;background:#fff;color:var(--text);resize:vertical;transition:border-color .15s;-webkit-user-select:text;user-select:text}
+.answer-textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(26,82,118,.1)}
+.answer-actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.btn-evaluate{background:linear-gradient(90deg,#1a3a2a,#1a6b3c);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-family:var(--font-sans);font-size:.84rem;font-weight:600;cursor:pointer;transition:opacity .15s;display:flex;align-items:center;gap:7px}
+.btn-evaluate:hover:not(:disabled){opacity:.88}
+.btn-evaluate:disabled{opacity:.55;cursor:not-allowed}
+.btn-show-corrige{background:none;border:1.5px solid var(--border);border-radius:8px;padding:8px 16px;font-family:var(--font-sans);font-size:.82rem;cursor:pointer;color:var(--tl);transition:border-color .15s,color .15s}
+.btn-show-corrige:hover{border-color:var(--green);color:var(--green)}
+.char-count{font-size:.72rem;color:var(--tl);margin-left:auto}
+.eval-result{margin-top:14px;border-radius:10px;overflow:hidden;border:1px solid var(--border);animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.eval-header{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.eval-header.excellent{background:linear-gradient(90deg,#1a6b3c,#2d9e58);color:#fff}
+.eval-header.bien{background:linear-gradient(90deg,#1a5276,#2471a3);color:#fff}
+.eval-header.passable{background:linear-gradient(90deg,#c45c0a,#e08030);color:#fff}
+.eval-header.insuffisant{background:linear-gradient(90deg,#b3281e,#d44030);color:#fff}
+.eval-note-big{font-family:var(--font-serif);font-size:2.2rem;line-height:1;font-weight:bold}
+.eval-label{font-size:.78rem;opacity:.85;margin-top:2px}
+.eval-mention{font-size:.9rem;font-weight:600}
+.eval-body{background:var(--surface);padding:16px 18px}
+.eval-section{margin-bottom:14px}
+.eval-section-title{font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:6px}
+.kw-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.kw-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:.74rem;font-weight:600}
+.kw-found{background:var(--gl);color:var(--green)}
+.kw-missing{background:var(--rl);color:var(--red)}
+.eval-feedback{font-size:.84rem;line-height:1.65;color:var(--text)}
+.progress-note{position:relative;background:var(--surface2);border-radius:99px;height:10px;overflow:hidden;margin:8px 0 4px}
+.progress-note-fill{height:100%;border-radius:99px;transition:width .5s ease}
+.progress-note-fill.excellent{background:linear-gradient(90deg,#1a6b3c,#2d9e58)}
+.progress-note-fill.bien{background:linear-gradient(90deg,#1a5276,#2471a3)}
+.progress-note-fill.passable{background:linear-gradient(90deg,#c45c0a,#e08030)}
+.progress-note-fill.insuffisant{background:linear-gradient(90deg,#b3281e,#d44030)}
+.cas-corrige{display:none;margin-top:14px;border:1.5px solid var(--green);border-radius:10px;overflow:hidden}
+.cas-corrige.show{display:block;animation:fadeIn .25s ease}
+.cas-corrige-inner{padding:16px 18px;background:var(--gl)}
+.cas-corrige-title{font-weight:700;color:var(--green);font-size:.85rem;margin-bottom:10px}
+.tips-box{background:linear-gradient(135deg,#f3e8ff,#e8f2fb);border:1px solid #c4b5e0;border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:.82rem;line-height:1.6}
+.tips-box strong{color:var(--purple)}
+.doc-oral{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:12px;font-size:.84rem}
+.doc-oral-phase{font-size:.72rem;font-weight:700;color:var(--tl);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+.doc-oral-txt{font-family:var(--font-serif);font-style:italic;line-height:1.7;color:var(--text)}
+@media(max-width:600px){.fiche-grid{grid-template-columns:1fr}}
+
+.progress-note{position:relative;background:var(--surface2);border-radius:99px;height:10px;overflow:hidden;margin:8px 0 4px}
+.progress-note-fill{height:100%;border-radius:99px;transition:width .5s ease}
+.progress-note-fill.excellent{background:linear-gradient(90deg,#1a6b3c,#2d9e58)}
+.progress-note-fill.bien{background:linear-gradient(90deg,#1a5276,#2471a3)}
+.progress-note-fill.passable{background:linear-gradient(90deg,#c45c0a,#e08030)}
+.progress-note-fill.insuffisant{background:linear-gradient(90deg,#b3281e,#d44030)}
+.cas-corrige{display:none;margin-top:14px;border:1.5px solid var(--green);border-radius:10px;overflow:hidden}
+.cas-corrige.show{display:block;animation:fadeIn .25s ease}
+.cas-corrige-inner{padding:16px 18px;background:var(--gl)}
+.cas-corrige-title{font-weight:700;color:var(--green);font-size:.85rem;margin-bottom:10px}
+.tips-box{background:linear-gradient(135deg,#f3e8ff,#e8f2fb);border:1px solid #c4b5e0;border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:.82rem;line-height:1.6}
+.tips-box strong{color:var(--purple)}
+.doc-oral{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:12px;font-size:.84rem}
+.doc-oral-phase{font-size:.72rem;font-weight:700;color:var(--tl);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+.doc-oral-txt{font-family:var(--font-serif);font-style:italic;line-height:1.7;color:var(--text)}
+.eval-section{margin-bottom:14px}
+.eval-section-title{font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:6px}
+.kw-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.kw-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:.74rem;font-weight:600}
+.kw-found{background:var(--gl);color:var(--green)}
+.kw-missing{background:var(--rl);color:var(--red)}
+.eval-feedback{font-size:.84rem;line-height:1.65;color:var(--text)}
+.eval-note-big{font-family:var(--font-serif);font-size:2.2rem;line-height:1;font-weight:bold}
+.eval-label{font-size:.78rem;opacity:.85;margin-top:2px}
+.eval-mention{font-size:.9rem;font-weight:600}
+.eval-body{background:var(--surface);padding:16px 18px}
+.eval-result{margin-top:14px;border-radius:10px;overflow:hidden;border:1px solid var(--border);animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.eval-header{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.eval-header.excellent{background:linear-gradient(90deg,#1a6b3c,#2d9e58);color:#fff}
+.eval-header.bien{background:linear-gradient(90deg,#1a5276,#2471a3);color:#fff}
+.eval-header.passable{background:linear-gradient(90deg,#c45c0a,#e08030);color:#fff}
+.eval-header.insuffisant{background:linear-gradient(90deg,#b3281e,#d44030);color:#fff}
+.annotated-response{background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;margin-top:8px;font-size:.88rem;line-height:1.8;-webkit-user-select:text;user-select:text}
+.annot-err{background:#fce8e8;border-bottom:2px solid var(--red);color:var(--red);font-weight:600;cursor:help}
+.annot-warn{background:#fef2e6;border-bottom:2px solid var(--orange);color:var(--orange);font-weight:500;cursor:help}
+.corrige-step2{margin-top:4px;padding:14px 16px;background:var(--gl);border:1.5px solid var(--green);border-radius:10px;font-size:.84rem;line-height:1.7;white-space:pre-line;-webkit-user-select:text;user-select:text}
+.corrige-step2-title{font-weight:700;color:var(--green);font-size:.85rem;margin-bottom:8px}
+.btn-show-corrige{background:none;border:1.5px solid var(--border);border-radius:8px;padding:8px 16px;font-family:var(--font-sans);font-size:.82rem;cursor:pointer;color:var(--tl);transition:border-color .15s,color .15s,background .15s}
+.btn-show-corrige:hover:not(:disabled){border-color:var(--green);color:var(--green)}
+.btn-show-corrige.step2{border-color:var(--green);color:var(--green);background:var(--gl)}
+.btn-show-corrige:disabled{opacity:.35;cursor:not-allowed}
+</style>
+</head>
+<body>
+
+<!-- LOCK SCREEN -->
+<div id="kb-lock">
+  <div class="kl-lock-icon">🔒</div>
+  <div class="kl-logo">BTS PI</div>
+  <div class="kl-sub">Usage pédagogique interne · E1 · Session 2026</div>
+  <div class="kl-divider"></div>
+  <div class="kl-title">Outil de révision — Épreuve de contrôle</div>
+  <div class="kl-desc">Culture générale et expression · U1 · Coefficient 4<br>Cet outil est réservé aux étudiants inscrits. Saisissez le code d'accès fourni par votre enseignant.</div>
+  <div class="kl-form">
+    <input class="kl-input" type="password" id="kl-pwd" placeholder="Code d'accès" maxlength="32" autocomplete="off" />
+    <button class="kl-btn" onclick="kbUnlock()">Accéder</button>
+  </div>
+  <div class="kl-err" id="kl-err"></div>
+  <div class="kl-footer">© Usage pédagogique interne · BTS PI · E1 · Session 2026</div>
+</div>
+
+<!-- EXPIRED SCREEN -->
+<div id="kb-expired">
+  <div class="ke-logo">⏰ Accès expiré</div>
+  <div class="ke-divider"></div>
+  <div class="ke-title">Période d'accès terminée</div>
+  <div class="ke-msg">La période d'accès à cet outil de révision est arrivée à échéance le 15 juillet 2026.<br>Si vous disposez d'un code de prolongation, saisissez-le ci-dessous.</div>
+  <div class="ke-form">
+    <input class="ke-input" type="password" id="ke-pwd" placeholder="Code de prolongation" maxlength="32" autocomplete="off" />
+    <button class="ke-btn" onclick="kbUnlockExpired()">Réactiver</button>
+  </div>
+  <div class="ke-err" id="ke-err"></div>
+  <div class="ke-footer">© Usage pédagogique interne · BTS PI · E1 · Session 2026</div>
+</div>
+
+<!-- APP -->
+<div id="kb-app" style="display:none">
+
+<div class="sticky-head">
+  <div class="welcome-banner">
+    <div class="welcome-name">BTS Professions Immobilières · <em>Épreuve de contrôle — Culture générale et expression</em></div>
+    <div class="welcome-tagline">U1 · Méthodes + 3 dossiers interactifs + QCM 30 questions · Révision autonome · Session 2026</div>
+  </div>
+  <div class="kb-copyright">© Usage pédagogique interne · BTS PI · E1 · Session 2026</div>
+  <div class="top-bar">
+    <div>
+      <div style="font-size:.85rem;font-weight:600">Révision épreuve de contrôle — E1 Culture générale</div>
+      <div class="top-bar-sub">Cadre · Méthodes · Exemples oraux · Entraînement guidé · QCM · Mémo · Hors ligne</div>
+    </div>
+    <div id="top-score" style="font-size:.72rem;color:rgba(255,255,255,.7)">QCM : 0 / 30</div>
+  </div>
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="showTab('accueil')">🏠 Accueil</button>
+    <button class="tab-btn" onclick="showTab('cadre')">📋 Cadre E1</button>
+    <button class="tab-btn" onclick="showTab('methodes')">🔧 Méthodes</button>
+    <button class="tab-btn" onclick="showTab('exemples')">🗣 Exemples oraux</button>
+    <button class="tab-btn cas-btn" onclick="showTab('cas')">📂 Dossiers d'entraînement</button>
+    <button class="tab-btn qcm-btn" onclick="showTab('qcm')">🧩 QCM (35)</button>
+    <button class="tab-btn" onclick="showTab('memo')">🧠 Mémo final</button>
+  </nav>
+</div>
+
+<div id="sec-accueil" class="tab-content active">
+  <div class="container">
+    <div class="section-header"><h2>Bienvenue dans l'outil de révision E1</h2><p>Révision autonome pour l'épreuve de contrôle de Culture générale et expression — BTS PI Session 2026</p></div>
+    <div class="alert-box green"><span class="ai">✅</span><div class="at"><strong>Ce qui est évalué :</strong> comprendre un document, identifier l'idée principale, analyser, interpréter, argumenter avec méthode, communiquer clairement à l'oral. <strong>20 min de préparation · 20 min d'oral · Coefficient 4.</strong></div></div>
+    <div class="alert-box orange"><span class="ai">⭐</span><div class="at"><strong>Méthode obligatoire :</strong> toute présentation orale suit la chaîne <strong>COMPRENDRE → ANALYSER → INTERPRÉTER → ARGUMENTER → OUVRIR</strong>. Une présentation sans analyse ni argument est sanctionnée.</div></div>
+    <div class="card"><div class="card-title">🎯 Ce que l'examinateur attend</div><div class="tbl-wrap"><table><tr><th>Critère</th><th>Ce qui est évalué</th><th>Points</th></tr><tr><td><strong>Compréhension</strong></td><td>Sujet identifié, intention de l'auteur, idées essentielles</td><td>/ 5</td></tr><tr><td><strong>Analyse et interprétation</strong></td><td>Va au-delà de la description, recul critique, mise en perspective</td><td>/ 5</td></tr><tr><td><strong>Argumentation</strong></td><td>Idées justifiées, illustrées, nuancées, exemples personnels mobilisés</td><td>/ 4</td></tr><tr><td><strong>Structure et plan</strong></td><td>Introduction / développement / conclusion identifiables</td><td>/ 3</td></tr><tr><td><strong>Expression orale</strong></td><td>Registre soutenu, clarté, fluidité, sans lecture des notes</td><td>/ 3</td></tr></table></div></div>
+    <div class="welcome-grid">
+      <div class="welcome-tile" onclick="showTab('cadre')"><div class="wt-icon">📋</div><div class="wt-title">Cadre E1</div><div class="wt-desc">Format, types de documents, thématiques fréquentes</div></div>
+      <div class="welcome-tile" onclick="showTab('methodes')"><div class="wt-icon">🔧</div><div class="wt-title">Méthodes</div><div class="wt-desc">QQOQCP · CCCS · ORME · DIRE · Plan oral universel</div></div>
+      <div class="welcome-tile" onclick="showTab('exemples')"><div class="wt-icon">🗣</div><div class="wt-title">Exemples oraux</div><div class="wt-desc">3 documents fictifs avec présentation orale modèle</div></div>
+      <div class="welcome-tile cas-tile" onclick="showTab('cas')"><div class="wt-icon">📂</div><div class="wt-title">Dossiers d'entraînement</div><div class="wt-desc">3 dossiers interactifs · analyse guidée · corrigé intégral</div></div>
+      <div class="welcome-tile qcm-tile" onclick="showTab('qcm')"><div class="wt-icon">🧩</div><div class="wt-title">QCM — 35 questions</div><div class="wt-desc">Méthode + thématiques + erreurs · correction immédiate</div></div>
+      <div class="welcome-tile" onclick="showTab('memo')"><div class="wt-icon">🧠</div><div class="wt-title">Mémo final</div><div class="wt-desc">Réflexes essentiels · phrases-clés · à relire la veille</div></div>
+    </div>
+    <div class="card"><div class="card-title">⛓ La chaîne de présentation orale</div><div class="chain"><div class="chain-item">1. Présenter</div><div class="chain-arrow">→</div><div class="chain-item">2. Comprendre</div><div class="chain-arrow">→</div><div class="chain-item">3. Analyser</div><div class="chain-arrow">→</div><div class="chain-item">4. Interpréter</div><div class="chain-arrow">→</div><div class="chain-item">5. Argumenter</div><div class="chain-arrow">→</div><div class="chain-item">6. Ouvrir</div></div></div>
+  </div>
+</div>
+
+<div id="sec-cadre" class="tab-content">
+  <div class="container">
+    <div class="section-header"><h2>📋 Cadre de l'épreuve de contrôle E1</h2><p>Culture générale et expression · U1 · Épreuve orale · Arrêté du 22 novembre 2023 mod. 24 juin 2025</p></div>
+    <div class="fiche-encadre"><div class="fiche-encadre-title">📌 Ce que le jury attend impérativement</div>Identifier le sujet et l'intention de l'auteur. Aller au-delà de la description. Construire une présentation structurée. Mobiliser au moins un exemple personnel extérieur au document. Maintenir un registre soutenu du début à la fin. <strong>Lire ses notes = pénalité immédiate.</strong></div>
+    <div class="fiche-section"><div class="fiche-section-title">1. Format de l'épreuve</div><div class="fiche-grid"><div class="fiche-tile"><strong>Durée</strong>Préparation : <strong>20 minutes</strong><br>Présentation orale : <strong>20 minutes</strong><br>Coefficient : <strong>4</strong></div><div class="fiche-tile"><strong>Support</strong>1 à 3 documents fournis par l'examinateur. Le thème n'est pas imposé par le référentiel. Ce qui est évalué : la capacité à comprendre, interpréter et argumenter.</div><div class="fiche-tile"><strong>Déroulement</strong>L'examinateur remet le(s) document(s). 20 min de préparation seul(e). Présentation libre. L'examinateur peut poser des questions en fin d'oral.</div><div class="fiche-tile"><strong>Ce qui est interdit</strong>Lire ses notes. Réciter les chiffres d'un graphique sans les interpréter. Décrire une image sans l'analyser. Dire « je ne sais pas ».</div></div></div>
+    <div class="fiche-section"><div class="fiche-section-title">2. Types de documents possibles</div><div class="fiche-grid"><div class="fiche-tile"><strong>Documents écrits</strong><span class="tag tag-methode">Article de presse</span> <span class="tag tag-methode">Éditorial</span> <span class="tag tag-methode">Tribune</span> <span class="tag tag-methode">Essai</span> <span class="tag tag-methode">Témoignage</span> <span class="tag tag-methode">Rapport</span> <span class="tag tag-methode">Entretien</span> <span class="tag tag-methode">Étude</span></div><div class="fiche-tile"><strong>Documents iconographiques</strong><span class="tag tag-ok">Photographie</span> <span class="tag tag-ok">Dessin de presse</span> <span class="tag tag-ok">Caricature</span> <span class="tag tag-ok">Affiche</span> <span class="tag tag-ok">Infographie</span> <span class="tag tag-ok">Graphique</span> <span class="tag tag-ok">Tableau statistique</span></div><div class="fiche-tile"><strong>Documents mixtes</strong>Article + image. Infographie commentée. Dossier documentaire simplifié (2 à 3 documents sur un même thème).</div></div></div>
+    <div class="fiche-section"><div class="fiche-section-title">3. Thématiques fréquentes</div><div class="fiche-grid"><div class="fiche-tile"><strong>Logement (priorité BTS PI)</strong><span class="tag tag-theme">Crise du logement</span> <span class="tag tag-theme">Accès propriété</span> <span class="tag tag-theme">Rénovation énergétique</span> <span class="tag tag-theme">Habitat durable</span> <span class="tag tag-theme">Jeunes et logement</span></div><div class="fiche-tile"><strong>Travail et emploi</strong><span class="tag tag-theme">Télétravail</span> <span class="tag tag-theme">Intelligence artificielle</span> <span class="tag tag-theme">Reconversion</span> <span class="tag tag-theme">Quête de sens</span> <span class="tag tag-theme">Nouvelles formes d'emploi</span></div><div class="fiche-tile"><strong>Numérique et société</strong><span class="tag tag-theme">Réseaux sociaux</span> <span class="tag tag-theme">Désinformation</span> <span class="tag tag-theme">IA générative</span> <span class="tag tag-theme">Données personnelles</span> <span class="tag tag-theme">Dépendance numérique</span></div><div class="fiche-tile"><strong>Environnement</strong><span class="tag tag-theme">Réchauffement climatique</span> <span class="tag tag-theme">Transition écologique</span> <span class="tag tag-theme">Développement durable</span> <span class="tag tag-theme">Énergie</span></div><div class="fiche-tile"><strong>Société</strong><span class="tag tag-theme">Inégalités</span> <span class="tag tag-theme">Pauvreté</span> <span class="tag tag-theme">Vieillissement</span> <span class="tag tag-theme">Consommation</span> <span class="tag tag-theme">Solidarité</span></div><div class="fiche-tile"><strong>Jeunesse et culture</strong><span class="tag tag-theme">Santé mentale</span> <span class="tag tag-theme">Engagement</span> <span class="tag tag-theme">Médias</span> <span class="tag tag-theme">Patrimoine</span> <span class="tag tag-theme">Rapport au travail</span></div></div></div>
+    <div class="alert-box red"><span class="ai">✗</span><div class="at"><strong>Erreurs les plus pénalisées :</strong> lire ses notes · décrire sans analyser · opinion sans argument · répondre oui/non · langage familier · absence de plan · « je ne sais pas » · réciter des chiffres sans les interpréter.</div></div>
+  </div>
+</div>
+
+<div id="sec-methodes" class="tab-content">
+  <div class="container">
+    <div class="section-header"><h2>🔧 Les 4 méthodes essentielles</h2><p>Outils à maîtriser et à appliquer systématiquement pendant les 20 minutes de préparation.</p></div>
+    <div class="card"><div class="card-title">🕐 Gestion des 20 minutes de préparation</div><div class="steps"><div class="step"><div class="step-num">5'</div><div class="step-body"><strong>Lecture active :</strong> lire l'intégralité du document. Surligner le sujet, l'idée principale, 2 ou 3 idées secondaires. Identifier le type de document et l'intention de l'auteur.</div></div><div class="step"><div class="step-num">10'</div><div class="step-body"><strong>Analyse :</strong> appliquer CCCS (Constat, Causes, Conséquences, Solutions). Si image : appliquer ORME. Identifier le message central. Construire le plan en 3 parties.</div></div><div class="step"><div class="step-num">5'</div><div class="step-body"><strong>Préparation de l'oral :</strong> rédiger une phrase d'introduction. Trouver un exemple personnel extérieur. Préparer une question d'ouverture. Ne pas écrire de phrases entières à lire.</div></div></div></div>
+    <div class="fiche-section"><div class="fiche-section-title">Méthode 1 — Comprendre : QQOQCP</div><div class="fiche-grid"><div class="fiche-tile"><strong>Qui ?</strong>Qui parle ? À qui ? Quelle est la position de l'auteur ?</div><div class="fiche-tile"><strong>Quoi ?</strong>Quel est le sujet traité ? Quelle est l'idée principale ?</div><div class="fiche-tile"><strong>Où ? Quand ?</strong>Quel contexte géographique ? Quelle temporalité, quelle actualité ?</div><div class="fiche-tile"><strong>Comment ? Pourquoi ?</strong>Par quel angle ? Quelle est l'intention de l'auteur ?</div></div><div class="alert-box blue"><span class="ai">💡</span><div class="at">Répondre mentalement à ces 6 questions en 2 minutes. Elles structurent l'introduction.</div></div></div>
+    <div class="fiche-section"><div class="fiche-section-title">Méthode 2 — Analyser : CCCS</div><div class="fiche-grid"><div class="fiche-tile"><strong>Constat</strong>Que se passe-t-il exactement ? Quelle est la situation décrite ?</div><div class="fiche-tile"><strong>Causes</strong>Pourquoi cette situation existe-t-elle ?</div><div class="fiche-tile"><strong>Conséquences</strong>Quels effets sur la société, les individus ?</div><div class="fiche-tile"><strong>Solutions</strong>Quelles réponses sont proposées ou possibles ?</div></div><div class="alert-box blue"><span class="ai">💡</span><div class="at">Tous les thèmes de culture générale se traitent avec CCCS. C'est la structure du développement.</div></div></div>
+    <div class="fiche-section"><div class="fiche-section-title">Méthode 3 — Analyser une image : ORME</div><div class="fiche-grid"><div class="fiche-tile"><strong>Observer</strong>Que vois-je ? Éléments visibles, personnages, couleurs, composition.</div><div class="fiche-tile"><strong>Repérer</strong>Quel est le sujet central ? À quel thème renvoie l'image ?</div><div class="fiche-tile"><strong>Message</strong>Que veut montrer, dénoncer ou défendre l'auteur ?</div><div class="fiche-tile"><strong>Élargir</strong>Quels liens avec l'actualité, des exemples connus ?</div></div><div class="alert-box red"><span class="ai">✗</span><div class="at"><strong>Erreur fréquente :</strong> se limiter à « je vois... ». L'examinateur attend une interprétation du message.</div></div></div>
+    <div class="fiche-section"><div class="fiche-section-title">Méthode 4 — Argumenter : DIRE</div><div class="fiche-grid"><div class="fiche-tile"><strong>D — Donner l'idée</strong>Formuler clairement l'argument en une phrase.</div><div class="fiche-tile"><strong>I — Illustrer</strong>Expliquer, développer, préciser en une ou deux phrases.</div><div class="fiche-tile"><strong>R — Rendre concret</strong>Donner un exemple précis, personnel, extérieur au document.</div><div class="fiche-tile"><strong>É — Élargir</strong>Ouvrir sur une nuance, une limite, une question plus large.</div></div><div class="exemple-redige"><div class="er-title">Exemple appliqué — sujet : le logement et les inégalités</div><div class="er-step"><div class="er-num">D</div><div class="er-text">Le logement est devenu un facteur majeur d'inégalités sociales.</div></div><div class="er-step"><div class="er-num">I</div><div class="er-text">En effet, l'accès à un logement décent dépend de plus en plus du niveau de revenu : dans les grandes villes, les loyers excluent de fait les ménages modestes.</div></div><div class="er-step"><div class="er-num">R</div><div class="er-text">Par exemple, en Île-de-France, un locataire doit justifier d'un revenu trois fois supérieur au loyer, rendant inaccessibles de nombreux logements aux jeunes actifs.</div></div><div class="er-step"><div class="er-num">É</div><div class="er-text">Cela soulève la question du rôle des politiques publiques : le logement social est-il encore une réponse suffisante à cette crise structurelle ?</div></div></div></div>
+    <div class="card"><div class="card-title">📐 Le plan oral universel</div><div class="steps"><div class="step"><div class="step-num">1</div><div class="step-body"><strong>Introduction :</strong> présenter le document (type, source, thème). Formuler l'idée principale en une phrase. Annoncer le plan.</div></div><div class="step"><div class="step-num">2</div><div class="step-body"><strong>Développement :</strong> idée principale + CCCS. Au moins un exemple personnel extérieur au document.</div></div><div class="step"><div class="step-num">3</div><div class="step-body"><strong>Conclusion :</strong> réponse synthétique. Ouverture sur une question plus large. Pas d'idée nouvelle.</div></div></div></div>
+  </div>
+</div>
+
+<div id="sec-exemples" class="tab-content">
+  <div class="container">
+    <div class="section-header"><h2>🗣 Exemples de présentations orales</h2><p>3 documents fictifs traités avec une présentation orale modèle. À lire à voix haute pour s'entraîner.</p></div>
+    <div class="tips-box"><strong>Comment utiliser ces exemples :</strong> lisez d'abord le document, préparez mentalement votre présentation (20 min), puis découvrez le modèle. Comparez votre approche avec le corrigé.</div>
+    <div class="cas-dossier"><div class="cas-header"><h3>📰 Exemple 1 — Article de presse · Thème : logement</h3><p>Document fictif · Type : texte écrit · Format : article de presse grand public</p></div><div class="cas-body"><div class="cas-doc"><div class="cas-doc-title">Document : « La crise du logement frappe plus fort les jeunes actifs »</div><div class="cas-doc-meta">Article fictif · Source : Le Monde de l'Immo · 2024</div>Selon une étude récente, les moins de 30 ans consacrent en moyenne 40 % de leurs revenus au loyer dans les grandes métropoles françaises. Cette proportion, en hausse constante depuis dix ans, place la France parmi les pays européens où l'effort locatif des jeunes est le plus élevé. Les causes sont multiples : insuffisance de l'offre, spéculation immobilière, dispositifs d'aide jugés insuffisants. Pour nombre de jeunes actifs, l'accès à un logement autonome est désormais conditionné à un soutien familial ou à une mobilité géographique contrainte.</div><button class="cas-toggle" onclick="toggleEx('oral1')">▼ Voir la présentation orale modèle</button><div class="exemple-redige" id="oral1" style="display:none"><div class="er-title">Présentation orale modèle — 4 à 5 minutes</div><div class="doc-oral"><div class="doc-oral-phase">Introduction</div><div class="doc-oral-txt">« Le document qui m'a été soumis est un article de presse issu du Monde de l'Immo, publié en 2024. Il traite de la crise du logement et de ses effets particuliers sur les jeunes actifs français. L'auteur cherche à montrer que cette crise n'est pas conjoncturelle mais structurelle. Je développerai en trois points : le constat chiffré, les causes identifiées, et les enjeux que cette situation soulève. »</div></div><div class="doc-oral"><div class="doc-oral-phase">Développement — Constat et causes</div><div class="doc-oral-txt">« Le constat est saisissant : 40 % des revenus consacrés au loyer dépasse largement le seuil raisonnable de 30 %. Les causes sont structurelles : offre insuffisante dans les zones tendues et spéculation immobilière. La conséquence est sociale : contraints de rester chez leurs parents ou de s'éloigner des bassins d'emploi, beaucoup de jeunes voient leur parcours professionnel directement affecté. »</div></div><div class="doc-oral"><div class="doc-oral-phase">Exemple personnel + conclusion</div><div class="doc-oral-txt">« Pour illustrer cela, je pense aux dispositifs comme le bail mobilité ou l'APL, qui existent mais restent insuffisants. En définitive, cet article montre que le logement est devenu un révélateur des inégalités. Cela invite à s'interroger sur la place du logement comme droit fondamental et sur la responsabilité des pouvoirs publics. »</div></div></div></div></div>
+    <div class="cas-dossier"><div class="cas-header"><h3>🖼 Exemple 2 — Dessin de presse · Thème : numérique</h3><p>Document fictif · Type : image / caricature · Format : dessin satirique</p></div><div class="cas-body"><div class="cas-doc"><div class="cas-doc-title">Document : Dessin de presse — dépendance numérique</div><div class="cas-doc-meta">Dessin fictif · Contexte : débat sur les réseaux sociaux · 2024</div>Un personnage est représenté submergé de centaines de bulles de notification — likes, messages, alertes — qui le recouvrent entièrement. Son visage affiche un sourire serein, presque béat. En bas du dessin, une légende unique : « Connecté. »</div><button class="cas-toggle" onclick="toggleEx('oral2')">▼ Voir la présentation orale modèle (méthode ORME)</button><div class="exemple-redige" id="oral2" style="display:none"><div class="er-title">Présentation orale modèle — ORME appliqué</div><div class="doc-oral"><div class="doc-oral-phase">Observer → Repérer</div><div class="doc-oral-txt">« Ce dessin représente un personnage submergé de bulles numériques qui l'enveloppent comme une marée — et qui sourit. La légende : "Connecté." Le sujet est la dépendance aux réseaux sociaux. »</div></div><div class="doc-oral"><div class="doc-oral-phase">Message → Élargir</div><div class="doc-oral-txt">« Le message est paradoxal : l'auteur dénonce une addiction consentie, voire désirée. En élargissant, ce dessin rejoint les préoccupations autour de la santé mentale des adolescents. Le débat sur l'interdiction du téléphone à l'école s'inscrit dans ce contexte. Cela pose la question : une société connectée est-elle nécessairement plus heureuse ? »</div></div></div></div></div>
+    <div class="cas-dossier"><div class="cas-header"><h3>📊 Exemple 3 — Graphique statistique · Thème : télétravail</h3><p>Document fictif · Type : courbe statistique · Format : document chiffré</p></div><div class="cas-body"><div class="cas-doc"><div class="cas-doc-title">Document : Évolution du taux de télétravail en France (2019–2024)</div><div class="cas-doc-meta">Source fictive : ministère du Travail · Données en % de salariés concernés</div>La courbe montre : 4 % en 2019, pic à 26 % en 2020 (confinements), maintien à 22 % en 2021, stabilisation à 18 % en 2022, plateau à 16 % en 2023–2024. Titre : « Le télétravail, un acquis durable ? »</div><button class="cas-toggle" onclick="toggleEx('oral3')">▼ Voir la présentation orale modèle</button><div class="exemple-redige" id="oral3" style="display:none"><div class="er-title">Présentation orale modèle — lecture de statistique</div><div class="doc-oral"><div class="doc-oral-phase">Interpréter — pas réciter</div><div class="doc-oral-txt">« Ce graphique montre une rupture brutale en 2020, suivie d'une stabilisation à un niveau significativement plus élevé qu'avant la crise — autour de 16 %. La crise a agi comme un catalyseur d'une transformation déjà en germe. »</div></div><div class="doc-oral"><div class="doc-oral-phase">Analyser + ouvrir</div><div class="doc-oral-txt">« Cette résistance s'explique par les investissements des entreprises et les attentes nouvelles des salariés. En conclusion, cette courbe illustre que certaines crises ont des effets transformateurs durables. Elle pose une question : le télétravail généralisé crée-t-il de nouvelles inégalités entre ceux qui peuvent télétravailler et ceux qui ne le peuvent pas ? »</div></div></div></div></div>
+  </div>
+</div>
+
+<div id="sec-cas" class="tab-content">
+  <div class="container">
+    <div class="section-header"><h2>📂 Dossiers d'entraînement interactifs</h2><p>3 dossiers guidés · Rédigez votre analyse · Évaluez-vous · Consultez le corrigé intégral</p></div>
+    <div class="tips-box"><strong>Mode d'emploi :</strong> lisez le document. Répondez aux questions. Cliquez sur « Évaluer » pour obtenir un retour immédiat. Consultez le corrigé pour comparer.</div>
+    <div id="cas-container"></div>
+  </div>
+</div>
+
+<div id="sec-qcm" class="tab-content">
+  <div class="container">
+    <div class="section-header"><h2>🧩 QCM — 35 questions</h2><p>Méthodes · Compétences · Thème 2026 Animaux · Erreurs · Correction immédiate</p></div>
+    <div class="global-score-bar"><div><div class="score-big" id="qcm-score-num">0 / 0</div><div class="score-sub">questions correctes</div></div><div class="score-prog-wrap"><div class="score-prog-bg"><div class="score-prog-fill" id="qcm-prog" style="width:0%"></div></div><div class="score-prog-label" id="qcm-prog-label">Aucune question répondue</div></div><button class="btn-reset-all" onclick="qcmReset()">↺ Réinitialiser</button></div>
+    <div id="qcm-container"></div>
+  </div>
+</div>
+
+<div id="sec-memo" class="tab-content">
+  <div class="container">
+    <div class="section-header"><h2>🧠 Mémo final — À lire la veille et le matin de l'épreuve</h2><p>12 réflexes essentiels · Phrases-clés mémorisées · Plan universel · Erreurs interdites</p></div>
+    <div class="alert-box green"><span class="ai">✅</span><div class="at"><strong>Si vous ne retenez que trois choses :</strong> 1) ne jamais décrire sans interpréter. 2) construire un argument avec DIRE. 3) ouvrir sur une question plus large en conclusion.</div></div>
+    <div class="fiche-section"><div class="fiche-section-title">12 réflexes essentiels</div><div class="memo-grid"><div class="memo-tile"><strong>1 — QQOQCP d'abord</strong>Avant toute analyse, répondre mentalement aux 6 questions. Elles structurent l'introduction.</div><div class="memo-tile"><strong>2 — Reformuler en une phrase</strong>L'idée principale se dit en une seule phrase. Si on ne peut pas, on n'a pas encore compris.</div><div class="memo-tile"><strong>3 — CCCS pour le développement</strong>Constat → Causes → Conséquences → Solutions. Applicable à tout sujet de culture générale.</div><div class="memo-tile"><strong>4 — ORME pour toute image</strong>Observer → Repérer → Message → Élargir. Jamais se limiter à « je vois ».</div><div class="memo-tile"><strong>5 — Interpréter les chiffres</strong>Ne jamais réciter un graphique. Toujours expliquer ce qu'il montre et ce que cela signifie.</div><div class="memo-tile"><strong>6 — Argument = DIRE</strong>Idée → Illustration → Exemple → Élargissement. Un argument sans exemple ne tient pas.</div><div class="memo-tile"><strong>7 — Un exemple personnel</strong>Obligatoire : au moins un exemple extérieur au document. Actualité, vécu, lecture, formation.</div><div class="memo-tile"><strong>8 — Ne pas lire ses notes</strong>Les notes servent à s'orienter, pas à être lues. L'examinateur évalue l'expression orale.</div><div class="memo-tile"><strong>9 — Registre soutenu</strong>Pas de « genre », « truc », « super ». Toujours « en effet », « cela s'explique par ».</div><div class="memo-tile"><strong>10 — Nuancer</strong>« Cependant », « toutefois », « dans une certaine mesure ». Une nuance montre qu'on pense.</div><div class="memo-tile"><strong>11 — Ouvrir en conclusion</strong>Poser une question plus large. Ne pas résumer. Ouvrir sur un enjeu de société.</div><div class="memo-tile"><strong>12 — Ne jamais dire « je ne sais pas »</strong>Toujours rebondir : « Je manque d'éléments précis, mais je peux avancer que... »</div></div></div>
+    <div class="card"><div class="card-title">💬 Phrases-clés à mémoriser</div><div class="fiche-grid"><div class="fiche-tile"><strong>Présenter</strong>« Il s'agit de… » · « Ce document traite de… » · « L'auteur cherche à montrer que… »</div><div class="fiche-tile"><strong>Organiser</strong>« Dans un premier temps… » · « Par ailleurs… » · « Cela s'explique par… »</div><div class="fiche-tile"><strong>Argumenter</strong>« En effet… » · « On peut citer l'exemple de… » · « Ce phénomène illustre… »</div><div class="fiche-tile"><strong>Nuancer</strong>« Cependant… » · « Il convient toutefois de noter que… » · « Sans nier que… »</div><div class="fiche-tile"><strong>Conclure</strong>« Finalement, ce document illustre que… » · « Cela invite à s'interroger sur… »</div><div class="fiche-tile"><strong>Si bloqué(e)</strong>« Je manque d'éléments précis, mais on peut avancer que… »</div></div></div>
+    <div class="alert-box red"><span class="ai">✗</span><div class="at"><strong>Erreurs interdites :</strong> lire ses notes · décrire sans analyser · opinion sans argument · langage familier · absence de plan · « je ne sais pas » · réciter des chiffres · idée nouvelle en conclusion.</div></div>
+  </div>
+</div>
+
+</div><!-- end #kb-app -->
+
+<script>
+/* ========================= TABS ========================= */
+function showTab(id){
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active')});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+  var sec=document.getElementById('sec-'+id);
+  if(sec)sec.classList.add('active');
+  var map=['accueil','cadre','methodes','exemples','cas','qcm','memo'];
+  var btns=document.querySelectorAll('.tab-btn');
+  var idx=map.indexOf(id);
+  if(idx>=0&&btns[idx])btns[idx].classList.add('active');
+}
+function toggleEx(id){
+  var el=document.getElementById(id);
+  if(!el)return;
+  el.style.display=el.style.display==='none'?'block':'none';
+}
+
+/* ========================= DONNÉES DOSSIERS ========================= */
+var casDossiers=[
+  {id:'cas1',title:'📰 Dossier 1 — Article de presse · Logement',subtitle:'Document texte · Méthodes : QQOQCP + CCCS + DIRE',
+   doc:{titre:'La rénovation énergétique : solution miracle ou fardeau pour les locataires ?',meta:'Article fictif · La Tribune Immobilière · Mars 2024',
+        texte:"Face à l'urgence climatique, le gouvernement a renforcé les obligations de rénovation thermique des logements. Depuis 2023, les passoires énergétiques (étiquettes F et G) ne peuvent plus être proposées à la location sans travaux. Résultat : des propriétaires vendent leurs biens plutôt que de rénover, réduisant encore l'offre locative dans des marchés déjà sous tension. Pour les locataires restants, la menace est double : expulsion si le logement est vendu, hausse des loyers si les travaux sont réalisés et répercutés sur le loyer. Paradoxalement, une mesure pensée pour améliorer les conditions de vie risque d'en précariser davantage certains. Le défi est d'accompagner financièrement les propriétaires les plus modestes pour que la rénovation ne devienne pas synonyme d'exclusion."},
+   questions:[
+    {id:'c1q1',num:'Q1',pts:'3 pts',
+     question:"Formulez l'idée principale de ce document en une phrase. Précisez l'intention de l'auteur.",
+     minwords:15,
+     annotations:[
+       {pattern:'rénovation',type:'ok',note:'Terme central bien utilisé'},
+       {pattern:'paradox',type:'ok',note:'Bonne identification du paradoxe'},
+       {pattern:'je pense|à mon avis|selon moi',type:'err',note:'Erreur : ne pas introduire son opinion dans la reformulation de l\'idée principale'},
+       {pattern:'résumé|en résumé',type:'warn',note:'Imprécision : préférer « l\'auteur montre que » plutôt que « en résumé »'},
+     ],
+     criteres:["Sujet identifié (rénovation énergétique et ses effets)","Intention de l'auteur précisée","Formulation personnelle — pas de copie","Mention du paradoxe"],
+     corrige:"L'auteur montre que la politique de rénovation énergétique, conçue pour améliorer les conditions de vie et réduire les émissions, produit paradoxalement des effets négatifs sur les locataires les plus vulnérables : réduction de l'offre locative, hausse des loyers, risque d'expulsion. Son intention est de révéler les effets pervers d'une mesure bien intentionnée et d'appeler à un accompagnement financier des propriétaires modestes."},
+    {id:'c1q2',num:'Q2',pts:'4 pts',
+     question:"Appliquez la méthode CCCS à ce document : identifiez le Constat, les Causes, les Conséquences et les Solutions.",
+     minwords:40,
+     annotations:[
+       {pattern:'constat',type:'ok',note:'Étape C1 identifiée'},
+       {pattern:'cause',type:'ok',note:'Étape C2 identifiée'},
+       {pattern:'conséquence',type:'ok',note:'Étape C3 identifiée'},
+       {pattern:'solution',type:'ok',note:'Étape C4 identifiée'},
+       {pattern:'vendent|préfèrent vendre',type:'ok',note:'Cause principale bien identifiée'},
+       {pattern:'je|mon|ma ',type:'err',note:'La méthode CCCS est objective — éviter la première personne'},
+     ],
+     criteres:["Constat formulé (effets contre-productifs)","Cause identifiée (préférence de vente)","Conséquences précisées (double menace locataires)","Solution mentionnée (accompagnement financier)"],
+     corrige:"CONSTAT : La réglementation sur les passoires thermiques produit des effets contre-productifs sur le marché locatif — l'offre diminue au lieu de s'améliorer.\nCAUSES : Les propriétaires, face au coût des travaux, préfèrent vendre plutôt que rénover, retirant leurs biens du marché locatif.\nCONSÉQUENCES : Les locataires subissent une double menace — expulsion en cas de vente, ou hausse des loyers si les travaux sont répercutés.\nSOLUTIONS : L'auteur préconise un accompagnement financier ciblé des propriétaires modestes pour que la rénovation ne produise pas d'exclusion sociale."},
+    {id:'c1q3',num:'Q3',pts:'3 pts',
+     question:"Construisez un argument personnel (méthode DIRE) sur le thème de la transition écologique et du logement. Votre exemple doit être extérieur au document.",
+     minwords:40,
+     annotations:[
+       {pattern:'en effet|car |parce que',type:'ok',note:'Connecteur d\'illustration présent — bien'},
+       {pattern:'par exemple|ainsi|tel que|notamment',type:'ok',note:'Exemple introduit — vérifiez qu\'il est extérieur au document'},
+       {pattern:'maprimerénov|bail mobilité|apl |zéro reste à charge|bbc|bâtiment basse consommation|dpe|rénovation globale',type:'ok',note:'Bon exemple extérieur au document'},
+       {pattern:'comme le montre le document|comme dit le texte|selon le document',type:'err',note:'Erreur : l\'exemple doit être extérieur au document, pas tiré du texte'},
+       {pattern:'cependant|toutefois|néanmoins|dans une certaine mesure',type:'ok',note:'Nuance présente — excellent'},
+     ],
+     criteres:["D — Idée clairement formulée en une phrase","I — Explication développée (2+ phrases)","R — Exemple concret extérieur au document","É — Ouverture ou nuance"],
+     corrige:"La transition écologique dans le logement est une nécessité absolue à long terme, mais elle doit être socialement pensée pour ne pas se retourner contre les plus fragiles. En effet, si l'effort de rénovation n'est pas accompagné d'une aide financière structurée, il risque d'aggraver les inégalités d'accès au logement plutôt que de les réduire. Par exemple, le dispositif MaPrimeRénov', réformé plusieurs fois entre 2020 et 2024 pour mieux cibler les ménages modestes, illustre que les pouvoirs publics ont progressivement intégré cet enjeu social — sans toutefois le résoudre entièrement. Cela soulève une question de fond : peut-on décarboner le parc immobilier sans y consacrer des ressources publiques massives et sans imposer des contraintes aux propriétaires bailleurs qui en feraient les frais ?"}
+   ]},
+
+  {id:'cas2',title:'🖼 Dossier 2 — Infographie · Intelligence artificielle et emploi',subtitle:'Document mixte · Méthodes : ORME + DIRE',
+   doc:{titre:"Infographie : « L'IA va-t-elle remplacer les humains ? »",meta:"Document fictif · Source : Observatoire du numérique · 2024",
+        texte:"L'infographie présente un schéma en deux parties. À gauche : une liste de métiers jugés « à risque » d'automatisation (comptable, caissier, téléconseiller, conducteur). À droite : une liste de métiers jugés « résilients » (infirmier, enseignant, artisan, avocat). Au centre : une flèche montante avec la mention « +40 % de gains de productivité attendus d'ici 2030 grâce à l'IA générative ». En bas : la question directe « Et vous, où vous situez-vous ? »"},
+   questions:[
+    {id:'c2q1',num:'Q1',pts:'4 pts',
+     question:"Analysez cette infographie avec la méthode ORME. Rédigez votre analyse en 4 paragraphes distincts correspondant aux 4 étapes.",
+     minwords:60,
+     annotations:[
+       {pattern:'j\'observe|j\'aperçois|on observe|on voit|on distingue',type:'ok',note:'Étape Observer présente'},
+       {pattern:'sujet|thème|traite de|porte sur',type:'ok',note:'Étape Repérer présente'},
+       {pattern:'message|auteur|veut montrer|cherche à|dénonce|illustre',type:'ok',note:'Étape Message présente'},
+       {pattern:'élargis|plus largement|on peut penser à|en lien avec|dans ce contexte',type:'ok',note:'Étape Élargir présente'},
+       {pattern:'c\'est beau|c\'est intéressant|j\'aime|je trouve que',type:'err',note:'Erreur : éviter les jugements subjectifs non argumentés dans l\'analyse'},
+       {pattern:'remplacer|remplacés',type:'warn',note:'Nuance utile : l\'infographie ne dit pas que l\'IA remplace — elle dit que certains métiers sont « à risque ». Soyez précis.'},
+     ],
+     criteres:["Observer : éléments visuels décrits (deux colonnes, flèche, question)","Repérer : sujet central identifié (impact IA sur emploi)","Message : intention interprétée (interpeller, pas alarmer)","Élargir : exemple personnel ou lien avec l'actualité"],
+     corrige:"OBSERVER : L'infographie se structure en deux colonnes antagonistes — métiers à risque vs métiers résilients — avec au centre une statistique de gain de productivité et une question finale adressée directement au lecteur.\nREPÉRER : Le sujet est l'impact de l'intelligence artificielle générative sur le marché du travail, et plus précisément la question de la substitution des travailleurs.\nMESSAGE : L'auteur ne dit pas que l'IA va tout supprimer — il suggère une recomposition des emplois. La question finale interpelle personnellement le lecteur, l'invitant à se situer dans cette transformation plutôt qu'à la subir passivement. Le ton est incitatif, pas alarmiste.\nÉLARGIR : Dans le secteur immobilier, l'IA commence à automatiser l'estimation de biens, la rédaction d'annonces ou l'analyse de documents — sans pour autant remplacer le conseil personnalisé, qui reste au cœur du métier d'agent immobilier. Cela illustre que la résilience d'un métier dépend moins de sa catégorie que de la part de jugement humain qu'il mobilise."},
+    {id:'c2q2',num:'Q2',pts:'3 pts',
+     question:"Rédigez votre conclusion orale sur ce document. Elle doit comporter une synthèse et une ouverture sur une question plus large.",
+     minwords:30,
+     annotations:[
+       {pattern:'finalement|en définitive|en conclusion|pour conclure|en somme',type:'ok',note:'Marqueur de conclusion présent — bien'},
+       {pattern:'invite à|soulève|pose la question|nous interroge|amène à',type:'ok',note:'Ouverture formulée — bien'},
+       {pattern:'nouvelle idée|par ailleurs|premièrement|deuxièmement',type:'err',note:'Erreur : ne pas introduire de nouvelle idée en conclusion'},
+       {pattern:'je pense|selon moi|à mon avis',type:'warn',note:'Imprécision : préférer une formulation impersonnelle en conclusion'},
+     ],
+     criteres:["Synthèse de l'idée principale (1-2 phrases)","Pas de nouvelle idée introduite","Ouverture formulée comme une question ou un enjeu","Registre soutenu"],
+     corrige:"En définitive, cette infographie illustre que l'intelligence artificielle n'est pas un substitut brutal à l'humain, mais un transformateur progressif des conditions de travail : elle redistribue les compétences demandées plus qu'elle ne détruit des emplois. Cela invite à s'interroger sur la responsabilité collective — entreprises, États, individus — dans l'accompagnement de ces transitions : qui forme les travailleurs dont les compétences deviennent obsolètes, et qui garantit que les gains de productivité ne profitent pas exclusivement aux actionnaires ?"}
+   ]},
+
+  {id:'cas3',title:'📊 Dossier 3 — Graphique + texte · Inégalités et jeunesse',subtitle:'Document mixte · Méthodes : QQOQCP + CCCS + plan oral complet',
+   doc:{titre:"« Les jeunes diplômés, premières victimes des inégalités de destin »",meta:"Article fictif accompagné d'un graphique · L'Obs Société · Janvier 2024",
+        texte:"Un graphique accompagne l'article : il montre que 68 % des enfants de cadres obtiennent un diplôme du supérieur contre 23 % des enfants d'ouvriers (données fictives, CEREQ 2023). L'article commente : « Le diplôme, censé être le grand égalisateur des chances, reste tributaire de l'origine sociale. L'école de la République n'a pas résolu la reproduction des inégalités : elle l'organise différemment. » L'auteure, sociologue, argue que la démocratisation de l'enseignement supérieur a créé une illusion méritocratique : l'accès à l'université s'est élargi, mais les grandes écoles restent le domaine des mêmes catégories sociales. Elle préconise une politique de quotas sociaux à l'entrée des établissements les plus sélectifs."},
+   questions:[
+    {id:'c3q1',num:'Q1',pts:'2 pts',
+     question:"Appliquez QQOQCP à ce document. Répondez aux 6 questions en une phrase chacune.",
+     minwords:30,
+     annotations:[
+       {pattern:'qui',type:'ok',note:'Qui : présent'},
+       {pattern:'quoi|traite de|porte sur',type:'ok',note:'Quoi : présent'},
+       {pattern:'où|france|français|nationale',type:'ok',note:'Où : présent'},
+       {pattern:'quand|2024|janvier',type:'ok',note:'Quand : présent'},
+       {pattern:'comment|grâce à|en s\'appuyant|via',type:'ok',note:'Comment : présent'},
+       {pattern:'pourquoi|afin de|pour démontrer|pour montrer',type:'ok',note:'Pourquoi : présent'},
+       {pattern:'auteure|sociologue',type:'ok',note:'Auteure correctement identifiée'},
+     ],
+     criteres:["6 questions traitées chacune en une phrase","Auteure identifiée (sociologue)","Intention précisée (démontrer la reproduction sociale)","Contexte temporel et géographique mentionné"],
+     corrige:"QUI : Une sociologue française, auteure spécialisée dans les questions éducatives et sociales.\nÀ QUI : Au grand public lecteur de presse généraliste, sensible aux enjeux d'inégalités.\nQUOI : Les inégalités de destin liées à l'origine sociale dans l'accès au diplôme et aux formations sélectives.\nOÙ : En France, dans le contexte de l'enseignement supérieur et des grandes écoles.\nQUAND : Janvier 2024, dans un contexte de débat renouvelé sur la méritocratie républicaine.\nCOMMENT : En s'appuyant sur des données chiffrées du CEREQ et une argumentation sociologique critique.\nPOURQUOI : Démontrer que la démocratisation formelle de l'accès à l'université n'a pas supprimé la reproduction sociale, et plaider pour des mesures correctrices (quotas sociaux)."},
+    {id:'c3q2',num:'Q2',pts:'5 pts',
+     question:"Rédigez votre présentation orale complète : introduction structurée, développement en 2 points (CCCS), exemple personnel extérieur, conclusion ouverte. Environ 15 à 20 lignes.",
+     minwords:80,
+     annotations:[
+       {pattern:'il s\'agit de|ce document|cet article|cette étude',type:'ok',note:'Présentation du document en introduction — bien'},
+       {pattern:'en premier lieu|dans un premier temps|premièrement',type:'ok',note:'Structuration du développement — bien'},
+       {pattern:'par exemple|je pense à|on peut citer|sciences po|bac|mention|oraux|khâgne|classes prépa',type:'ok',note:'Exemple personnel extérieur présent — bien'},
+       {pattern:'finalement|en définitive|en conclusion',type:'ok',note:'Conclusion amorcée — bien'},
+       {pattern:'cela invite|soulève la question|nous interroge',type:'ok',note:'Ouverture formulée — excellent'},
+       {pattern:'le texte dit que|le document dit que|selon le texte',type:'err',note:'Erreur : ne pas paraphraser le document — reformuler et interpréter'},
+       {pattern:'en résumé|pour résumer|je vais résumer',type:'warn',note:'Imprécision : la conclusion ne doit pas résumer mais ouvrir — éviter ce terme'},
+       {pattern:'je|j\'|mon|ma ',type:'warn',note:'Usage de la première personne : acceptable pour l\'exemple personnel, à éviter dans l\'analyse du document'},
+     ],
+     criteres:["Introduction : document présenté, idée principale formulée, plan annoncé","Développement : au moins 2 points structurés (CCCS)","Exemple personnel extérieur au document","Conclusion : synthèse + ouverture formulée","Registre soutenu tout au long"],
+     corrige:"INTRODUCTION : Ce document est un article accompagné d'un graphique statistique, publié en janvier 2024 dans L'Obs. Son auteure, sociologue, cherche à démontrer que le diplôme — présenté comme le grand égalisateur des chances en France — reste profondément conditionné par l'origine sociale. Je développerai d'abord le constat et ses causes, avant d'examiner les solutions proposées et leurs limites, puis j'ouvrirai sur les enjeux que cela soulève.\n\nDÉVELOPPEMENT :\nConstat et causes : Le graphique est éloquent — l'écart entre 68 % d'accès au supérieur pour les enfants de cadres et 23 % pour les enfants d'ouvriers est considérable. L'auteure propose une lecture critique : l'élargissement formel de l'université masque une concentration de l'élite dans les grandes écoles. Ce phénomène s'explique par des inégalités économiques (coût des études, éloignement géographique), mais aussi symboliques — les familles modestes s'autocensurent dans leurs choix d'orientation, intégrant inconsciemment des barrières qui ne leur sont pas officiellement imposées.\n\nSolutions et exemple : L'auteure préconise des quotas sociaux dans les grandes écoles. Sciences Po avait mis en place des conventions d'éducation prioritaire permettant à des lycéens de ZEP d'intégrer le concours sans passer par la voie classique — un dispositif qui a montré qu'une volonté politique peut corriger partiellement ces déterminismes, même si son ampleur reste limitée.\n\nCONCLUSION : En définitive, ce document illustre que la méritocratie républicaine est davantage un idéal qu'une réalité mesurable. Cela invite à s'interroger sur ce que l'école doit fondamentalement garantir : l'égalité des chances à l'entrée, ou l'égalité des résultats à la sortie ? Et jusqu'où l'État peut-il corriger les inégalités de destin sans remettre en cause le principe même de la sélection par le mérite ?"}
+   ]},
+
+  {id:'cas4',title:'🐾 Dossier 4 — Thème 2026 · « Les animaux et nous »',subtitle:'Thème officiel BTS session 2026 · Documents texte + image · Méthodes : QQOQCP + CCCS + ORME + DIRE',
+   doc:{titre:'Document A — Article : « La condition animale, nouveau défi éthique de notre siècle »',meta:'Article fictif · Le Monde · Janvier 2024',
+        texte:'Longtemps réduit au statut de machine par Descartes, l\'animal est aujourd\'hui au cœur d\'un débat philosophique, scientifique et juridique sans précédent. Les travaux de l\'éthologue Frans de Waal ont démontré que les chimpanzés, les éléphants ou les corbeaux manifestent des comportements empathiques, des formes de deuil, voire des cultures propres à leurs groupes. Cette révolution scientifique oblige à repenser radicalement notre rapport à l\'animal. En France, depuis 2015, le Code civil reconnaît officiellement les animaux comme des « êtres vivants doués de sensibilité ». Pourtant, cette avancée juridique coexiste avec une industrie d\'élevage intensif qui traite des milliards d\'animaux comme des marchandises. Cette contradiction fondamentale — reconnaître la sensibilité animale tout en perpétuant leur exploitation massive — est au cœur des tensions contemporaines. Philosophes, artistes et écrivains s\'emparent de cette question : que nous dit notre rapport aux animaux de ce que nous sommes ?'},
+   questions:[
+    {id:'c4q1',num:'Q1',pts:'3 pts',
+     question:"Formulez l'idée principale de ce document en une phrase. Identifiez la contradiction centrale que l'auteur met en lumière.",
+     minwords:20,
+     annotations:[
+       {pattern:'contradiction|paradoxe|tension|pourtant|mais|cependant|coexiste',type:'ok',note:'Contradiction identifiée ✓'},
+       {pattern:'sensibilité|sensible|être sensible|doués de sensibilité',type:'ok',note:'Avancée juridique mentionnée ✓'},
+       {pattern:'exploitation|élevage|marchandise|industrie',type:'ok',note:'Exploitation identifiée ✓'},
+       {pattern:'auteur|article|document|montre|cherche à|démontre',type:'ok',note:'Intention de l\'auteur précisée ✓'},
+       {pattern:'je pense|à mon avis|selon moi',type:'err',note:'Erreur : ne pas introduire son opinion dans la reformulation de l\'idée principale'},
+       {pattern:'résumé|en résumé|le texte dit que',type:'warn',note:'Imprécision : reformuler en ses propres mots, ne pas paraphraser'},
+     ],
+     criteres:["Sujet identifié (condition animale / débat éthique)","Contradiction centrale formulée (reconnaissance + exploitation)","Intention de l'auteur précisée","Formulation personnelle"],
+     corrige:"L'auteur montre que notre époque est traversée par une contradiction fondamentale : la science et le droit reconnaissent désormais la sensibilité et la complexité psychologique des animaux, mais cette reconnaissance coexiste avec une exploitation industrielle massive qui les traite comme de simples objets. Son intention est de pointer cette tension comme le défi éthique majeur de notre siècle, et d'interroger ce que notre comportement envers les animaux révèle de nous-mêmes."},
+
+    {id:'c4q2',num:'Q2',pts:'4 pts',
+     question:"Appliquez la méthode CCCS à ce document. Identifiez le Constat, les Causes, les Conséquences et les Solutions ou pistes évoquées.",
+     minwords:50,
+     annotations:[
+       {pattern:'constat',type:'ok',note:'Étape Constat identifiée ✓'},
+       {pattern:'cause|parce que|en raison|s\'explique',type:'ok',note:'Étape Causes identifiée ✓'},
+       {pattern:'conséquence|résultat|entraîne|oblige|ainsi',type:'ok',note:'Étape Conséquences identifiée ✓'},
+       {pattern:'solution|piste|philosophes|artistes|écrivains|repenser|débat',type:'ok',note:'Étape Solutions/pistes identifiée ✓'},
+       {pattern:'descartes|de waal|code civil|2015|chimpanzé|éléphant|corbeau',type:'ok',note:'Références précises du document utilisées ✓'},
+       {pattern:'je|mon avis|je pense',type:'warn',note:'CCCS est une analyse objective — réserver la première personne pour la question suivante'},
+     ],
+     criteres:["4 composantes CCCS identifiées et développées","Références précises au document (De Waal, Code civil 2015)","Formulation personnelle et structurée","Articulation logique entre les 4 étapes"],
+     corrige:"CONSTAT : Notre rapport aux animaux est marqué par une contradiction majeure : la science prouve leur sensibilité et leur complexité, mais leur exploitation industrielle massive se poursuit sans discontinuer.\n\nCAUSES : Pendant des siècles, la conception cartésienne de l'animal-machine a légitimé leur exploitation. Les nouvelles découvertes éthologiques (Frans de Waal, comportements empathiques des chimpanzés, des éléphants, des corbeaux) ont remis en cause cette vision, mais sans encore modifier en profondeur les pratiques économiques.\n\nCONSÉQUENCES : Cette tension produit un vide éthique : le Code civil français reconnaît depuis 2015 que les animaux sont des « êtres vivants doués de sensibilité », mais cette reconnaissance juridique n'a pas mis fin à l'élevage intensif. Elle oblige cependant à repenser notre rapport au vivant dans toutes ses dimensions — philosophique, artistique, scientifique.\n\nSOLUTIONS/PISTES : L'auteur ne propose pas de solution directe, mais pointe le rôle des philosophes, artistes et écrivains pour faire évoluer les consciences. La question qu'il pose — que dit notre rapport aux animaux de ce que nous sommes ? — est elle-même une invitation à la réflexion collective."},
+
+    {id:'c4q3',num:'Q3',pts:'3 pts',
+     question:"Construisez un argument personnel (méthode DIRE) sur le thème « Les animaux et nous ». Mobilisez une référence littéraire, philosophique ou artistique extérieure au document.",
+     minwords:50,
+     annotations:[
+       {pattern:'en effet|car |parce que|s\'explique',type:'ok',note:'Illustration développée ✓'},
+       {pattern:'par exemple|ainsi|notamment|on peut citer|orwell|kafka|la fontaine|de waal|fontenay|zola|hugo|métamorphose|ferme des animaux|fables|règne animal',type:'ok',note:'Exemple personnel extérieur au document ✓'},
+       {pattern:'cependant|toutefois|néanmoins|dans une certaine mesure|nuance|limite',type:'ok',note:'Nuance ou ouverture présente ✓'},
+       {pattern:'comme le montre le document|comme dit le texte|selon le document|selon l\'article',type:'err',note:'Erreur : l\'exemple doit être extérieur au document, ne pas citer le texte remis'},
+       {pattern:'c\'est bien|c\'est mal|c\'est nul|très bien|trop',type:'warn',note:'Imprécision : éviter les jugements sans argumentation — développer avec « parce que »'},
+     ],
+     criteres:["D — Idée clairement formulée","I — Explication développée (2+ phrases)","R — Référence extérieure précise et pertinente (littéraire, philosophique ou artistique)","É — Ouverture ou nuance"],
+     corrige:"Notre rapport aux animaux est révélateur de notre rapport à l'altérité : la façon dont nous traitons ceux qui ne parlent pas notre langage dit quelque chose d'essentiel sur notre conception de la justice et de la dignité. En effet, si nous acceptons de reconnaître une sensibilité à l'animal tout en continuant à l'exploiter, nous révélons une capacité humaine troublante à compartimenter la morale selon nos intérêts. Par exemple, dans La Ferme des animaux de George Orwell, les animaux qui se révoltent finissent par reproduire exactement les logiques de domination qu'ils combattaient — une métaphore puissante qui montre que la question du pouvoir sur l'autre, qu'il soit animal ou humain, est au cœur de toute organisation sociale. De même, dans La Métamorphose de Kafka, la transformation de Gregor Samsa en insecte révèle comment la perte d'utilité sociale conduit à la déshumanisation — ou ici à l'« animalisation » — du regard de l'entourage. Cela soulève une question fondamentale : notre compassion envers les animaux est-elle universelle, ou ne s'applique-t-elle qu'aux espèces que nous avons décidé d'aimer ?"}
+   ]}
+];
+
+/* ========================= ÉTAT DES RÉPONSES ========================= */
+var answerState = {}; // {qid: {text, annotated, corrigeShown}}
+
+/* ========================= BUILD CAS ========================= */
+function buildCas(){
+  var container=document.getElementById('cas-container');
+  if(!container)return;
+  container.innerHTML='';
+  casDossiers.forEach(function(dossier){
+    var div=document.createElement('div');
+    div.className='cas-dossier';
+    var questionsHtml=dossier.questions.map(function(q){
+      return '<div class="cas-question" id="cq-'+q.id+'">' +
+        '<div class="cas-q-header"><span class="cas-q-num">'+q.num+'</span>' +
+        '<div><div class="cas-q-text">'+q.question+'</div>' +
+        '<div class="cas-q-pts">'+q.pts+' · Critères : '+q.criteres.join(' · ')+'</div></div></div>' +
+        '<div class="answer-zone">' +
+        '<label>Votre réponse</label>' +
+        '<textarea class="answer-textarea" id="ta-'+q.id+'" placeholder="Rédigez votre réponse ici…" oninput="updateCharCount(\''+q.id+'\')"></textarea>' +
+        '<div class="answer-actions">' +
+        '<button class="btn-evaluate" onclick="evaluateAnswer(\''+q.id+'\')">✓ Évaluer ma réponse</button>' +
+        '<button class="btn-show-corrige" id="btn-corr-'+q.id+'" onclick="requestCorrige(\''+q.id+'\')" disabled>📋 Voir le corrigé</button>' +
+        '<span class="char-count" id="cc-'+q.id+'">0 mots</span>' +
+        '</div>' +
+        '<div id="eval-'+q.id+'"></div>' +
+        '<div id="annot-'+q.id+'" style="display:none;margin-top:12px">' +
+        '<div style="font-size:.75rem;font-weight:600;color:var(--red);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px">📝 Votre réponse annotée — corrigez avant de voir le corrigé</div>' +
+        '<div class="annotated-response" id="annot-txt-'+q.id+'"></div>' +
+        '<div id="annot-legend-'+q.id+'" style="margin-top:8px;font-size:.72rem;color:var(--tl)"></div>' +
+        '</div>' +
+        '<div id="corr-'+q.id+'" style="display:none;margin-top:12px">' +
+        '<div class="corrige-step2-title">✅ Corrigé indicatif</div>' +
+        '<div class="corrige-step2" id="corr-txt-'+q.id+'"></div>' +
+        '</div>' +
+        '</div></div>';
+    }).join('');
+    div.innerHTML='<div class="cas-header"><h3>'+dossier.title+'</h3><p>'+dossier.subtitle+'</p></div>' +
+      '<div class="cas-body">' +
+      '<div class="cas-doc"><div class="cas-doc-title">'+dossier.doc.titre+'</div>' +
+      '<div class="cas-doc-meta">'+dossier.doc.meta+'</div>'+dossier.doc.texte+'</div>' +
+      questionsHtml+'</div>';
+    container.appendChild(div);
+  });
+}
+
+function updateCharCount(id){
+  var ta=document.getElementById('ta-'+id);
+  var cc=document.getElementById('cc-'+id);
+  if(!ta||!cc)return;
+  var words=ta.value.trim().split(/\s+/).filter(function(w){return w.length>0;});
+  cc.textContent=words.length+' mot'+(words.length>1?'s':'');
+}
+
+/* ========================= ÉVALUATION ========================= */
+function evaluateAnswer(id){
+  var q=null;
+  casDossiers.forEach(function(d){d.questions.forEach(function(qq){if(qq.id===id)q=qq;});});
+  if(!q)return;
+  var annotations=q.annotations; var minwords=q.minwords;
+  var ta=document.getElementById('ta-'+id);
+  var container=document.getElementById('eval-'+id);
+  var btnCorr=document.getElementById('btn-corr-'+id);
+  if(!ta||!container)return;
+  var text=ta.value.trim();
+  var textL=text.toLowerCase();
+  var words=textL.split(/\s+/).filter(function(w){return w.length>0;});
+  var wordCount=words.length;
+  if(wordCount<5){
+    container.innerHTML='<div class="alert-box red" style="margin-top:10px"><span class="ai">✗</span><div class="at">Rédigez une réponse avant d\'évaluer.</div></div>';
+    return;
+  }
+  // Score par critères qualitatifs
+  var okFound=annotations.filter(function(a){return a.type==='ok'&&textL.match(new RegExp(a.pattern,'i'));});
+  var errFound=annotations.filter(function(a){return a.type==='err'&&textL.match(new RegExp(a.pattern,'i'));});
+  var warnFound=annotations.filter(function(a){return a.type==='warn'&&textL.match(new RegExp(a.pattern,'i'));});
+  var totalOk=annotations.filter(function(a){return a.type==='ok';}).length;
+  var kwScore=totalOk>0?Math.round((okFound.length/totalOk)*100):50;
+  var lengthOk=wordCount>=minwords;
+  var penalty=errFound.length*15+warnFound.length*5;
+  var combined=Math.max(0,(kwScore*0.6)+(lengthOk?40:(wordCount/minwords)*40)-penalty);
+  var score,mention,cls,stars;
+  if(combined>=78){score='Excellent';mention='Réponse complète et bien développée';cls='excellent';stars='★★★★★';}
+  else if(combined>=55){score='Bien';mention='Bonne réponse, quelques éléments à compléter';cls='bien';stars='★★★★☆';}
+  else if(combined>=35){score='Passable';mention='Réponse incomplète — annotez et corrigez';cls='passable';stars='★★★☆☆';}
+  else{score='Insuffisant';mention='Réponse à retravailler — consultez les annotations';cls='insuffisant';stars='★★☆☆☆';}
+  var pct=Math.min(100,Math.round(combined));
+  var errHtml=errFound.map(function(a){return'<span class="kw-tag kw-missing">⚠ '+a.note+'</span>';}).join('');
+  var warnHtml=warnFound.map(function(a){return'<span class="kw-tag" style="background:var(--ol);color:var(--orange)">~ '+a.note+'</span>';}).join('');
+  var okHtml=okFound.map(function(a){return'<span class="kw-tag kw-found">✓ '+a.pattern+'</span>';}).join('');
+  container.innerHTML=
+    '<div class="eval-result">' +
+    '<div class="eval-header '+cls+'"><div><div class="eval-note-big">'+score+'</div><div class="eval-label">'+wordCount+' mots · seuil : '+minwords+'</div></div>' +
+    '<div style="text-align:right"><div class="eval-mention">'+mention+'</div><div style="font-size:.82rem;opacity:.8;margin-top:4px">'+stars+'</div></div></div>' +
+    '<div class="eval-body">' +
+    '<div class="progress-note"><div class="progress-note-fill '+cls+'" style="width:'+pct+'%"></div></div>' +
+    '<div style="font-size:.72rem;color:var(--tl);margin-bottom:12px">'+pct+'% des critères détectés</div>' +
+    (okHtml?'<div class="eval-section"><div class="eval-section-title">Critères détectés</div><div class="kw-list">'+okHtml+'</div></div>':'') +
+    (errHtml?'<div class="eval-section"><div class="eval-section-title">Erreurs relevées</div><div class="kw-list">'+errHtml+'</div></div>':'') +
+    (warnHtml?'<div class="eval-section"><div class="eval-section-title">Points à améliorer</div><div class="kw-list">'+warnHtml+'</div></div>':'') +
+    '<div class="eval-section"><div class="eval-section-title">Conseil</div><div class="eval-feedback">'+getAdvice(cls,lengthOk,errFound.length)+'</div></div>' +
+    '</div></div>';
+  // Activer le bouton corrigé + annoter la réponse
+  answerState[id]={text:text,step:0};
+  buildAnnotation(id,text,annotations);
+  if(btnCorr){btnCorr.disabled=false;btnCorr.textContent='📝 Annoter ma réponse';}
+  // Figer le textarea
+  if(ta)ta.readOnly=true;
+}
+
+function getAdvice(cls,lengthOk,errCount){
+  if(errCount>0)return'Des erreurs de méthode ont été détectées. Corrigez-les avant de consulter le corrigé.';
+  if(cls==='excellent')return'Excellent niveau. Cliquez sur « Annoter » pour vérifier les points fins, puis comparez avec le corrigé.';
+  if(cls==='bien')return"Bonne base. Cliquez sur « Annoter » pour identifier ce qui peut être amélioré avant de voir le corrigé.";
+  if(cls==='passable'){if(!lengthOk)return"Réponse trop courte. Développez davantage, puis annotez votre réponse.";return'Plusieurs critères manquent. Annotez votre réponse pour identifier les lacunes.';}
+  return'Réponse insuffisante. Annotez, corrigez, puis consultez le corrigé pour comprendre ce qui manque.';
+}
+
+/* ========================= ANNOTATION ========================= */
+function buildAnnotation(id, text, annotations){
+  var annotDiv=document.getElementById('annot-txt-'+id);
+  var legendDiv=document.getElementById('annot-legend-'+id);
+  if(!annotDiv)return;
+  // Annoter le texte : surligner les patterns trouvés
+  var html=escapeHtml(text);
+  var legend=[];
+  annotations.forEach(function(a){
+    var re=new RegExp('('+a.pattern+')','gi');
+    if(re.test(html)){
+      if(a.type==='err'){
+        html=html.replace(new RegExp('('+a.pattern+')','gi'),'<span class="annot-err" title="'+escapeAttr(a.note)+'">$1</span>');
+        legend.push('<span style="color:var(--red)">■</span> Erreur : '+a.note);
+      } else if(a.type==='warn'){
+        html=html.replace(new RegExp('('+a.pattern+')','gi'),'<span class="annot-warn" title="'+escapeAttr(a.note)+'">$1</span>');
+        legend.push('<span style="color:var(--orange)">■</span> Imprécision : '+a.note);
+      } else {
+        html=html.replace(new RegExp('('+a.pattern+')','gi'),'<span style="background:#e6f4ed;border-bottom:2px solid var(--green)" title="'+escapeAttr(a.note)+'">$1</span>');
+      }
+    }
+  });
+  annotDiv.innerHTML=html;
+  if(legend.length>0){
+    legendDiv.innerHTML='<strong>Légende :</strong> '+legend.join(' · ');
+  } else {
+    legendDiv.innerHTML='<span style="color:var(--green)">✓ Aucune erreur ou imprécision détectée dans votre formulation.</span>';
+  }
+}
+
+function escapeHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
+function escapeAttr(t){return t.replace(/"/g,'&quot;');}
+
+/* ========================= CORRIGÉ EN 2 CLICS ========================= */
+function requestCorrige(id){
+  var q=null;
+  casDossiers.forEach(function(d){d.questions.forEach(function(qq){if(qq.id===id)q=qq;});});
+  if(!q)return;
+  var state=answerState[id];
+  if(!state)return;
+  var annotDiv=document.getElementById('annot-'+id);
+  var corrDiv=document.getElementById('corr-'+id);
+  var corrTxt=document.getElementById('corr-txt-'+id);
+  var btn=document.getElementById('btn-corr-'+id);
+  if(state.step===0){
+    // Clic 1 : afficher l'annotation de la réponse
+    if(annotDiv)annotDiv.style.display='block';
+    state.step=1;
+    if(btn){btn.textContent='✅ Afficher le corrigé complet';btn.classList.add('step2');}
+  } else {
+    // Clic 2 : afficher le corrigé complet
+    if(corrTxt)corrTxt.textContent=q.corrige;
+    if(corrDiv)corrDiv.style.display='block';
+    if(btn){btn.textContent='✅ Corrigé affiché';btn.disabled=true;}
+  }
+}
+
+/* ========================= QCM ========================= */
+var qcmModules=[
+  {id:'qm1',title:"Module 1 — Cadre et format de l'épreuve",color:'#1a5276',bg:'#e8f2fb',questions:[
+    {q:"Quelle est la durée de préparation de l'épreuve de contrôle E1 ?",opts:["10 minutes","20 minutes","30 minutes","45 minutes"],ans:1,expl:"La préparation dure 20 minutes. L'oral dure également 20 minutes. Coefficient 4."},
+    {q:"Quel est le coefficient de l'épreuve E1 au BTS PI ?",opts:["2","3","4","5"],ans:2,expl:"L'épreuve E1 (Culture générale et expression) est coefficient 4, commune à tous les BTS."},
+    {q:"Que peut remettre l'examinateur comme support ?",opts:["Uniquement un texte écrit","Un texte, une image, ou un document mixte","Uniquement une image","Uniquement un graphique statistique"],ans:1,expl:"L'examinateur peut proposer tout type de document : texte, image, ou document mixte (texte + image)."},
+    {q:"Combien de documents l'examinateur peut-il remettre ?",opts:["Toujours 1 seul","1 à 3 documents","Exactement 2","3 à 5 documents"],ans:1,expl:"L'examinateur peut remettre 1 à 3 documents sur un même thème."},
+    {q:"Que mesure principalement l'épreuve de contrôle E1 ?",opts:["Les connaissances encyclopédiques","La capacité à comprendre, analyser, interpréter et argumenter","La maîtrise du droit immobilier","La capacité à mémoriser des thèmes"],ans:1,expl:"Le thème importe peu. Ce qui est évalué : comprendre, analyser, interpréter, argumenter, structurer, communiquer."}
+  ]},
+  {id:'qm2',title:'Module 2 — Méthodes (QQOQCP, CCCS, ORME, DIRE)',color:'#1a6b3c',bg:'#e6f4ed',questions:[
+    {q:"À quoi sert la méthode QQOQCP ?",opts:["Construire un argument en 4 étapes","Comprendre rapidement un document en répondant à 6 questions","Analyser une image","Rédiger la conclusion orale"],ans:1,expl:"QQOQCP permet de cerner le sujet, l'auteur, le contexte et l'intention. Elle structure l'introduction."},
+    {q:"Les 4 étapes de CCCS sont :",opts:["Contexte, Causes, Conséquences, Solutions","Constat, Causes, Conséquences, Solutions","Compréhension, Critique, Conclusion, Synthèse","Clarté, Cohérence, Contenu, Structure"],ans:1,expl:"CCCS = Constat / Causes / Conséquences / Solutions. Applicable à presque tous les thèmes."},
+    {q:"La méthode ORME s'applique à :",opts:["Un article de presse","Un document statistique","Une image (dessin, photo, affiche, caricature)","Une tribune d'opinion"],ans:2,expl:"ORME (Observer, Repérer, Message, Élargir) : méthode exclusive aux documents iconographiques."},
+    {q:"Dans ORME, 'M' signifie :",opts:["Mémoriser","Message : que veut montrer ou dénoncer l'auteur ?","Méthode","Maîtrise"],ans:1,expl:"M = Message : l'intention de l'auteur. C'est l'étape d'interprétation, la plus valorisée par l'examinateur."},
+    {q:"Dans DIRE, 'R' correspond à :",opts:["Raisonner","Relier","Rendre concret avec un exemple précis","Récapituler"],ans:2,expl:"DIRE = Donner l'idée / Illustrer / Rendre concret (exemple) / Élargir. L'exemple est obligatoire."},
+    {q:"Pour analyser un graphique statistique, quelle méthode ?",opts:["ORME","DIRE","CCCS","QQOQCP seul"],ans:2,expl:"QQOQCP pour comprendre le document, puis CCCS pour analyser. Ne jamais réciter les chiffres."}
+  ]},
+  {id:'qm3',title:'Module 3 — Compétences orales et structure',color:'#6b21a8',bg:'#f3e8ff',questions:[
+    {q:"Répartition optimale des 20 minutes de préparation ?",opts:["20 min de lecture","10 min lecture + 10 min plan","5 min lecture + 10 min analyse + 5 min préparation orale","15 min lecture + 5 min plan"],ans:2,expl:"5 min lecture active, 10 min analyse et plan, 5 min préparation introduction et exemples."},
+    {q:"Plan oral universel recommandé ?",opts:["Thèse / Antithèse / Synthèse","Introduction / Développement / Conclusion","Problème / Règle / Application","Constat / Analyse / Solution"],ans:1,expl:"Introduction (présentation + idée principale + plan) / Développement / Conclusion (synthèse + ouverture)."},
+    {q:"Que doit impérativement contenir l'introduction orale ?",opts:["La thèse de l'auteur mot pour mot","La présentation du document, l'idée principale reformulée, l'annonce du plan","Un résumé complet","Des chiffres extraits du document"],ans:1,expl:"L'introduction : nommer le type de document, formuler l'idée principale reformulée, annoncer le plan."},
+    {q:"Que doit contenir la conclusion orale ?",opts:["Une nouvelle idée forte","Un résumé détaillé","Une synthèse + une ouverture sur une question plus large","La répétition de l'idée principale"],ans:2,expl:"La conclusion synthétise et ouvre. Elle ne doit jamais introduire une idée nouvelle."},
+    {q:"Qu'est-ce qu'une 'ouverture' en conclusion ?",opts:["Citer un auteur littéraire","Poser une question plus large que le sujet traité","Introduire un second document","Donner son opinion personnelle"],ans:1,expl:"L'ouverture élargit la réflexion : une question de société, un enjeu connexe, une perspective complémentaire."}
+  ]},
+  {id:'qm4',title:'Module 4 — Thématiques et culture générale',color:'#c45c0a',bg:'#fef2e6',questions:[
+    {q:"La crise du logement en France se caractérise par :",opts:["Un excès d'offre","Une tension entre offre insuffisante et demande croissante, notamment en zone urbaine","Une baisse des prix","Un manque de demande locative"],ans:1,expl:"La crise du logement est structurelle : l'offre ne suit pas la demande, surtout en zone tendue."},
+    {q:"La rénovation énergétique vise principalement :",opts:["Augmenter la valeur des biens","Améliorer les performances thermiques et réduire les émissions de CO2","Moderniser l'architecture","Rénover sans contrainte"],ans:1,expl:"Elle réduit la consommation d'énergie des logements. Les passoires F et G sont progressivement interdites à la location."},
+    {q:"Qu'a principalement révélé le télétravail depuis 2020 ?",opts:["Que la productivité chute hors du bureau","Qu'il est possible de travailler efficacement hors du bureau, transformant durablement les modes de travail","Que les salariés préfèrent le bureau","Qu'il ne concerne que les cadres"],ans:1,expl:"La crise sanitaire a démontré que le télétravail est faisable à grande échelle et a modifié durablement les attentes des salariés."},
+    {q:"L'IA générative désigne :",opts:["Un robot physique","Des systèmes produisant du texte, des images ou du code à partir de requêtes en langage naturel","Un logiciel de gestion","Un algorithme de calcul de prix"],ans:1,expl:"L'IA générative (ex. ChatGPT) produit du contenu original à partir d'une requête, transformant de nombreux métiers."},
+    {q:"L'enjeu principal de la désinformation sur les réseaux sociaux ?",opts:["L'excès de publicité","La propagation rapide de fausses informations aux effets sociaux et politiques majeurs","L'addiction des jeunes","Le manque de diversité des contenus"],ans:1,expl:"La désinformation se propage plus vite que les démentis, fragilisant la confiance dans les institutions."}
+  ]},
+  {id:'qm5',title:"Module 5 — Erreurs à éviter et critères d'évaluation",color:'#b3281e',bg:'#fcecea',questions:[
+    {q:"L'erreur la plus pénalisante à l'épreuve de contrôle E1 ?",opts:["Utiliser trop d'exemples","Lire ses notes pendant la présentation","Prendre trop de temps à préparer","Utiliser des connecteurs logiques"],ans:1,expl:"Lire ses notes est l'erreur la plus pénalisée. Les notes servent de repères, pas de texte à lire."},
+    {q:"Que signifie 'décrire sans analyser' ?",opts:["Utiliser des exemples","Répéter ce que dit le document sans l'interpréter ni en dégager le sens","Parler trop longtemps","Utiliser le mot 'je'"],ans:1,expl:"La description est le niveau 0 de l'analyse. L'examinateur attend une interprétation : que veut montrer l'auteur ?"},
+    {q:"Que faire si on ne connaît pas précisément un chiffre ?",opts:["Dire 'je ne sais pas' et s'arrêter","Inventer un chiffre","Rebondir : 'Je manque d'éléments précis, mais on peut avancer que...'","Changer de sujet"],ans:2,expl:"Ne jamais bloquer sur un chiffre. Toujours rester dans la dynamique de l'argumentation."},
+    {q:"Pourquoi apporter un exemple extérieur au document ?",opts:["Pour allonger la présentation","Pour montrer sa culture générale, pas seulement qu'on a lu le document","Pour critiquer l'auteur","Parce que c'est réglementaire"],ans:1,expl:"L'exemple personnel montre que le candidat mobilise sa culture générale. C'est un critère d'évaluation explicite."},
+    {q:"Qu'est-ce qu'un 'registre soutenu' à l'oral ?",opts:["Parler lentement","Vocabulaire précis, connecteurs logiques, pas d'expressions familières","Parler avec un accent neutre","Utiliser des mots techniques BTS"],ans:1,expl:"Registre soutenu = vocabulaire précis, syntaxe construite, connecteurs logiques, pas de langue familière."},
+    {q:"Peut-on introduire une nouvelle idée en conclusion ?",opts:["Oui, pour finir en force","Non, la conclusion répond et ouvre, sans introduire d'idée nouvelle","Oui, si le temps le permet","Oui, si l'idée est importante"],ans:1,expl:"La conclusion synthétise et ouvre. Elle ne doit pas introduire un argument non développé dans le corps."}
+  ]},
+  {id:'qm6',title:'Module 6 — Thème 2026 · Les animaux et nous',color:'#0d5c3a',bg:'#e6f4ed',questions:[
+    {q:"Quel est l'intitulé officiel du thème de culture générale BTS session 2026 ?",opts:["« L'homme et la nature »","« Les animaux et nous : imaginer, connaître, comprendre l'animal »","« Vivre ensemble : la question animale »","« Biodiversité et société »"],ans:1,expl:"Le thème officiel, paru au BO n°17 du 24 avril 2025, est : « Les animaux et nous : imaginer, connaître, comprendre l'animal ». Il interroge la relation entre l'humain et le monde animal sous toutes ses dimensions."},
+    {q:"Quelle est la conception de l'animal défendue par Descartes ?",opts:["L'animal est un être sensible et intelligent","L'animal est une machine dépourvue de sensibilité et de conscience","L'animal est supérieur à l'homme dans certains domaines","L'animal possède une âme comme l'être humain"],ans:1,expl:"Descartes défendait la conception de l'« animal-machine » : l'animal n'aurait ni sensibilité, ni raison, ni subjectivité — il serait un pur mécanisme. Cette vision a longtemps légitimé leur exploitation."},
+    {q:"Depuis quelle année le Code civil français reconnaît-il les animaux comme des « êtres vivants doués de sensibilité » ?",opts:["1989","2004","2015","2022"],ans:2,expl:"Depuis 2015, le Code civil français reconnaît officiellement les animaux comme des « êtres vivants doués de sensibilité » — une avancée juridique majeure, même si elle n'a pas mis fin à l'élevage intensif."},
+    {q:"Dans La Ferme des animaux de George Orwell, quelle est l'idée centrale ?",opts:["Les animaux sont naturellement supérieurs aux humains","Les animaux se révoltent et reproduisent les mêmes logiques de domination qu'ils combattaient","Les animaux vivent en harmonie sans hiérarchie","Un fermier apprend à respecter ses animaux"],ans:1,expl:"La Ferme des animaux est une fable politique : les animaux renversent leurs maîtres mais reproduisent exactement les mêmes mécanismes de pouvoir et d'oppression. C'est une satire du totalitarisme, utilisant l'animal comme miroir de l'humain."},
+    {q:"Qu'est-ce que l'anthropomorphisme ?",opts:["Le fait de se transformer en animal","Le fait d'attribuer des caractéristiques ou des comportements humains aux animaux","L'étude scientifique des animaux","La protection juridique des espèces menacées"],ans:1,expl:"L'anthropomorphisme consiste à prêter aux animaux des traits humains — émotions, intentions, valeurs morales. C'est un procédé littéraire très répandu dans les fables (La Fontaine), les contes et l'animation."},
+    {q:"Quel auteur a démontré scientifiquement que les chimpanzés manifestent des comportements empathiques et une forme de culture ?",opts:["Charles Darwin","René Descartes","Frans de Waal","Claude Lévi-Strauss"],ans:2,expl:"Frans de Waal, éthologue néerlandais, a prouvé par ses recherches que les grands singes — et d'autres espèces — manifestent de l'empathie, du deuil, et des comportements culturels propres à leurs groupes, renversant la vision cartésienne."},
+    {q:"Dans La Métamorphose de Kafka, que symbolise la transformation de Gregor Samsa en insecte ?",opts:["La liberté retrouvée de l'homme","L'exclusion et la perte d'humanité aux yeux des autres","La supériorité de l'animal sur l'homme","La fusion entre l'homme et la nature"],ans:1,expl:"La transformation de Gregor en insecte symbolise l'exclusion sociale : dès qu'il perd son utilité économique, sa famille le traite comme un être inférieur et étranger. Kafka explore la frontière entre humanité et animalité à travers le regard de l'autre."},
+    {q:"Quelle question centrale le thème « Les animaux et nous » invite-t-il à poser ?",opts:["Comment améliorer les performances de l'élevage industriel ?","Que révèle notre rapport aux animaux sur ce que nous sommes en tant qu'êtres humains ?","Les animaux sont-ils plus intelligents que les humains ?","Faut-il interdire la consommation de viande ?"],ans:1,expl:"Le thème invite à une réflexion en miroir : la façon dont nous traitons les animaux — fascination, exploitation, protection, anthropomorphisme — dit quelque chose d'essentiel sur notre propre humanité, nos valeurs et nos contradictions."}
+  ]}
+];
+
+var qcmState={};var qcmCorrect=0;var qcmAnswered=0;
+var qcmTotal=qcmModules.reduce(function(s,m){return s+m.questions.length;},0);
+
+function buildQcm(){
+  var container=document.getElementById('qcm-container');
+  if(!container)return;
+  container.innerHTML='';
+  var globalIdx=0;
+  qcmModules.forEach(function(mod){
+    var section=document.createElement('div');section.style.cssText='margin-bottom:28px';
+    var am=mod.questions.filter(function(_,i){return qcmState[mod.id+'_'+i]!==undefined;}).length;
+    var cm=mod.questions.filter(function(_,i){return qcmState[mod.id+'_'+i]===mod.questions[i].ans;}).length;
+    var header=document.createElement('div');
+    header.style.cssText='background:'+mod.bg+';border-left:4px solid '+mod.color+';border-radius:var(--r);padding:12px 16px;margin-bottom:14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between';
+    header.innerHTML='<span style="font-family:var(--font-serif);font-size:1rem;font-weight:bold;color:'+mod.color+'">'+mod.title+'</span><span style="font-size:.78rem;color:'+mod.color+';opacity:.8">'+am+'/'+mod.questions.length+' répondues'+(am>0?' · '+cm+' correctes':'')+'</span>';
+    var body=document.createElement('div');body.id='qmod-'+mod.id;
+    mod.questions.forEach(function(q,qi){
+      globalIdx++;
+      var key=mod.id+'_'+qi;
+      var card=document.createElement('div');card.id='qcard-'+key;
+      card.style.cssText='background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:12px';
+      var optsHtml=q.opts.map(function(o,j){
+        var sv=qcmState[key];
+        var cls='background:var(--surface2);border:1px solid var(--border);';
+        if(sv!==undefined){
+          if(j===q.ans)cls='background:var(--gl);border:1px solid var(--green);color:var(--green);';
+          else if(j===sv&&j!==q.ans)cls='background:var(--rl);border:1px solid var(--red);color:var(--red);';
+          else cls='background:var(--surface2);border:1px solid var(--border);opacity:.5';
+        }
+        var dis=sv!==undefined?'pointer-events:none;':'cursor:pointer;';
+        return '<div onclick="qcmAnswer(\''+key+'\','+j+','+q.ans+')" style="'+cls+dis+'border-radius:8px;padding:9px 12px;margin-bottom:6px;display:flex;align-items:flex-start;gap:10px;font-size:.85rem"><span style="font-weight:600;min-width:18px">'+['A','B','C','D'][j]+'</span><span>'+o+'</span></div>';
+      }).join('');
+      var explShow=qcmState[key]!==undefined?'display:block':'display:none';
+      card.innerHTML='<div style="font-size:.72rem;font-weight:600;color:var(--tl);letter-spacing:.04em;margin-bottom:6px">Q'+globalIdx+' / '+qcmTotal+'</div><div style="font-size:.9rem;font-weight:500;margin-bottom:12px;line-height:1.5">'+q.q+'</div><div>'+optsHtml+'</div><div id="expl-'+key+'" style="'+explShow+';margin-top:10px;padding:10px 12px;background:var(--al);border-radius:8px;font-size:.82rem;color:var(--accent);line-height:1.6"><strong>📖 Explication :</strong> '+q.expl+'</div>';
+      body.appendChild(card);
+    });
+    header.onclick=function(){body.style.display=body.style.display==='none'?'block':'none';};
+    section.appendChild(header);section.appendChild(body);container.appendChild(section);
+  });
+  updateQcmScore();
+}
+
+function qcmAnswer(key,chosen,correctAns){
+  if(qcmState[key]!==undefined)return;
+  qcmState[key]=chosen;
+  if(chosen===correctAns)qcmCorrect++;
+  qcmAnswered++;
+  var card=document.getElementById('qcard-'+key);
+  if(card){
+    card.querySelectorAll('[onclick]').forEach(function(o,j){
+      o.style.pointerEvents='none';o.style.cursor='default';
+      if(j===correctAns){o.style.background='var(--gl)';o.style.border='1px solid var(--green)';o.style.color='var(--green)';}
+      else if(j===chosen&&j!==correctAns){o.style.background='var(--rl)';o.style.border='1px solid var(--red)';o.style.color='var(--red)';}
+      else{o.style.opacity='.5';}
+    });
+    var expl=document.getElementById('expl-'+key);
+    if(expl)expl.style.display='block';
+  }
+  updateQcmScore();
+}
+
+function updateQcmScore(){
+  var s=document.getElementById('qcm-score-num');
+  var p=document.getElementById('qcm-prog');
+  var l=document.getElementById('qcm-prog-label');
+  var t=document.getElementById('top-score');
+  if(!s)return;
+  s.textContent=qcmCorrect+' / '+qcmAnswered+' (sur '+qcmTotal+')';
+  var pct=qcmTotal>0?Math.round((qcmCorrect/qcmTotal)*100):0;
+  if(p)p.style.width=pct+'%';
+  if(l)l.textContent=qcmAnswered===0?'Aucune question répondue':qcmAnswered+' répondue(s) · '+pct+'% de bonnes réponses';
+  if(t)t.textContent='QCM : '+qcmCorrect+' / '+qcmTotal;
+}
+function qcmReset(){
+  if(!confirm('Réinitialiser toutes les réponses au QCM ?'))return;
+  qcmState={};qcmCorrect=0;qcmAnswered=0;buildQcm();
+}
+
+/* ========================= PROTECTION ========================= */
+(function(){
+  var _a=['D','R','A','K','E'];var _PWD=_a.join('');
+  var _b=['E','X','T','2','0','2','6'];var _EXT=_b.join('');
+  var _EXP=new Date(2026,6,15,0,0,0).getTime();
+  var _SK='_kb_e1_s26';var _MAX=5;var _tries=0;
+  function _h(s){var h=0,i,c;for(i=0;i<s.length;i++){c=s.charCodeAt(i);h=((h<<5)-h)+c;h|=0;}return h;}
+  var _HP=_h(_PWD);var _HE=_h(_EXT);
+  function _show(){
+    var l=document.getElementById('kb-lock');var e=document.getElementById('kb-expired');var a=document.getElementById('kb-app');
+    if(l)l.style.display='none';if(e)e.classList.remove('visible');if(a)a.style.display='block';
+    buildCas();buildQcm();_guards();
+  }
+  function _guards(){
+    document.addEventListener('contextmenu',function(e){e.preventDefault();});
+    document.addEventListener('keydown',function(e){
+      if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&'IJC'.includes(e.key))||(e.ctrlKey&&'uUsSpPaA'.includes(e.key))){e.preventDefault();}
+    });
+    // Détection DevTools supprimée (trop de faux positifs selon la résolution)
+  }
+  window.kbUnlock=function(){
+    var v=document.getElementById('kl-pwd').value.trim().toUpperCase();
+    var err=document.getElementById('kl-err');
+    if(_tries>=_MAX){err.textContent='Trop de tentatives. Rechargez la page.';return;}
+    if(_h(v)===_HP){try{sessionStorage.setItem(_SK,'1');}catch(x){}err.textContent='';_show();}
+    else{_tries++;var left=_MAX-_tries;err.textContent='Code incorrect.'+(left>0?' '+left+' tentative(s) restante(s).':' Accès bloqué.');document.getElementById('kl-pwd').value='';}
+  };
+  window.kbUnlockExpired=function(){
+    var v=document.getElementById('ke-pwd').value.trim().toUpperCase();
+    var err=document.getElementById('ke-err');
+    if(_h(v)===_HE||_h(v)===_HP){try{sessionStorage.setItem(_SK,'1');}catch(x){}err.textContent='';_show();}
+    else{err.textContent='Code incorrect.';document.getElementById('ke-pwd').value='';}
+  };
+  var now=Date.now();var stored=null;
+  try{stored=sessionStorage.getItem(_SK);}catch(x){}
+  if(now<_EXP){_show();}
+  else if(stored==='1'){_show();}
+  else{
+    var ek=document.getElementById('kb-expired');if(ek)ek.classList.add('visible');
+    var p2=document.getElementById('ke-pwd');
+    if(p2)p2.addEventListener('keydown',function(e){if(e.key==='Enter')kbUnlockExpired();});
+  }
+})();
+</script>
+</body>
+</html>
